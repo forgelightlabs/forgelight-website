@@ -1376,7 +1376,7 @@ const Header = ({setPage}) => {
 const Footer = ({setPage}) => (
   <footer style={{background:c.bg,borderTop:'1px solid '+c.border,padding:'60px 0 40px'}}>
     <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 24px'}}>
-      <div className="footer-grid" style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr',gap:'40px',marginBottom:'40px'}}>
+      <div className="footer-grid" style={{marginBottom:'40px'}}>
         {/* Brand */}
         <div>
           <div style={{display:'flex',alignItems:'center',gap:'10px',marginBottom:'16px'}}>
@@ -1444,17 +1444,17 @@ const Home = ({setPage}) => (
           <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Core Systems</p>
           <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>Six systems.<br/>Revenue on autopilot.</h2>
         </div>
-        <div className="systems-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'16px'}}>
+        <div className="systems-grid">
           {systems.slice(0,3).map(s=><Card key={s.id} onClick={()=>setPage(s.id)}>{h=><div className="system-card" style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'14px',padding:'24px',transition:'all 0.2s'}}><div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'16px'}}><span style={{fontSize:'0.65rem',color:c.textTertiary,fontWeight:500}}>{s.num}</span><div style={{color:c.textTertiary,transform:h?'translateX(2px)':'translateX(0)',transition:'transform 0.2s'}}><Arrow/></div></div><h3 style={{fontSize:'1.1rem',fontWeight:600,marginBottom:'6px'}}>{s.title}</h3><p style={{fontSize:'0.8rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.5}}>{s.desc}</p><Diagram nodes={s.nodes} hovered={h}/></div>}</Card>)}
         </div>
-        <div className="systems-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'16px',marginTop:'16px'}}>
+        <div className="systems-grid" style={{marginTop:'16px'}}>
           {systems.slice(3,6).map(s=><Card key={s.id} onClick={()=>setPage(s.id)}>{h=><div className="system-card" style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'14px',padding:'24px',transition:'all 0.2s'}}><div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'16px'}}><span style={{fontSize:'0.65rem',color:c.textTertiary,fontWeight:500}}>{s.num}</span><div style={{color:c.textTertiary,transform:h?'translateX(2px)':'translateX(0)',transition:'transform 0.2s'}}><Arrow/></div></div><h3 style={{fontSize:'1.1rem',fontWeight:600,marginBottom:'6px'}}>{s.title}</h3><p style={{fontSize:'0.8rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.5}}>{s.desc}</p><Diagram nodes={s.nodes} hovered={h}/></div>}</Card>)}
         </div>
       </div>
     </section>
     <section style={{padding:'60px 0',borderTop:'1px solid '+c.border,borderBottom:'1px solid '+c.border}}>
       <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px'}}>
-        <div className="animated-stats-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'40px',textAlign:'center'}}>
+        <div className="animated-stats-grid">
           <div><div style={{fontSize:'clamp(1.25rem,3vw,1.75rem)',fontWeight:600,letterSpacing:'-0.02em',color:c.text,marginBottom:'4px'}}>More calls booked.</div><div style={{fontSize:'0.8rem',color:c.textTertiary}}>Pipeline that fills itself</div></div>
           <div><div style={{fontSize:'clamp(1.25rem,3vw,1.75rem)',fontWeight:600,letterSpacing:'-0.02em',color:c.text,marginBottom:'4px'}}>Zero missed leads.</div><div style={{fontSize:'0.8rem',color:c.textTertiary}}>Every opportunity captured</div></div>
           <div><div style={{fontSize:'clamp(1.25rem,3vw,1.75rem)',fontWeight:600,letterSpacing:'-0.02em',color:c.text,marginBottom:'4px'}}>Revenue 24/7.</div><div style={{fontSize:'0.8rem',color:c.textTertiary}}>Systems that never sleep</div></div>
@@ -1516,7 +1516,7 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:'16px'}}>
-      <div className="form-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'16px'}}>
+      <div className="form-grid">
         <input
           type="text"
           placeholder="Name"
@@ -1699,7 +1699,7 @@ const Landing = ({id,setPage}) => {
       </section>
       <section style={{padding:'60px 0',borderTop:'1px solid '+c.border}}>
         <div style={{maxWidth:'900px',margin:'0 auto',padding:'0 20px'}}>
-          <div className="problem-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'48px',alignItems:'center'}}>
+          <div className="problem-grid">
             <div>
               <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>The Problem</p>
               <h2 style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>What is costing you.</h2>
@@ -1722,7 +1722,7 @@ const Landing = ({id,setPage}) => {
           </div>
           
           {/* Before/After Visual */}
-          <div className="before-after-grid" style={{display:'grid',gridTemplateColumns:'1fr auto 1fr',gap:'24px',alignItems:'center',marginBottom:'48px'}}>
+          <div className="before-after-grid" style={{marginBottom:'48px'}}>
             {/* Before */}
             <div style={{background:c.bgCard,border:'1px solid '+c.border,borderRadius:'16px',padding:'32px 24px'}}>
               <div style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:'#EF4444',marginBottom:'20px',display:'flex',alignItems:'center',gap:'8px'}}>
@@ -1764,7 +1764,7 @@ const Landing = ({id,setPage}) => {
           </div>
           
           {/* Animated stats row */}
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'24px',marginTop:'20px'}} className="animated-stats-grid">
+          <div className="animated-stats-grid" style={{marginTop:'20px'}}>
             <AnimatedStat value={3.7} suffix="x" label="return per dollar" source="McKinsey" decimals={1} />
             <AnimatedStat value={15.8} suffix="%" label="revenue increase" source="Gartner" decimals={1} />
             <AnimatedStat value={15.2} suffix="%" label="cost savings" source="Gartner" decimals={1} />
@@ -1822,7 +1822,7 @@ const Landing = ({id,setPage}) => {
               <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Industries We Serve</p>
               <h2 style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:600,letterSpacing:'-0.02em',margin:0}}>See how it works for your business</h2>
             </div>
-            <div className="industries-grid" style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:'12px'}}>
+            <div className="industries-grid">
               {[
                 { id: 'ai-front-desk-roofing', name: 'Roofing', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> },
                 { id: 'ai-front-desk-hvac', name: 'HVAC', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg> },
@@ -1872,7 +1872,7 @@ const Landing = ({id,setPage}) => {
               <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Industries We Serve</p>
               <h2 style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:600,letterSpacing:'-0.02em',margin:0}}>See how it works for your business</h2>
             </div>
-            <div className="industries-grid-3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'16px'}}>
+            <div className="industries-grid-3">
               {[
                 { id: 'ai-outbound-staffing', name: 'Staffing Agencies', desc: 'Client acquisition on autopilot', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> },
                 { id: 'ai-outbound-saas', name: 'B2B SaaS', desc: 'Pipeline without the headcount', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg> },
@@ -1913,7 +1913,7 @@ const Landing = ({id,setPage}) => {
               <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Industries We Serve</p>
               <h2 style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:600,letterSpacing:'-0.02em',margin:0}}>See how it works for your business</h2>
             </div>
-            <div className="industries-grid-3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'16px'}}>
+            <div className="industries-grid-3">
               {[
                 { id: 'referral-real-estate', name: 'Real Estate Agents', desc: '82% of sales come from referrals', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> },
                 { id: 'referral-mortgage', name: 'Mortgage Lenders', desc: '87% of business from referrals', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg> },
@@ -1954,7 +1954,7 @@ const Landing = ({id,setPage}) => {
               <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Industries We Serve</p>
               <h2 style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:600,letterSpacing:'-0.02em',margin:0}}>See how it works for your business</h2>
             </div>
-            <div className="industries-grid-3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'16px'}}>
+            <div className="industries-grid-3">
               {[
                 { id: 'broker-os-freight', name: 'Freight Brokers', desc: 'Real-time margins, carrier tracking', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> },
                 { id: 'broker-os-wholesale', name: 'Wholesale Real Estate', desc: 'Deals to dispositions in one place', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg> },
@@ -1993,7 +1993,7 @@ const Landing = ({id,setPage}) => {
               <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Industries We Serve</p>
               <h2 style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:600,letterSpacing:'-0.02em',margin:0}}>See how it works for your business</h2>
             </div>
-            <div className="industries-grid-3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'16px'}}>
+            <div className="industries-grid-3">
               {[
                 { id: 'content-engine-local', name: 'Local Service Businesses', desc: 'Roofing, HVAC, plumbing, contractors—get found online', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> },
                 { id: 'content-engine-realestate', name: 'Real Estate Agents', desc: 'Video, market updates, and social—stay visible', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> },
@@ -2032,7 +2032,7 @@ const Landing = ({id,setPage}) => {
               <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Industries We Serve</p>
               <h2 style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:600,letterSpacing:'-0.02em',margin:0}}>See how it works for your business</h2>
             </div>
-            <div className="industries-grid-2" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'16px'}}>
+            <div className="industries-grid-2">
               {[
                 { id: 'website-design-local', name: 'Local Service Businesses', desc: 'Roofing, HVAC, plumbing, contractors—websites that convert', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> },
                 { id: 'website-design-realestate', name: 'Real Estate Agents', desc: 'IDX-integrated sites that build your brand', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> }
@@ -2221,7 +2221,7 @@ const Contact = ({setPage}) => (
           <span style={{margin:'0 8px',opacity:0.5}}>/</span><span style={{color:c.textSecondary}}>Contact</span>
         </div>
         
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'80px',alignItems:'start'}} className="contact-grid">
+        <div className="contact-grid">
           {/* Left side - Copy */}
           <div>
             <h1 style={{fontSize:'clamp(2rem,5vw,3rem)',fontWeight:600,lineHeight:1.1,letterSpacing:'-0.03em',marginBottom:'24px'}}>Let's talk.</h1>
@@ -2679,7 +2679,7 @@ const CallNetwork = ({setPage}) => {
             <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.03em',margin:0}}>The Forgelight Difference</h2>
           </div>
           
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'24px'}} className="how-it-works-grid">
+          <div className="how-it-works-grid">
             <div style={{background:c.bgCard,border:'1px solid '+c.border,borderRadius:'16px',padding:'32px'}}>
               <div style={{width:'48px',height:'48px',background:c.accentSubtle,borderRadius:'12px',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:'20px'}}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={c.warm} strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -2722,7 +2722,7 @@ const CallNetwork = ({setPage}) => {
       {/* For Publishers */}
       <section id="publishers" style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
         <div style={{maxWidth:'900px',margin:'0 auto',padding:'0 24px'}}>
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'60px',alignItems:'center'}} className="publisher-grid">
+          <div className="publisher-grid">
             <div>
               <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,marginBottom:'12px'}}>For Publishers</p>
               <h2 style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:600,letterSpacing:'-0.02em',marginBottom:'20px'}}>You generate the calls.<br/>We handle the rest.</h2>
@@ -2771,7 +2771,7 @@ const CallNetwork = ({setPage}) => {
       {/* For Buyers */}
       <section id="buyers" style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
         <div style={{maxWidth:'900px',margin:'0 auto',padding:'0 24px'}}>
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'60px',alignItems:'center'}} className="buyer-grid">
+          <div className="buyer-grid">
             <div>
               <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,marginBottom:'12px'}}>For Buyers</p>
               <h2 style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:600,letterSpacing:'-0.02em',marginBottom:'20px'}}>Calls that close.<br/>Sources you can trust.</h2>
@@ -2842,7 +2842,7 @@ const CallNetwork = ({setPage}) => {
           <p style={{fontSize:'1rem',color:c.textSecondary,lineHeight:1.7,textAlign:'center',marginBottom:'32px'}}>
             Forgelight Labs builds AI-powered revenue systems. We understand lead generation from every angle—from the ad click to the closed deal. When you work with us, you're working with operators who have skin in the game.
           </p>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'24px',marginTop:'40px'}} className="why-grid">
+          <div className="why-grid" style={{marginTop:'40px'}}>
             <div style={{textAlign:'center'}}>
               <div style={{fontSize:'2rem',fontWeight:600,color:c.warm,marginBottom:'8px'}}>24/7</div>
               <div style={{fontSize:'0.85rem',color:c.textSecondary}}>Network monitoring</div>
@@ -3303,7 +3303,7 @@ const MoneyPage = ({ setPage, data }) => {
       <section style={{padding:'60px 0',borderTop:'1px solid '+c.border}}>
         <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px'}}>
           <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 24px 0'}}>What Changes</p>
-          <div className="two-col-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'24px'}}>
+          <div className="two-col-grid">
             <div style={{background:c.bgCard,border:'1px solid '+c.border,borderRadius:'12px',padding:'24px'}}>
               <p style={{fontSize:'0.75rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:'#EF4444',margin:'0 0 16px 0'}}>Before</p>
               <p style={{fontSize:'0.9rem',color:c.textSecondary,margin:0,lineHeight:1.6}}>{data.before}</p>

@@ -15,20 +15,113 @@ body {
 }
 
 /* =============================================
+   BASE GRID STYLES (Desktop)
+   ============================================= */
+.systems-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.industries-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.industries-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.industries-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.animated-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  text-align: center;
+}
+
+.how-it-works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.before-after-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.publisher-grid,
+.buyer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+/* =============================================
    TABLET STYLES (768px - 1024px)
    ============================================= */
 @media (max-width: 1024px) {
   .systems-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(2, 1fr);
   }
   
   .industries-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(3, 1fr);
   }
   
   .footer-grid {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 32px !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
   }
 }
 
@@ -47,35 +140,34 @@ body {
   .two-col-grid,
   .form-grid,
   .problem-grid,
-  .before-after-grid,
   .contact-grid,
   .publisher-grid,
-  .buyer-grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-
-  /* Footer grid */
+  .buyer-grid,
   .footer-grid {
-    grid-template-columns: 1fr !important;
-    gap: 32px !important;
-    text-align: center;
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
-  /* Hide middle arrow in before/after on mobile */
+  /* Before/after grid - stack and hide arrow */
+  .before-after-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
   .before-after-grid > div:nth-child(2) {
-    display: none !important;
+    display: none;
+  }
+
+  /* Footer centering */
+  .footer-grid {
+    text-align: center;
+    gap: 32px;
   }
 
   /* Section padding adjustments */
   section {
     padding-left: 16px !important;
     padding-right: 16px !important;
-  }
-
-  /* Hero adjustments */
-  .hero-content {
-    padding: 60px 0 !important;
   }
 
   /* Typography scaling */
@@ -98,18 +190,9 @@ body {
     padding: 20px !important;
   }
 
-  /* Navigation - hamburger menu needed but for now just stack */
+  /* Navigation */
   nav {
     padding: 12px 16px !important;
-  }
-
-  /* Hide desktop nav links on mobile, show hamburger */
-  .desktop-nav {
-    display: none !important;
-  }
-
-  .mobile-nav {
-    display: block !important;
   }
 
   /* Cookie banner */
@@ -136,42 +219,9 @@ body {
     bottom: 16px !important;
   }
 
-  /* Lifecycle diagram - horizontal scroll */
-  .lifecycle-diagram {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 8px !important;
-  }
-
-  .lifecycle-diagram > div {
-    min-width: max-content !important;
-    gap: 6px !important;
-  }
-
-  .lifecycle-diagram span {
-    padding: 6px 12px !important;
-    font-size: 0.7rem !important;
-  }
-
-  /* Buttons */
-  button, a[role="button"] {
-    font-size: 0.85rem !important;
-  }
-
-  /* CTA sections */
-  .cta-buttons {
-    flex-direction: column !important;
-    width: 100% !important;
-  }
-
-  .cta-buttons > * {
-    width: 100% !important;
-    justify-content: center !important;
-  }
-
-  /* Stats section */
+  /* Stats section borders for visual separation */
   .animated-stats-grid > div {
-    padding: 16px 0 !important;
+    padding: 16px 0;
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
@@ -197,14 +247,8 @@ body {
     padding-right: 12px !important;
   }
 
-  /* Even smaller card padding */
   .system-card {
     padding: 16px !important;
-  }
-
-  /* Footer links */
-  .footer-grid a {
-    font-size: 0.85rem !important;
   }
 }
 
@@ -212,7 +256,7 @@ body {
    UTILITY CLASSES
    ============================================= */
 .mobile-only {
-  display: none !important;
+  display: none;
 }
 
 .desktop-only {
@@ -221,10 +265,10 @@ body {
 
 @media (max-width: 768px) {
   .mobile-only {
-    display: block !important;
+    display: block;
   }
   
   .desktop-only {
-    display: none !important;
+    display: none;
   }
 }
