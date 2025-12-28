@@ -13,3 +13,218 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* =============================================
+   TABLET STYLES (768px - 1024px)
+   ============================================= */
+@media (max-width: 1024px) {
+  .systems-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .industries-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 32px !important;
+  }
+}
+
+/* =============================================
+   MOBILE STYLES (below 768px)
+   ============================================= */
+@media (max-width: 768px) {
+  /* All grids stack to single column */
+  .systems-grid,
+  .industries-grid,
+  .industries-grid-3,
+  .industries-grid-2,
+  .animated-stats-grid,
+  .how-it-works-grid,
+  .why-grid,
+  .two-col-grid,
+  .form-grid,
+  .problem-grid,
+  .before-after-grid,
+  .contact-grid,
+  .publisher-grid,
+  .buyer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Footer grid */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    text-align: center;
+  }
+
+  /* Hide middle arrow in before/after on mobile */
+  .before-after-grid > div:nth-child(2) {
+    display: none !important;
+  }
+
+  /* Section padding adjustments */
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Hero adjustments */
+  .hero-content {
+    padding: 60px 0 !important;
+  }
+
+  /* Typography scaling */
+  h1 {
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+  }
+
+  h2 {
+    font-size: 1.4rem !important;
+    line-height: 1.3 !important;
+  }
+
+  h3 {
+    font-size: 1.1rem !important;
+  }
+
+  /* Card padding */
+  .system-card {
+    padding: 20px !important;
+  }
+
+  /* Navigation - hamburger menu needed but for now just stack */
+  nav {
+    padding: 12px 16px !important;
+  }
+
+  /* Hide desktop nav links on mobile, show hamburger */
+  .desktop-nav {
+    display: none !important;
+  }
+
+  .mobile-nav {
+    display: block !important;
+  }
+
+  /* Cookie banner */
+  .cookie-banner {
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 16px !important;
+  }
+
+  .cookie-banner > div {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  .cookie-banner button {
+    width: 100% !important;
+  }
+
+  /* Chat widget full width on mobile */
+  .chat-widget {
+    width: calc(100vw - 32px) !important;
+    max-width: none !important;
+    right: 16px !important;
+    bottom: 16px !important;
+  }
+
+  /* Lifecycle diagram - horizontal scroll */
+  .lifecycle-diagram {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px !important;
+  }
+
+  .lifecycle-diagram > div {
+    min-width: max-content !important;
+    gap: 6px !important;
+  }
+
+  .lifecycle-diagram span {
+    padding: 6px 12px !important;
+    font-size: 0.7rem !important;
+  }
+
+  /* Buttons */
+  button, a[role="button"] {
+    font-size: 0.85rem !important;
+  }
+
+  /* CTA sections */
+  .cta-buttons {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  .cta-buttons > * {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Stats section */
+  .animated-stats-grid > div {
+    padding: 16px 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .animated-stats-grid > div:last-child {
+    border-bottom: none;
+  }
+}
+
+/* =============================================
+   SMALL MOBILE (below 480px)
+   ============================================= */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem !important;
+  }
+
+  h2 {
+    font-size: 1.25rem !important;
+  }
+
+  section {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* Even smaller card padding */
+  .system-card {
+    padding: 16px !important;
+  }
+
+  /* Footer links */
+  .footer-grid a {
+    font-size: 0.85rem !important;
+  }
+}
+
+/* =============================================
+   UTILITY CLASSES
+   ============================================= */
+.mobile-only {
+  display: none !important;
+}
+
+.desktop-only {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .mobile-only {
+    display: block !important;
+  }
+  
+  .desktop-only {
+    display: none !important;
+  }
+}
