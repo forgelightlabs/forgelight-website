@@ -1,0 +1,10 @@
+# Robots.txt for Forgelight Labs
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://forgelightlabs.com/sitemap.xml
+
+# LLMs.txt location (for AI crawlers)
+# See: https://forgelightlabs.com/llms.txt
