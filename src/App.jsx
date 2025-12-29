@@ -1266,7 +1266,24 @@ const Diagram = ({ nodes, hovered }) => {
 
 const Card = ({ children, onClick }) => {
   const [h, setH] = useState(false);
-  return <div onClick={onClick} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} style={{cursor:'pointer'}}>{typeof children === 'function' ? children(h) : children}</div>;
+  const [pressed, setPressed] = useState(false);
+  return (
+    <div 
+      onClick={onClick} 
+      onMouseEnter={() => setH(true)} 
+      onMouseLeave={() => setH(false)}
+      onTouchStart={() => setPressed(true)}
+      onTouchEnd={() => setPressed(false)}
+      onTouchCancel={() => setPressed(false)}
+      style={{
+        cursor:'pointer',
+        transform: pressed ? 'scale(0.98)' : 'scale(1)',
+        transition: 'transform 0.15s ease'
+      }}
+    >
+      {typeof children === 'function' ? children(h || pressed) : children}
+    </div>
+  );
 };
 
 const systems = [
@@ -1477,42 +1494,21 @@ const Home = ({setPage}) => (
 // Contact Form component
 const ContactForm = () => {
   const [form, setForm] = useState({ name: '', email: '', company: '', message: '' });
-  const [status, setStatus] = useState('idle'); // idle, sending, success, error
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setStatus('sending');
     
-    // Replace with your form endpoint (Formspree, Netlify Forms, etc.)
-    // Example using Formspree:
-    try {
-      const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
-      });
-      if (res.ok) {
-        setStatus('success');
-        setForm({ name: '', email: '', company: '', message: '' });
-      } else {
-        setStatus('error');
-      }
-    } catch {
-      setStatus('error');
-    }
-  };
+    const subject = `Contact from ${form.name}${form.company ? ` at ${form.company}` : ''}`;
+    const body = `Name: ${form.name}
+Email: ${form.email}
+Company: ${form.company || 'Not provided'}
 
-  if (status === 'success') {
-    return (
-      <div style={{textAlign:'center',padding:'40px 24px',background:c.bgCard,border:'1px solid '+c.border,borderRadius:'16px'}}>
-        <div style={{width:'48px',height:'48px',background:'rgba(34,197,94,0.1)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 16px'}}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        </div>
-        <h3 style={{fontSize:'1.25rem',fontWeight:600,marginBottom:'8px',color:c.text}}>Message sent!</h3>
-        <p style={{fontSize:'0.9rem',color:c.textSecondary}}>We'll get back to you within 24 hours.</p>
-      </div>
-    );
-  }
+Message:
+${form.message}`;
+    
+    const mailtoLink = `mailto:hello@forgelightlabs.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+  };
 
   return (
     <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:'16px'}}>
@@ -1551,14 +1547,10 @@ const ContactForm = () => {
       />
       <button
         type="submit"
-        disabled={status === 'sending'}
-        style={{padding:'14px 24px',background:c.warm,color:c.bg,border:'none',borderRadius:'10px',fontSize:'0.9rem',fontWeight:600,cursor:status === 'sending' ? 'wait' : 'pointer',opacity:status === 'sending' ? 0.7 : 1}}
+        style={{padding:'14px 24px',background:c.warm,color:c.bg,border:'none',borderRadius:'10px',fontSize:'0.9rem',fontWeight:600,cursor:'pointer'}}
       >
-        {status === 'sending' ? 'Sending...' : 'Send Message'}
+        Send Message
       </button>
-      {status === 'error' && (
-        <p style={{fontSize:'0.85rem',color:'#EF4444',textAlign:'center',margin:0}}>Something went wrong. Please try again or email us directly.</p>
-      )}
     </form>
   );
 };
