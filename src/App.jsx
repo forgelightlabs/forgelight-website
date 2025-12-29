@@ -5664,7 +5664,7 @@ export default function App() {
     <div style={{fontFamily:'Inter,-apple-system,sans-serif'}}>
       <Header setPage={setPage}/>
       {renderPage()}
-      <ChatWidget/>
+      {/* Chat widget removed - add back when connected to real service */}
       <CookieBanner/>
     </div>
   );
