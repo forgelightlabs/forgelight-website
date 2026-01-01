@@ -28,8 +28,21 @@ body {
    ============================================= */
 .systems-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
 }
 
 .industries-grid {
@@ -124,6 +137,15 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
   
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
   .industries-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -140,6 +162,8 @@ body {
 @media (max-width: 768px) {
   /* All grids stack to single column */
   .systems-grid,
+  .results-grid,
+  .about-grid,
   .industries-grid,
   .industries-grid-3,
   .industries-grid-2,

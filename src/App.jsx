@@ -1287,12 +1287,14 @@ const Card = ({ children, onClick }) => {
 };
 
 const systems = [
-  {id:'ai-front-desk',num:'01',title:'AI Sales Desk',desc:'AI voice agents that answer calls 24/7 and book appointments.',nodes:[{icon:<PhoneIcon/>,label:'Answer'},{icon:<BrainIcon/>,label:'Qualify'},{icon:<CalIcon/>,label:'Book'},{icon:<DollarIcon/>,label:'Revenue'}]},
-  {id:'ai-outbound',num:'02',title:'Outbound Engine',desc:'Automated outreach and database reactivation that fills your calendar.',nodes:[{icon:<UsersIcon/>,label:'Identify'},{icon:<MailIcon/>,label:'Engage'},{icon:<CalIcon/>,label:'Meet'},{icon:<DollarIcon/>,label:'Close'}]},
-  {id:'referral',num:'03',title:'Referral Engine',desc:'Automated partner outreach that generates referrals on autopilot.',nodes:[{icon:<UsersIcon/>,label:'Find'},{icon:<MsgIcon/>,label:'Nurture'},{icon:<UserPlusIcon/>,label:'Partner'},{icon:<DollarIcon/>,label:'Earn'}]},
-  {id:'broker-os',num:'04',title:'Broker OS',desc:'One system to manage deals, track pipeline, and close more.',nodes:[{icon:<UsersIcon/>,label:'Organize'},{icon:<ActivityIcon/>,label:'Execute'},{icon:<LayoutIcon/>,label:'Track'},{icon:<DollarIcon/>,label:'Scale'}]},
-  {id:'content-engine',num:'05',title:'Content Engine',desc:'Done-for-you content that builds authority and drives inbound leads.',nodes:[{icon:<CheckIcon/>,label:'Approve'},{icon:<UsersIcon/>,label:'Attract'},{icon:<MsgIcon/>,label:'Trust'},{icon:<DollarIcon/>,label:'Sell'}]},
-  {id:'website-design',num:'06',title:'Website Design',desc:'Fast, modern websites built to convert visitors into customers.',nodes:[{icon:<PaletteIcon/>,label:'Design'},{icon:<CodeIcon/>,label:'Build'},{icon:<RocketIcon/>,label:'Launch'},{icon:<DollarIcon/>,label:'Convert'}]}
+  {id:'ai-voice-agents',num:'01',title:'AI Voice Agents',desc:'24/7 call handling that qualifies, routes, and books—without hold music.',nodes:[{icon:<PhoneIcon/>,label:'Answer'},{icon:<BrainIcon/>,label:'Qualify'},{icon:<CalIcon/>,label:'Book'},{icon:<DollarIcon/>,label:'Revenue'}]},
+  {id:'ai-front-desk',num:'02',title:'AI Front Desk',desc:'Automated reception that greets, answers FAQs, and schedules appointments.',nodes:[{icon:<PhoneIcon/>,label:'Greet'},{icon:<MsgIcon/>,label:'Answer'},{icon:<CalIcon/>,label:'Schedule'},{icon:<CheckIcon/>,label:'Done'}]},
+  {id:'database-reactivation',num:'03',title:'Database Reactivation',desc:'Turn dormant leads into booked appointments with multi-channel outreach.',nodes:[{icon:<UsersIcon/>,label:'Segment'},{icon:<MailIcon/>,label:'Reach'},{icon:<MsgIcon/>,label:'Engage'},{icon:<CalIcon/>,label:'Book'}]},
+  {id:'ai-outbound',num:'04',title:'AI Outbound SDR',desc:'Automated prospecting that identifies, contacts, and qualifies leads.',nodes:[{icon:<UsersIcon/>,label:'Identify'},{icon:<MailIcon/>,label:'Engage'},{icon:<CalIcon/>,label:'Meet'},{icon:<DollarIcon/>,label:'Close'}]},
+  {id:'referral',num:'05',title:'AI Referral Network',desc:'Systematized partner outreach that turns your network into revenue.',nodes:[{icon:<UsersIcon/>,label:'Find'},{icon:<MsgIcon/>,label:'Nurture'},{icon:<UserPlusIcon/>,label:'Partner'},{icon:<DollarIcon/>,label:'Earn'}]},
+  {id:'community-systems',num:'06',title:'Community Systems',desc:'Infrastructure for masterminds, memberships, and professional networks.',nodes:[{icon:<UsersIcon/>,label:'Onboard'},{icon:<MsgIcon/>,label:'Engage'},{icon:<ActivityIcon/>,label:'Track'},{icon:<DollarIcon/>,label:'Monetize'}]},
+  {id:'broker-os',num:'07',title:'Broker OS',desc:'Deal flow management for M&A advisors and acquisition entrepreneurs.',nodes:[{icon:<UsersIcon/>,label:'Organize'},{icon:<ActivityIcon/>,label:'Execute'},{icon:<LayoutIcon/>,label:'Track'},{icon:<DollarIcon/>,label:'Scale'}]},
+  {id:'ai-parts-counter',num:'08',title:'AI Parts Counter',desc:'Built for heavy-duty dealers. 24/7 parts lookup and order booking.',nodes:[{icon:<PhoneIcon/>,label:'Answer'},{icon:<BrainIcon/>,label:'Lookup'},{icon:<CheckIcon/>,label:'Confirm'},{icon:<DollarIcon/>,label:'Order'}]}
 ];
 
 const Logo = ({ size = 40 }) => (
@@ -1406,13 +1408,13 @@ const Footer = ({setPage}) => (
         <div>
           <h4 style={{fontSize:'0.7rem',fontWeight:600,color:c.textSecondary,textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:'16px'}}>Systems</h4>
           <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
-            {systems.slice(0,3).map(s=><button key={s.id} onClick={()=>setPage(s.id)} style={{background:'none',border:'none',cursor:'pointer',fontSize:'0.8rem',color:c.textTertiary,textAlign:'left',padding:0}}>{s.title}</button>)}
+            {systems.slice(0,4).map(s=><button key={s.id} onClick={()=>setPage(s.id)} style={{background:'none',border:'none',cursor:'pointer',fontSize:'0.8rem',color:c.textTertiary,textAlign:'left',padding:0}}>{s.title}</button>)}
           </div>
         </div>
         <div>
           <h4 style={{fontSize:'0.7rem',fontWeight:600,color:c.textSecondary,textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:'16px'}}>&nbsp;</h4>
           <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
-            {systems.slice(3,6).map(s=><button key={s.id} onClick={()=>setPage(s.id)} style={{background:'none',border:'none',cursor:'pointer',fontSize:'0.8rem',color:c.textTertiary,textAlign:'left',padding:0}}>{s.title}</button>)}
+            {systems.slice(4,8).map(s=><button key={s.id} onClick={()=>setPage(s.id)} style={{background:'none',border:'none',cursor:'pointer',fontSize:'0.8rem',color:c.textTertiary,textAlign:'left',padding:0}}>{s.title}</button>)}
           </div>
         </div>
         {/* Contact */}
@@ -1449,9 +1451,33 @@ const Home = ({setPage}) => (
       <div style={{position:'absolute',bottom:0,left:0,right:0,height:'30%',background:`linear-gradient(to top,${c.bg},transparent)`,pointerEvents:'none',zIndex:2}}/>
       <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px',position:'relative',zIndex:1}}>
         <div style={{maxWidth:'600px'}}>
-          <h1 style={{fontSize:'clamp(2.5rem,6vw,4rem)',fontWeight:600,lineHeight:1.1,letterSpacing:'-0.03em',marginBottom:'24px'}}>Systems that<br/>compound while<br/>you sleep.</h1>
-          <p style={{fontSize:'1rem',lineHeight:1.6,color:c.textSecondary,marginBottom:'32px',maxWidth:'420px'}}>We build AI voice agents, automated outbound systems, and database reactivation campaigns for businesses that want more leads and sales without more headcount.</p>
+          <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,marginBottom:'16px'}}>Enterprise AI Infrastructure</p>
+          <h1 style={{fontSize:'clamp(2.5rem,6vw,4rem)',fontWeight:600,lineHeight:1.1,letterSpacing:'-0.03em',marginBottom:'24px'}}>Revenue Systems<br/>That Run While<br/>You Sleep</h1>
+          <p style={{fontSize:'1rem',lineHeight:1.6,color:c.textSecondary,marginBottom:'16px',maxWidth:'480px'}}>We design, build, and deploy AI-powered infrastructure—voice agents, outbound engines, and database reactivation systems—that operate 24/7 and scale without headcount.</p>
+          <p style={{fontSize:'0.95rem',fontWeight:500,color:c.accent,marginBottom:'32px'}}>Working demo in 72 hours. Full implementation in weeks.</p>
           <div style={{display:'flex',gap:'12px'}}><a href="https://calendar.app.google/LUhpKq7nBNLpLiBWA" target="_blank" rel="noopener noreferrer" style={{textDecoration:'none'}}><Btn primary>Book a Call <Arrow/></Btn></a><button onClick={()=>document.getElementById('systems')?.scrollIntoView({behavior:'smooth'})} style={{background:'none',border:'none',padding:0,cursor:'pointer'}}><Btn>How It Works</Btn></button></div>
+        </div>
+      </div>
+    </section>
+    {/* Trust Bar */}
+    <section style={{padding:'50px 0',borderTop:'1px solid '+c.border,borderBottom:'1px solid '+c.border}}>
+      <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px',textAlign:'center'}}>
+        <p style={{fontSize:'0.7rem',fontWeight:500,textTransform:'uppercase',letterSpacing:'0.1em',color:c.textTertiary,marginBottom:'32px'}}>Trusted by service businesses, dealerships, and B2B companies</p>
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center',gap:'40px',flexWrap:'wrap'}}>
+          {['Client','Client','Client','Client','Client'].map((t,i)=><div key={i} style={{width:'120px',height:'44px',background:c.bgCard,border:'1px solid '+c.border,borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',color:c.textTertiary,fontSize:'0.7rem',textTransform:'uppercase',letterSpacing:'0.05em'}}>Logo</div>)}
+        </div>
+      </div>
+    </section>
+    {/* Results Section */}
+    <section style={{padding:'80px 0'}}>
+      <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px'}}>
+        <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,marginBottom:'16px'}}>Proven Results</p>
+        <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,marginBottom:'48px'}}>The Numbers That Matter</h2>
+        <div className="results-grid" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'20px'}}>
+          <div style={{background:c.bgCard,border:'1px solid '+c.border,borderRadius:'14px',padding:'28px'}}><div style={{fontSize:'2.25rem',fontWeight:600,color:c.accent,marginBottom:'8px',lineHeight:1}}>12</div><div style={{fontSize:'0.85rem',color:c.textSecondary,marginBottom:'8px'}}>Appointments in 4 hours</div><div style={{fontSize:'0.75rem',color:c.textTertiary}}>AI outbound pilot</div></div>
+          <div style={{background:c.bgCard,border:'1px solid '+c.border,borderRadius:'14px',padding:'28px'}}><div style={{fontSize:'2.25rem',fontWeight:600,color:c.accent,marginBottom:'8px',lineHeight:1}}>24/7</div><div style={{fontSize:'0.85rem',color:c.textSecondary,marginBottom:'8px'}}>Call coverage</div><div style={{fontSize:'0.75rem',color:c.textTertiary}}>Zero missed leads</div></div>
+          <div style={{background:c.bgCard,border:'1px solid '+c.border,borderRadius:'14px',padding:'28px'}}><div style={{fontSize:'2.25rem',fontWeight:600,color:c.accent,marginBottom:'8px',lineHeight:1}}>72hr</div><div style={{fontSize:'0.85rem',color:c.textSecondary,marginBottom:'8px'}}>Demo delivery</div><div style={{fontSize:'0.75rem',color:c.textTertiary}}>Not weeks of scoping</div></div>
+          <div style={{background:c.bgCard,border:'1px solid '+c.border,borderRadius:'14px',padding:'28px'}}><div style={{fontSize:'2.25rem',fontWeight:600,color:c.accent,marginBottom:'8px',lineHeight:1}}>10+</div><div style={{fontSize:'0.85rem',color:c.textSecondary,marginBottom:'8px'}}>Years domain expertise</div><div style={{fontSize:'0.75rem',color:c.textTertiary}}>Heavy truck, industrial</div></div>
         </div>
       </div>
     </section>
@@ -1459,13 +1485,13 @@ const Home = ({setPage}) => (
       <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px'}}>
         <div style={{marginBottom:'32px'}}>
           <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Core Systems</p>
-          <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>Six systems.<br/>Revenue on autopilot.</h2>
+          <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>Eight systems.<br/>Revenue on autopilot.</h2>
         </div>
         <div className="systems-grid">
-          {systems.slice(0,3).map(s=><Card key={s.id} onClick={()=>setPage(s.id)}>{h=><div className="system-card" style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'14px',padding:'24px',transition:'all 0.2s'}}><div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'16px'}}><span style={{fontSize:'0.65rem',color:c.textTertiary,fontWeight:500}}>{s.num}</span><div style={{color:c.textTertiary,transform:h?'translateX(2px)':'translateX(0)',transition:'transform 0.2s'}}><Arrow/></div></div><h3 style={{fontSize:'1.1rem',fontWeight:600,marginBottom:'6px'}}>{s.title}</h3><p style={{fontSize:'0.8rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.5}}>{s.desc}</p><Diagram nodes={s.nodes} hovered={h}/></div>}</Card>)}
+          {systems.slice(0,4).map(s=><Card key={s.id} onClick={()=>setPage(s.id)}>{h=><div className="system-card" style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'14px',padding:'24px',transition:'all 0.2s'}}><div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'16px'}}><span style={{fontSize:'0.65rem',color:c.textTertiary,fontWeight:500}}>{s.num}</span><div style={{color:c.textTertiary,transform:h?'translateX(2px)':'translateX(0)',transition:'transform 0.2s'}}><Arrow/></div></div><h3 style={{fontSize:'1.1rem',fontWeight:600,marginBottom:'6px'}}>{s.title}</h3><p style={{fontSize:'0.8rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.5}}>{s.desc}</p><Diagram nodes={s.nodes} hovered={h}/></div>}</Card>)}
         </div>
         <div className="systems-grid" style={{marginTop:'16px'}}>
-          {systems.slice(3,6).map(s=><Card key={s.id} onClick={()=>setPage(s.id)}>{h=><div className="system-card" style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'14px',padding:'24px',transition:'all 0.2s'}}><div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'16px'}}><span style={{fontSize:'0.65rem',color:c.textTertiary,fontWeight:500}}>{s.num}</span><div style={{color:c.textTertiary,transform:h?'translateX(2px)':'translateX(0)',transition:'transform 0.2s'}}><Arrow/></div></div><h3 style={{fontSize:'1.1rem',fontWeight:600,marginBottom:'6px'}}>{s.title}</h3><p style={{fontSize:'0.8rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.5}}>{s.desc}</p><Diagram nodes={s.nodes} hovered={h}/></div>}</Card>)}
+          {systems.slice(4,8).map(s=><Card key={s.id} onClick={()=>setPage(s.id)}>{h=><div className="system-card" style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'14px',padding:'24px',transition:'all 0.2s'}}><div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'16px'}}><span style={{fontSize:'0.65rem',color:c.textTertiary,fontWeight:500}}>{s.num}</span><div style={{color:c.textTertiary,transform:h?'translateX(2px)':'translateX(0)',transition:'transform 0.2s'}}><Arrow/></div></div><h3 style={{fontSize:'1.1rem',fontWeight:600,marginBottom:'6px'}}>{s.title}</h3><p style={{fontSize:'0.8rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.5}}>{s.desc}</p><Diagram nodes={s.nodes} hovered={h}/></div>}</Card>)}
         </div>
       </div>
     </section>
@@ -1475,6 +1501,25 @@ const Home = ({setPage}) => (
           <div><div style={{fontSize:'clamp(1.25rem,3vw,1.75rem)',fontWeight:600,letterSpacing:'-0.02em',color:c.text,marginBottom:'4px'}}>More calls booked.</div><div style={{fontSize:'0.8rem',color:c.textTertiary}}>Pipeline that fills itself</div></div>
           <div><div style={{fontSize:'clamp(1.25rem,3vw,1.75rem)',fontWeight:600,letterSpacing:'-0.02em',color:c.text,marginBottom:'4px'}}>Zero missed leads.</div><div style={{fontSize:'0.8rem',color:c.textTertiary}}>Every opportunity captured</div></div>
           <div><div style={{fontSize:'clamp(1.25rem,3vw,1.75rem)',fontWeight:600,letterSpacing:'-0.02em',color:c.text,marginBottom:'4px'}}>Revenue 24/7.</div><div style={{fontSize:'0.8rem',color:c.textTertiary}}>Systems that never sleep</div></div>
+        </div>
+      </div>
+    </section>
+    {/* About Section */}
+    <section style={{padding:'100px 0',borderTop:'1px solid '+c.border}}>
+      <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px'}}>
+        <div className="about-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'80px',alignItems:'center'}}>
+          <div>
+            <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,marginBottom:'16px'}}>About</p>
+            <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,marginBottom:'24px'}}>Built by Operators,<br/>Not Just Technologists</h2>
+            <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.7}}>Forgelight Labs was founded on a simple premise: AI systems should be built by people who've actually done the work they're automating.</p>
+            <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.7}}>Our team brings 10+ years of frontline experience in heavy truck dealerships, parts operations, and industrial supply chains. We've worked the phones. We've seen how a missed call at 4:47 PM turns into a $3,000 order for your competitor.</p>
+            <p style={{fontSize:'0.95rem',color:c.textSecondary,lineHeight:1.7}}>That operational background is why Forgelight exists. We don't build generic chatbots. We build systems that understand your actual workflow—because we've lived it.</p>
+          </div>
+          <div>
+            <div style={{borderTop:'1px solid '+c.border,padding:'24px 0'}}><div style={{fontWeight:600,marginBottom:'6px'}}>Speed over perfection</div><div style={{fontSize:'0.9rem',color:c.textSecondary}}>Working demo in 72 hours, not a 6-week discovery phase.</div></div>
+            <div style={{borderTop:'1px solid '+c.border,padding:'24px 0'}}><div style={{fontWeight:600,marginBottom:'6px'}}>Ownership over handoffs</div><div style={{fontSize:'0.9rem',color:c.textSecondary}}>Direct communication, not offshore ticket queues.</div></div>
+            <div style={{borderTop:'1px solid '+c.border,borderBottom:'1px solid '+c.border,padding:'24px 0'}}><div style={{fontWeight:600,marginBottom:'6px'}}>Outcomes over hours</div><div style={{fontSize:'0.9rem',color:c.textSecondary}}>We measure success in revenue generated, not billable time.</div></div>
+          </div>
         </div>
       </div>
     </section>
