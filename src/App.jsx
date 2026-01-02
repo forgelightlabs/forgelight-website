@@ -1665,6 +1665,14 @@ const AnimatedStat = ({ value, suffix, label, source, decimals = 1 }) => {
 const Landing = ({id,setPage}) => {
   const sys = systems.find(s=>s.id===id);
   const content = {
+    'ai-voice-agents':{
+      sub:'Every call answered. Every opportunity captured.',
+      desc:'AI voice agents that qualify leads, route calls, and book appointments—24/7, without hold music.',
+      problems:["Missed calls are missed revenue.","You can't answer every call.","After-hours means lost opportunities.","Hold music kills conversions."],
+      time:'7-14',
+      without:["Missed calls, lost revenue","No coverage after hours","Leads go to voicemail and vanish"],
+      with:["Every call answered instantly","24/7 qualification and booking","Revenue captured around the clock"]
+    },
     'ai-front-desk':{
       sub:'Never miss a customer again.',
       desc:'Every call answered. Every appointment booked. Even nights, weekends, and holidays.',
@@ -1672,6 +1680,14 @@ const Landing = ({id,setPage}) => {
       time:'7-14',
       without:["Missed calls, lost leads","Manual follow-up","Revenue leaks everywhere"],
       with:["Every lead captured","Automated 24/7","Revenue on autopilot"]
+    },
+    'database-reactivation':{
+      sub:'Wake your dead leads.',
+      desc:'Turn dormant contacts into booked appointments with automated multi-channel outreach.',
+      problems:["Your database is full of untapped revenue.","Old leads forget you exist.","Manual follow-up doesn't scale.","You're leaving money on the table."],
+      time:'7-14',
+      without:["Dead leads stay dead","No systematic reactivation","Revenue sitting in your CRM unused"],
+      with:["Dormant leads re-engaged automatically","Multi-channel sequences that convert","Hidden revenue unlocked"]
     },
     'ai-outbound':{
       sub:'Pipeline that fills itself.',
@@ -1689,6 +1705,14 @@ const Landing = ({id,setPage}) => {
       without:["Partners forget you exist","No time to nurture relationships","Referrals happen by accident"],
       with:["System reaches out for you","Relationships nurtured automatically","Referrals flow predictably"]
     },
+    'community-systems':{
+      sub:'Infrastructure for communities that thrive.',
+      desc:'Build, engage, and monetize your mastermind, membership, or professional network.',
+      problems:["Members churn before they engage.","No system to track participation.","Monetization feels awkward.","Community management eats your time."],
+      time:'14-21',
+      without:["Members drift away silently","Engagement is manual and exhausting","Revenue potential unrealized"],
+      with:["Automated onboarding and engagement","Participation tracked and rewarded","Monetization built into the system"]
+    },
     'broker-os':{
       sub:'One place. Zero chaos.',
       desc:'Your whole operation in one system. No more hunting through 10 tools to find what you need.',
@@ -1696,6 +1720,14 @@ const Landing = ({id,setPage}) => {
       time:'14-21',
       without:["Struggling to find opportunities","Due diligence is scattered chaos","Buyers and sellers slip away"],
       with:["Opportunities surface automatically","Due diligence organized and tracked","More contracts, more revenue"]
+    },
+    'ai-parts-counter':{
+      sub:'Parts lookup that never sleeps.',
+      desc:'Built for heavy-duty dealers. 24/7 parts identification, pricing, and order booking.',
+      problems:["After-hours calls go to voicemail.","Parts lookup takes too long.","Customers go to competitors.","Your counter staff is overwhelmed."],
+      time:'14-21',
+      without:["Lost orders after hours","Slow lookup frustrates customers","Revenue walks out the door"],
+      with:["24/7 parts lookup and ordering","Instant identification and pricing","Capture every order, day or night"]
     },
     'content-engine':{
       sub:'Content that closes. Zero effort.',
