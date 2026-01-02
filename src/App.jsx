@@ -1288,7 +1288,7 @@ const Card = ({ children, onClick }) => {
 
 const systems = [
   {id:'ai-voice-agents',num:'01',title:'AI Voice Agents',desc:'24/7 call handling that qualifies, routes, and books—without hold music.',nodes:[{icon:<PhoneIcon/>,label:'Answer'},{icon:<BrainIcon/>,label:'Qualify'},{icon:<CalIcon/>,label:'Book'},{icon:<DollarIcon/>,label:'Revenue'}]},
-  {id:'ai-front-desk',num:'02',title:'AI Front Desk',desc:'Automated reception that greets, answers FAQs, and schedules appointments.',nodes:[{icon:<PhoneIcon/>,label:'Greet'},{icon:<MsgIcon/>,label:'Answer'},{icon:<CalIcon/>,label:'Schedule'},{icon:<CheckIcon/>,label:'Done'}]},
+  {id:'ai-front-desk',num:'02',title:'AI Front Desk',desc:'Automated reception that greets, answers FAQs, and books.',nodes:[{icon:<PhoneIcon/>,label:'Greet'},{icon:<MsgIcon/>,label:'Answer'},{icon:<CalIcon/>,label:'Schedule'},{icon:<DollarIcon/>,label:'Book'}]},
   {id:'database-reactivation',num:'03',title:'Database Reactivation',desc:'Turn dormant leads into booked appointments with multi-channel outreach.',nodes:[{icon:<UsersIcon/>,label:'Segment'},{icon:<MailIcon/>,label:'Reach'},{icon:<MsgIcon/>,label:'Engage'},{icon:<CalIcon/>,label:'Book'}]},
   {id:'ai-outbound',num:'04',title:'AI Outbound SDR',desc:'Automated prospecting that identifies, contacts, and qualifies leads.',nodes:[{icon:<UsersIcon/>,label:'Identify'},{icon:<MailIcon/>,label:'Engage'},{icon:<CalIcon/>,label:'Meet'},{icon:<DollarIcon/>,label:'Close'}]},
   {id:'referral',num:'05',title:'AI Referral Network',desc:'Systematized partner outreach that turns your network into revenue.',nodes:[{icon:<UsersIcon/>,label:'Find'},{icon:<MsgIcon/>,label:'Nurture'},{icon:<UserPlusIcon/>,label:'Partner'},{icon:<DollarIcon/>,label:'Earn'}]},
