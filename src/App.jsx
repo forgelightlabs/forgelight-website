@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// Load Cinzel font
+// Load fonts
 const fontLink = document.createElement('link');
-fontLink.href = 'https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&display=swap';
+fontLink.href = 'https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&display=swap';
 fontLink.rel = 'stylesheet';
 if (!document.querySelector(`link[href*="Cinzel"]`)) document.head.appendChild(fontLink);
 
@@ -2404,7 +2404,7 @@ const BackOfficePage = ({setPage, data}) => {
     if (data.title.includes('Quoting')) return [50, 5000, 20]; // quotes/mo, deal size, close rate
     if (data.title.includes('Scheduling')) return [50, 250, 10]; // appts/wk, job value, no-show rate
     if (data.title.includes('Customer Comm')) return [15, 4, 35]; // calls/day, minutes, hourly cost
-    if (data.title.includes('Lead Follow')) return [100, 2000, 10]; // leads/mo, customer value, conversion
+    if (data.title.includes('Lead Follow')) return [100, 8, 15]; // leads/mo, current conversion %, target conversion %
     if (data.title.includes('Data Entry')) return [20, 40, 2]; // hrs/wk, hourly cost, staff count
     return [100, 50, 10];
   };
@@ -2495,20 +2495,23 @@ const BackOfficePage = ({setPage, data}) => {
     }
     if (data.title.includes('Lead Follow')) {
       // Lead follow-up calculator
-      const currentConversions = calcValue1 * (calcValue3/100);
-      const improvedConversions = calcValue1 * ((calcValue3 + 3)/100);
-      const additionalRevenue = (improvedConversions - currentConversions) * calcValue2;
+      // calcValue1 = leads/month, calcValue2 = current conversion %, calcValue3 = target conversion %
+      const currentCustomers = calcValue1 * (calcValue2/100);
+      const targetCustomers = calcValue1 * (calcValue3/100);
+      const additionalCustomers = targetCustomers - currentCustomers;
+      const revenuePerCustomer = 2000; // fixed avg customer value for simplicity
+      const additionalRevenue = additionalCustomers * revenuePerCustomer;
       return {
         title: 'Follow-up Calculator',
-        question: 'What\'s a 3% conversion improvement worth?',
+        question: 'What\'s better conversion worth?',
         inputs: [
           { label: 'Leads per month', value: calcValue1, set: setCalcValue1, min: 50, max: 500, step: 25, format: v => v },
-          { label: 'Average customer value', value: calcValue2, set: setCalcValue2, min: 500, max: 10000, step: 500, format: v => '$'+v.toLocaleString() },
-          { label: 'Current conversion rate', value: calcValue3, set: setCalcValue3, min: 5, max: 25, step: 1, format: v => v+'%' }
+          { label: 'Current conversion rate', value: calcValue2, set: setCalcValue2, min: 3, max: 20, step: 1, format: v => v+'%' },
+          { label: 'Target conversion rate', value: calcValue3, set: setCalcValue3, min: 5, max: 30, step: 1, format: v => v+'%' }
         ],
-        result: '$'+Math.round(additionalRevenue * 12).toLocaleString()+'/yr',
-        resultLabel: 'additional revenue with +3% conversion',
-        note: 'Most leads need 5+ touches to convert. If you\'re stopping at 1-2, you\'re leaving money on the table.'
+        result: additionalRevenue > 0 ? '$'+Math.round(additionalRevenue * 12).toLocaleString()+'/yr' : '$0/yr',
+        resultLabel: `additional revenue at $2k/customer (${Math.round(additionalCustomers * 12)} more customers/yr)`,
+        note: 'Most leads need 5+ touches to convert. Consistent follow-up typically improves conversion by 5-15 points.'
       };
     }
     if (data.title.includes('Data Entry')) {
