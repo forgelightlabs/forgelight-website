@@ -1498,7 +1498,7 @@ const Home = ({setPage}) => (
           <p style={{fontSize:'0.85rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.text,margin:'0 0 16px 0'}}>Cut Costs First?</p>
           <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>Optimize back office operations and cut spend.</h2>
         </div>
-        <div className="backoffice-grid" style={{display:'grid',gridTemplateColumns:'repeat(6,1fr)',gap:'12px',marginBottom:'32px'}}>
+        <div className="backoffice-grid" style={{display:'grid',gridTemplateColumns:'repeat(6,1fr)',gap:'12px',marginBottom:'32px',alignItems:'stretch'}}>
           {[
             {id:'billing-automation',icon:<DollarIcon/>,title:'Billing & Collections',desc:'Automated invoice follow-up'},
             {id:'quoting-automation',icon:<CheckIcon/>,title:'Quoting & Estimates',desc:'Quote generation + follow-up'},
@@ -1506,15 +1506,17 @@ const Home = ({setPage}) => (
             {id:'customer-communications',icon:<MsgIcon/>,title:'Customer Comms',desc:'Updates, reminders, reviews'},
             {id:'lead-followup',icon:<MailIcon/>,title:'Follow-up & Nurture',desc:'Re-engage unconverted leads'},
             {id:'data-entry-automation',icon:<LayoutIcon/>,title:'Data Entry & Admin',desc:'Forms to CRM automation'}
-          ].map((item,i)=>(
+          ].map((item,i)=>{
+            const isWing = i === 0 || i === 5;
+            return (
             <Card key={i} onClick={()=>setPage(item.id)}>{h=>(
-              <div style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'12px',padding:'20px',textAlign:'center',cursor:'pointer',transition:'all 0.2s'}}>
+              <div style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'12px',padding:'20px',textAlign:'center',cursor:'pointer',transition:'all 0.2s',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center',transform:isWing?'scale(0.95)':'none'}}>
                 <div style={{color:c.accent,marginBottom:'12px'}}>{item.icon}</div>
                 <h4 style={{fontSize:'0.85rem',fontWeight:600,marginBottom:'6px'}}>{item.title}</h4>
                 <p style={{fontSize:'0.7rem',color:c.textTertiary,lineHeight:1.4}}>{item.desc}</p>
               </div>
             )}</Card>
-          ))}
+          )})}
         </div>
         <div style={{textAlign:'center'}}>
           <p style={{fontSize:'1.1rem',fontWeight:500,color:c.textSecondary,margin:'0 0 20px 0'}}>Eliminate waste. Recover revenue. Then scale.</p>
