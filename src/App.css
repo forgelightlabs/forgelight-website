@@ -34,8 +34,14 @@ body {
 
 .results-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+}
+
+.backoffice-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
 }
 
 .about-grid {
@@ -141,6 +147,10 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
   
+  .backoffice-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
   .about-grid {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -179,6 +189,11 @@ body {
   .footer-grid {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+  
+  .backoffice-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   /* Before/after grid - stack and hide arrow */
@@ -311,4 +326,39 @@ body {
   .desktop-only {
     display: none;
   }
+}
+
+/* Scrolling Stats Ticker */
+.stats-ticker {
+  width: 100%;
+  overflow: hidden;
+}
+
+.stats-ticker-track {
+  display: flex;
+  width: fit-content;
+  animation: ticker-scroll 30s linear infinite;
+}
+
+.stats-ticker-content {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 1.25rem;
+  color: #A1A1AA;
+  padding: 0 24px;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+/* Pause on hover */
+.stats-ticker:hover .stats-ticker-track {
+  animation-play-state: paused;
 }

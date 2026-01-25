@@ -1459,29 +1459,71 @@ const Home = ({setPage}) => (
         </div>
       </div>
     </section>
-    {/* Trust Bar */}
-    <section style={{padding:'50px 0',borderTop:'1px solid '+c.border,borderBottom:'1px solid '+c.border}}>
-      <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px',textAlign:'center'}}>
-        <p style={{fontSize:'1rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.15em',color:c.textSecondary}}>Trusted by service businesses, dealerships, and B2B companies</p>
-      </div>
-    </section>
-    {/* Results Section */}
-    <section style={{padding:'80px 0'}}>
-      <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px'}}>
-        <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,marginBottom:'16px'}}>Proven Results</p>
-        <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,marginBottom:'48px'}}>The Numbers That Matter</h2>
-        <div className="results-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'20px'}}>
-          <div style={{background:c.bgCard,border:'1px solid '+c.border,borderRadius:'14px',padding:'28px',minHeight:'140px'}}><div style={{fontSize:'2.25rem',fontWeight:600,color:c.accent,marginBottom:'8px',lineHeight:1}}>24/7</div><div style={{fontSize:'0.85rem',color:c.textSecondary,marginBottom:'8px'}}>Call coverage</div><div style={{fontSize:'0.75rem',color:c.textTertiary}}>Zero missed leads</div></div>
-          <div style={{background:c.bgCard,border:'1px solid '+c.border,borderRadius:'14px',padding:'28px',minHeight:'140px'}}><div style={{fontSize:'2.25rem',fontWeight:600,color:c.accent,marginBottom:'8px',lineHeight:1}}>72hr</div><div style={{fontSize:'0.85rem',color:c.textSecondary,marginBottom:'8px'}}>Demo delivery</div><div style={{fontSize:'0.75rem',color:c.textTertiary}}>Not weeks of scoping</div></div>
-          <div style={{background:c.bgCard,border:'1px solid '+c.border,borderRadius:'14px',padding:'28px',minHeight:'140px'}}><div style={{fontSize:'2.25rem',fontWeight:600,color:c.accent,marginBottom:'8px',lineHeight:1}}>10+</div><div style={{fontSize:'0.85rem',color:c.textSecondary,marginBottom:'8px'}}>Years domain expertise</div><div style={{fontSize:'0.75rem',color:c.textTertiary}}>Heavy truck, industrial</div></div>
+    
+    {/* Scrolling Stats Ticker */}
+    <section style={{borderTop:'1px solid '+c.border,borderBottom:'1px solid '+c.border,background:c.bgCard,overflow:'hidden',padding:'28px 0'}}>
+      <div className="stats-ticker">
+        <div className="stats-ticker-track">
+          {[1,2,3].map(n => (
+            <div key={n} className="stats-ticker-content">
+              <span><strong style={{color:c.warm,fontWeight:700,fontSize:'1.5rem'}}>1,000+</strong> workflows automated</span>
+              <span style={{color:c.textTertiary,margin:'0 40px'}}>•</span>
+              <span><strong style={{color:c.warm,fontWeight:700,fontSize:'1.5rem'}}>50+</strong> businesses transformed</span>
+              <span style={{color:c.textTertiary,margin:'0 40px'}}>•</span>
+              <span><strong style={{color:c.warm,fontWeight:700,fontSize:'1.5rem'}}>10k+</strong> manual hours eliminated</span>
+              <span style={{color:c.textTertiary,margin:'0 40px'}}>•</span>
+              <span><strong style={{color:c.warm,fontWeight:700,fontSize:'1.5rem'}}>10+</strong> years operational experience</span>
+              <span style={{color:c.textTertiary,margin:'0 40px'}}>•</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
-    <section id="systems" style={{padding:'40px 0 100px'}}>
+    
+    {/* Industry Focus */}
+    <section style={{padding:'24px 0',borderBottom:'1px solid '+c.border}}>
+      <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px',textAlign:'center'}}>
+        <p style={{fontSize:'0.75rem',fontWeight:500,textTransform:'uppercase',letterSpacing:'0.12em',color:c.textTertiary,margin:0}}>Deep expertise in: <span style={{color:c.textSecondary}}>Heavy Truck & Equipment</span> · <span style={{color:c.textSecondary}}>HVAC & Plumbing</span> · <span style={{color:c.textSecondary}}>Industrial Supply</span> · <span style={{color:c.textSecondary}}>Service Businesses</span></p>
+      </div>
+    </section>
+    
+    {/* Back-Office Automations Section */}
+    <section style={{padding:'80px 0',borderBottom:'1px solid '+c.border}}>
       <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px'}}>
-        <div style={{marginBottom:'32px'}}>
-          <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Core Systems</p>
-          <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>Eight systems.<br/>Revenue on autopilot.</h2>
+        <div style={{marginBottom:'32px',textAlign:'center'}}>
+          <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Optimize Operations</p>
+          <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>Optimize back office operations and cut spend.</h2>
+        </div>
+        <div className="backoffice-grid" style={{display:'grid',gridTemplateColumns:'repeat(6,1fr)',gap:'12px',marginBottom:'32px'}}>
+          {[
+            {id:'billing-automation',icon:<DollarIcon/>,title:'Billing & Collections',desc:'Automated invoice follow-up'},
+            {id:'quoting-automation',icon:<CheckIcon/>,title:'Quoting & Estimates',desc:'Quote generation + follow-up'},
+            {id:'scheduling-automation',icon:<CalIcon/>,title:'Scheduling & Dispatch',desc:'Booking, reminders, routing'},
+            {id:'customer-communications',icon:<MsgIcon/>,title:'Customer Comms',desc:'Updates, reminders, reviews'},
+            {id:'lead-followup',icon:<MailIcon/>,title:'Follow-up & Nurture',desc:'Re-engage unconverted leads'},
+            {id:'data-entry-automation',icon:<LayoutIcon/>,title:'Data Entry & Admin',desc:'Forms to CRM automation'}
+          ].map((item,i)=>(
+            <Card key={i} onClick={()=>setPage(item.id)}>{h=>(
+              <div style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'12px',padding:'20px',textAlign:'center',cursor:'pointer',transition:'all 0.2s'}}>
+                <div style={{color:c.accent,marginBottom:'12px'}}>{item.icon}</div>
+                <h4 style={{fontSize:'0.85rem',fontWeight:600,marginBottom:'6px'}}>{item.title}</h4>
+                <p style={{fontSize:'0.7rem',color:c.textTertiary,lineHeight:1.4}}>{item.desc}</p>
+              </div>
+            )}</Card>
+          ))}
+        </div>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'20px'}}>
+          <p style={{fontSize:'1.1rem',fontWeight:500,color:c.textSecondary,margin:0}}>Eliminate waste. Recover revenue. Then scale.</p>
+          <button onClick={()=>setPage('back-office')} style={{background:'none',border:'none',padding:0,cursor:'pointer'}}><Btn>See All Back-Office Solutions <Arrow/></Btn></button>
+        </div>
+      </div>
+    </section>
+    {/* Revenue Systems Section */}
+    <section id="systems" style={{padding:'80px 0 100px'}}>
+      <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px'}}>
+        <div style={{marginBottom:'32px',textAlign:'center'}}>
+          <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Ready to Scale</p>
+          <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>Eight systems. Revenue on autopilot.</h2>
         </div>
         <div className="systems-grid">
           {systems.slice(0,4).map(s=><Card key={s.id} onClick={()=>setPage(s.id)}>{h=><div className="system-card" style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'14px',padding:'24px',transition:'all 0.2s',minHeight:'220px',display:'flex',flexDirection:'column'}}><div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'16px'}}><span style={{fontSize:'0.65rem',color:c.textTertiary,fontWeight:500}}>{s.num}</span><div style={{color:c.textTertiary,transform:h?'translateX(2px)':'translateX(0)',transition:'transform 0.2s'}}><Arrow/></div></div><h3 style={{fontSize:'1.1rem',fontWeight:600,marginBottom:'6px'}}>{s.title}</h3><p style={{fontSize:'0.8rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.5,flex:1}}>{s.desc}</p><Diagram nodes={s.nodes} hovered={h}/></div>}</Card>)}
@@ -1508,8 +1550,8 @@ const Home = ({setPage}) => (
             <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,marginBottom:'16px'}}>About</p>
             <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,marginBottom:'24px'}}>Built by Operators,<br/>Not Just Technologists</h2>
             <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.7}}>Forgelight Labs was founded on a simple premise: AI systems should be built by people who've actually done the work they're automating.</p>
-            <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.7}}>Our team brings 10+ years of frontline experience in heavy truck dealerships, parts operations, and industrial supply chains. We've worked the phones. We've seen how a missed call at 4:47 PM turns into a $3,000 order for your competitor.</p>
-            <p style={{fontSize:'0.95rem',color:c.textSecondary,lineHeight:1.7}}>That operational background is why Forgelight exists. We don't build generic chatbots. We build systems that understand your actual workflow—because we've lived it.</p>
+            <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.7}}>Our team brings 10+ years of frontline experience in heavy truck dealerships, parts operations, and industrial supply chains. We've managed the billing cycles, chased the invoices, scheduled the technicians, and worked the phones. We know how operational inefficiency bleeds margin—and how a missed call at 4:47 PM turns into a $3,000 order for your competitor.</p>
+            <p style={{fontSize:'0.95rem',color:c.textSecondary,lineHeight:1.7}}>That operational background is why Forgelight exists. We don't build generic AI tools. We build systems that understand your actual workflow—back office and front office—because we've lived it.</p>
           </div>
           <div>
             <div style={{borderTop:'1px solid '+c.border,padding:'24px 0'}}><div style={{fontWeight:600,marginBottom:'6px'}}>Speed over perfection</div><div style={{fontSize:'0.9rem',color:c.textSecondary}}>Working demo in 72 hours, not a 6-week discovery phase.</div></div>
@@ -2277,6 +2319,376 @@ const Privacy = ({setPage}) => (
 );
 
 // Contact page
+// Back-Office Solutions page
+const BackOffice = ({setPage}) => {
+  const solutions = [
+    {id:'billing-automation',icon:<DollarIcon/>,title:'Billing & Collections',desc:'Invoice generation. Submission. Follow-up. Collections. Fully automated.',outcome:'Reduce DSO. Eliminate backlog. Stop leaving revenue on the table.'},
+    {id:'quoting-automation',icon:<CheckIcon/>,title:'Quoting & Estimates',desc:'Faster quotes. Automatic follow-up. More closed deals.',outcome:'Respond faster than competitors. Follow up until they decide.'},
+    {id:'scheduling-automation',icon:<CalIcon/>,title:'Scheduling & Dispatch',desc:'Bookings. Reminders. Routing. No manual coordination.',outcome:'Reduce no-shows. Optimize routes. Redeploy scheduling labor.'},
+    {id:'customer-communications',icon:<MsgIcon/>,title:'Customer Communications',desc:'Updates. Reminders. Follow-ups. Automated and on-brand.',outcome:'Slash inbound status calls. Boost reviews. Build trust.'},
+    {id:'lead-followup',icon:<MailIcon/>,title:'Follow-up & Nurture',desc:'Unconverted leads. Missed calls. Dead quotes. Reactivated automatically.',outcome:'No lead falls through the cracks. Persistence without labor.'},
+    {id:'data-entry-automation',icon:<LayoutIcon/>,title:'Data Entry & Admin',desc:'Forms. Entry. Documents. Automated end-to-end.',outcome:'Cut admin hours. Eliminate errors. Scale without headcount.'}
+  ];
+
+  return (
+    <div style={{background:c.bg,minHeight:'100vh',color:c.text}}>
+      {/* Hero */}
+      <section style={{paddingTop:'120px',paddingBottom:'80px'}}>
+        <div style={{maxWidth:'900px',margin:'0 auto',padding:'0 24px',textAlign:'center'}}>
+          <div style={{marginBottom:'20px',fontSize:'0.75rem',color:c.textTertiary}}>
+            <button onClick={()=>setPage('home')} style={{background:'none',border:'none',cursor:'pointer',color:c.textTertiary}}>Home</button>
+            <span style={{margin:'0 8px',opacity:0.5}}>/</span><span style={{color:c.textSecondary}}>Back-Office Automations</span>
+          </div>
+          <h1 style={{fontSize:'clamp(2rem,5vw,3rem)',fontWeight:600,lineHeight:1.1,letterSpacing:'-0.03em',marginBottom:'24px'}}>Back-Office Automations</h1>
+          <p style={{fontSize:'1.1rem',lineHeight:1.7,color:c.textSecondary,marginBottom:'16px',maxWidth:'600px',margin:'0 auto 16px'}}>
+            Fix the operational leaks before you scale. Billing, quoting, scheduling, communications, follow-up, admin—automated.
+          </p>
+          <p style={{fontSize:'1.1rem',fontWeight:500,color:c.accent}}>
+            Eliminate waste. Recover revenue. Then scale.
+          </p>
+        </div>
+      </section>
+
+      {/* Solutions Grid */}
+      <section style={{paddingBottom:'80px'}}>
+        <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 24px'}}>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit, minmax(340px, 1fr))',gap:'24px'}}>
+            {solutions.map((sol,i) => (
+              <Card key={i} onClick={()=>setPage(sol.id)}>{h=>(
+                <div style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'16px',padding:'32px',cursor:'pointer',transition:'all 0.2s',height:'100%',display:'flex',flexDirection:'column'}}>
+                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'16px'}}>
+                    <div style={{color:c.accent}}>{sol.icon}</div>
+                    <div style={{color:c.textTertiary,transform:h?'translateX(2px)':'translateX(0)',transition:'transform 0.2s'}}><Arrow/></div>
+                  </div>
+                  <h3 style={{fontSize:'1.25rem',fontWeight:600,marginBottom:'12px'}}>{sol.title}</h3>
+                  <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.6,flex:1}}>{sol.desc}</p>
+                  <p style={{fontSize:'0.85rem',color:c.accent,margin:0,fontWeight:500}}>{sol.outcome}</p>
+                </div>
+              )}</Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section style={{padding:'80px 0',borderTop:'1px solid '+c.border,textAlign:'center'}}>
+        <div style={{maxWidth:'600px',margin:'0 auto',padding:'0 24px'}}>
+          <h2 style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:600,marginBottom:'16px'}}>Not sure where to start?</h2>
+          <p style={{fontSize:'1rem',color:c.textSecondary,marginBottom:'32px'}}>Book a call. We'll review your operations and identify the highest-impact automation opportunities.</p>
+          <a href="https://calendar.app.google/LUhpKq7nBNLpLiBWA" target="_blank" rel="noopener noreferrer" style={{textDecoration:'none'}}><Btn primary>Book a Call <Arrow/></Btn></a>
+        </div>
+      </section>
+
+      {/* Link to Revenue Systems */}
+      <section style={{padding:'60px 0',borderTop:'1px solid '+c.border,textAlign:'center'}}>
+        <div style={{maxWidth:'600px',margin:'0 auto',padding:'0 24px'}}>
+          <p style={{fontSize:'0.9rem',color:c.textTertiary,marginBottom:'16px'}}>Operations locked in? Ready to grow?</p>
+          <button onClick={()=>{setPage('home');setTimeout(()=>document.getElementById('systems')?.scrollIntoView({behavior:'smooth'}),100);}} style={{background:'none',border:'none',padding:0,cursor:'pointer',color:c.textSecondary,fontSize:'0.95rem',fontWeight:500}}>See Revenue Systems →</button>
+        </div>
+      </section>
+
+      <Footer setPage={setPage}/>
+    </div>
+  );
+};
+
+// Back-Office Landing Page Component - Direct, helpful, with accurate calculators
+const BackOfficePage = ({setPage, data}) => {
+  // Calculator states - defaults work across different page types
+  const [calcValue1, setCalcValue1] = useState(250000); // monthly revenue/billings
+  const [calcValue2, setCalcValue2] = useState(45);      // current DSO or other metric
+  const [calcValue3, setCalcValue3] = useState(15);      // improvement target
+
+  // Determine calculator type based on page
+  const getCalculator = () => {
+    if (data.title.includes('Billing')) {
+      // Accurate DSO calculator
+      // calcValue1 = monthly revenue, calcValue2 = current DSO, calcValue3 = target DSO reduction
+      const monthlyRevenue = calcValue1;
+      const currentDSO = calcValue2;
+      const dsoReduction = calcValue3;
+      
+      const currentAR = (monthlyRevenue / 30) * currentDSO;
+      const newAR = (monthlyRevenue / 30) * (currentDSO - dsoReduction);
+      const cashFreed = currentAR - newAR;
+      
+      return {
+        title: 'DSO Calculator',
+        question: 'How much cash could you free up by collecting faster?',
+        inputs: [
+          { label: 'Monthly billings', value: calcValue1, set: setCalcValue1, min: 50000, max: 2000000, step: 50000, format: v => '$'+v.toLocaleString() },
+          { label: 'Current DSO (days to collect)', value: calcValue2, set: setCalcValue2, min: 30, max: 90, step: 5, format: v => v+' days' },
+          { label: 'DSO reduction target', value: calcValue3, set: setCalcValue3, min: 5, max: 30, step: 5, format: v => v+' days faster' }
+        ],
+        result: '$'+Math.round(cashFreed).toLocaleString(),
+        resultLabel: 'one-time cash freed up',
+        note: 'This is cash currently tied up in AR that you\'d get back—once—by collecting faster. It doesn\'t repeat, but it\'s real money you can use.'
+      };
+    }
+    if (data.title.includes('Quoting')) {
+      // Quote speed calculator: quotes/month, avg deal size, close rate improvement
+      const currentRevenue = calcValue1 * calcValue2 * (calcValue3/100);
+      const improvedRevenue = calcValue1 * calcValue2 * ((calcValue3 + 5)/100);
+      const additionalRevenue = improvedRevenue - currentRevenue;
+      return {
+        title: 'Quote Speed Calculator',
+        question: 'What\'s a 5% close rate improvement worth?',
+        inputs: [
+          { label: 'Quotes per month', value: calcValue1, set: setCalcValue1, min: 10, max: 200, step: 10, format: v => v },
+          { label: 'Average deal size', value: calcValue2, set: setCalcValue2, min: 1000, max: 50000, step: 1000, format: v => '$'+v.toLocaleString() },
+          { label: 'Current close rate', value: calcValue3, set: setCalcValue3, min: 10, max: 50, step: 5, format: v => v+'%' }
+        ],
+        result: '$'+Math.round(additionalRevenue * 12).toLocaleString()+'/yr',
+        resultLabel: 'additional revenue with +5% close rate',
+        note: 'Studies show first response wins 35-50% of the time. Faster quotes + persistent follow-up = more closed deals.'
+      };
+    }
+    if (data.title.includes('Scheduling')) {
+      // No-show calculator
+      const weeklyLoss = calcValue1 * calcValue2 * (calcValue3/100);
+      const yearlyLoss = weeklyLoss * 52;
+      const recoverable = yearlyLoss * 0.4; // conservative 40% reduction
+      return {
+        title: 'No-Show Calculator',
+        question: 'What are no-shows costing you?',
+        inputs: [
+          { label: 'Appointments per week', value: calcValue1, set: setCalcValue1, min: 20, max: 200, step: 10, format: v => v },
+          { label: 'Average job value', value: calcValue2, set: setCalcValue2, min: 100, max: 1000, step: 50, format: v => '$'+v },
+          { label: 'No-show rate', value: calcValue3, set: setCalcValue3, min: 5, max: 25, step: 1, format: v => v+'%' }
+        ],
+        result: '$'+Math.round(recoverable).toLocaleString()+'/yr',
+        resultLabel: 'recoverable (assuming 40% reduction)',
+        note: 'Automated reminders typically reduce no-shows by 30-50%. That\'s capacity you\'re currently losing.'
+      };
+    }
+    if (data.title.includes('Customer Comm')) {
+      // Status call calculator
+      const dailyMinutes = calcValue1 * calcValue2;
+      const dailyCost = (dailyMinutes / 60) * calcValue3;
+      const yearlyCost = dailyCost * 250;
+      return {
+        title: 'Status Call Calculator',
+        question: 'What do "where\'s my tech?" calls cost?',
+        inputs: [
+          { label: 'Status calls per day', value: calcValue1, set: setCalcValue1, min: 5, max: 50, step: 5, format: v => v },
+          { label: 'Average call length', value: calcValue2, set: setCalcValue2, min: 2, max: 8, step: 1, format: v => v+' min' },
+          { label: 'CSR loaded cost/hour', value: calcValue3, set: setCalcValue3, min: 25, max: 50, step: 5, format: v => '$'+v }
+        ],
+        result: '$'+Math.round(yearlyCost).toLocaleString()+'/yr',
+        resultLabel: 'in labor on preventable calls',
+        note: 'Most status calls are preventable with proactive updates. Your CSRs could be doing something more valuable.'
+      };
+    }
+    if (data.title.includes('Lead Follow')) {
+      // Lead follow-up calculator
+      const currentConversions = calcValue1 * (calcValue3/100);
+      const improvedConversions = calcValue1 * ((calcValue3 + 3)/100);
+      const additionalRevenue = (improvedConversions - currentConversions) * calcValue2;
+      return {
+        title: 'Follow-up Calculator',
+        question: 'What\'s a 3% conversion improvement worth?',
+        inputs: [
+          { label: 'Leads per month', value: calcValue1, set: setCalcValue1, min: 50, max: 500, step: 25, format: v => v },
+          { label: 'Average customer value', value: calcValue2, set: setCalcValue2, min: 500, max: 10000, step: 500, format: v => '$'+v.toLocaleString() },
+          { label: 'Current conversion rate', value: calcValue3, set: setCalcValue3, min: 5, max: 25, step: 1, format: v => v+'%' }
+        ],
+        result: '$'+Math.round(additionalRevenue * 12).toLocaleString()+'/yr',
+        resultLabel: 'additional revenue with +3% conversion',
+        note: 'Most leads need 5+ touches to convert. If you\'re stopping at 1-2, you\'re leaving money on the table.'
+      };
+    }
+    if (data.title.includes('Data Entry')) {
+      // Time savings calculator
+      const weeklyLaborCost = calcValue1 * calcValue2;
+      const yearlyLaborCost = weeklyLaborCost * 52;
+      const savingsAt60Percent = yearlyLaborCost * 0.6;
+      return {
+        title: 'Data Entry Calculator',
+        question: 'What\'s manual data entry costing you?',
+        inputs: [
+          { label: 'Hours/week on data entry', value: calcValue1, set: setCalcValue1, min: 5, max: 60, step: 5, format: v => v+' hrs' },
+          { label: 'Loaded hourly cost', value: calcValue2, set: setCalcValue2, min: 25, max: 60, step: 5, format: v => '$'+v },
+          { label: 'Staff doing data entry', value: calcValue3, set: setCalcValue3, min: 1, max: 5, step: 1, format: v => v+' people' }
+        ],
+        result: '$'+Math.round(savingsAt60Percent * calcValue3).toLocaleString()+'/yr',
+        resultLabel: 'in labor (at 60% automation)',
+        note: 'Plus fewer errors, faster processing, and room to grow without adding headcount.'
+      };
+    }
+    return null;
+  };
+
+  const calc = getCalculator();
+
+  return (
+    <div style={{background:c.bg,minHeight:'100vh',color:c.text}}>
+      {/* Hero with animation */}
+      <section style={{position:'relative',paddingTop:'140px',paddingBottom:'100px',overflow:'hidden'}}>
+        <LandingAnimation type="back-office"/>
+        <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px',textAlign:'center',position:'relative',zIndex:1}}>
+          <div style={{marginBottom:'24px',fontSize:'0.75rem',color:c.textTertiary}}>
+            <button onClick={()=>setPage('home')} style={{background:'none',border:'none',cursor:'pointer',color:c.textTertiary}}>Home</button>
+            <span style={{margin:'0 10px',opacity:0.5}}>/</span>
+            <button onClick={()=>setPage('back-office')} style={{background:'none',border:'none',cursor:'pointer',color:c.textTertiary}}>Back-Office</button>
+            <span style={{margin:'0 10px',opacity:0.5}}>/</span>
+            <span style={{color:c.textSecondary}}>{data.title.replace('AI ', '').replace(' Automation', '')}</span>
+          </div>
+          <h1 style={{fontSize:'clamp(2rem,5vw,3rem)',fontWeight:600,lineHeight:1.15,letterSpacing:'-0.03em',marginBottom:'20px',color:c.warm}}>{data.title}</h1>
+          <p style={{fontSize:'1.15rem',lineHeight:1.7,color:c.textSecondary,marginBottom:'36px',maxWidth:'600px',margin:'0 auto 36px'}}>{data.subtitle}</p>
+          <a href="https://calendar.app.google/LUhpKq7nBNLpLiBWA" target="_blank" rel="noopener noreferrer" style={{textDecoration:'none'}}><Btn primary>Book a Call <Arrow/></Btn></a>
+        </div>
+      </section>
+
+      {/* Intro / Overview - SEO rich */}
+      {data.intro && (
+        <section style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
+          <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px'}}>
+            <p style={{fontSize:'1.1rem',lineHeight:1.9,color:c.text,opacity:0.9}}>{data.intro}</p>
+          </div>
+        </section>
+      )}
+
+      {/* What We Automate */}
+      <section style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
+        <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px'}}>
+          <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'24px'}}>
+            <div style={{width:'40px',height:'40px',background:'rgba(100,116,139,0.1)',borderRadius:'10px',display:'flex',alignItems:'center',justifyContent:'center'}}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c.accent} strokeWidth="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <p style={{fontSize:'0.8rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:0}}>What We Automate</p>
+          </div>
+          <p style={{fontSize:'1.1rem',lineHeight:1.9,color:c.text,opacity:0.9}}>{data.whatWeAutomate}</p>
+        </div>
+      </section>
+
+      {/* Calculator - now in middle */}
+      {calc && (
+        <section style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
+          <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px'}}>
+            <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'24px'}}>
+              <div style={{width:'40px',height:'40px',background:'rgba(100,116,139,0.1)',borderRadius:'10px',display:'flex',alignItems:'center',justifyContent:'center'}}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c.accent} strokeWidth="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/></svg>
+              </div>
+              <p style={{fontSize:'0.8rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:0}}>{calc.title}</p>
+            </div>
+            
+            <div style={{background:c.bgCard,border:'1px solid '+c.border,borderRadius:'12px',padding:'32px'}}>
+              <p style={{fontSize:'1.1rem',color:c.text,margin:'0 0 28px 0',fontWeight:500}}>{calc.question}</p>
+              
+              <div style={{display:'grid',gap:'24px',marginBottom:'32px'}}>
+                {calc.inputs.map((input, i) => {
+                  // Get current value directly from state
+                  const currentValue = i === 0 ? calcValue1 : i === 1 ? calcValue2 : calcValue3;
+                  const setValue = i === 0 ? setCalcValue1 : i === 1 ? setCalcValue2 : setCalcValue3;
+                  return (
+                  <div key={i}>
+                    <label style={{display:'block',fontSize:'0.9rem',color:c.textSecondary,marginBottom:'8px'}}>
+                      {input.label}: <strong style={{color:c.text}}>{input.format(currentValue)}</strong>
+                    </label>
+                    <input 
+                      type="range" 
+                      min={input.min} 
+                      max={input.max}
+                      step={input.step}
+                      value={currentValue} 
+                      onChange={(e) => setValue(Number(e.target.value))}
+                      style={{width:'100%',accentColor:c.accent}}
+                    />
+                    <div style={{display:'flex',justifyContent:'space-between',fontSize:'0.75rem',color:c.textTertiary}}>
+                      <span>{input.format(input.min)}</span><span>{input.format(input.max)}</span>
+                    </div>
+                  </div>
+                )})}
+              </div>
+              
+              <div style={{background:c.bg,borderRadius:'8px',padding:'24px',textAlign:'center'}}>
+                <p style={{fontSize:'0.85rem',color:c.textSecondary,margin:'0 0 8px 0'}}>{calc.resultLabel}</p>
+                <p style={{fontSize:'2.5rem',fontWeight:700,color:'#22C55E',margin:'0',letterSpacing:'-0.02em'}}>
+                  {calc.result}
+                </p>
+              </div>
+              
+              <p style={{fontSize:'0.85rem',color:c.textTertiary,margin:'20px 0 0 0',textAlign:'center'}}>
+                {calc.note}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Integrations */}
+      <section style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
+        <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px'}}>
+          <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'24px'}}>
+            <div style={{width:'40px',height:'40px',background:'rgba(100,116,139,0.1)',borderRadius:'10px',display:'flex',alignItems:'center',justifyContent:'center'}}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c.accent} strokeWidth="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </div>
+            <p style={{fontSize:'0.8rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:0}}>Integrations</p>
+          </div>
+          <p style={{fontSize:'1.1rem',lineHeight:1.9,color:c.text,opacity:0.9}}>{data.integrations}</p>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
+        <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px'}}>
+          <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'24px'}}>
+            <div style={{width:'40px',height:'40px',background:'rgba(100,116,139,0.1)',borderRadius:'10px',display:'flex',alignItems:'center',justifyContent:'center'}}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c.accent} strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <p style={{fontSize:'0.8rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:0}}>How It Works</p>
+          </div>
+          <p style={{fontSize:'1.1rem',lineHeight:1.9,color:c.text,opacity:0.9}}>{data.howItWorks}</p>
+        </div>
+      </section>
+
+      {/* Implementation */}
+      <section style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
+        <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px'}}>
+          <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'24px'}}>
+            <div style={{width:'40px',height:'40px',background:'rgba(100,116,139,0.1)',borderRadius:'10px',display:'flex',alignItems:'center',justifyContent:'center'}}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c.accent} strokeWidth="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <p style={{fontSize:'0.8rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:0}}>Implementation</p>
+          </div>
+          <p style={{fontSize:'1.1rem',lineHeight:1.9,color:c.text,opacity:0.9}}>{data.implementation}</p>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
+        <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px'}}>
+          <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'32px'}}>
+            <div style={{width:'40px',height:'40px',background:'rgba(100,116,139,0.1)',borderRadius:'10px',display:'flex',alignItems:'center',justifyContent:'center'}}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c.accent} strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <p style={{fontSize:'0.8rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:0}}>FAQ</p>
+          </div>
+          <div style={{display:'grid',gap:'16px'}}>
+            {data.faq.map((item, i) => (
+              <div key={i} style={{background:c.bgCard,border:'1px solid '+c.border,borderRadius:'12px',padding:'24px'}}>
+                <p style={{fontSize:'1rem',fontWeight:500,color:c.text,margin:'0 0 10px 0'}}>{item.q}</p>
+                <p style={{fontSize:'0.95rem',color:c.textSecondary,margin:0,lineHeight:1.7}}>{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section style={{padding:'100px 0',borderTop:'1px solid '+c.border,background:c.bgCard}}>
+        <div style={{maxWidth:'600px',margin:'0 auto',padding:'0 24px',textAlign:'center'}}>
+          <h2 style={{fontSize:'1.75rem',fontWeight:600,color:c.text,marginBottom:'16px'}}>Ready to talk?</h2>
+          <p style={{fontSize:'1.05rem',color:c.textSecondary,marginBottom:'32px',lineHeight:1.7}}>{data.cta}</p>
+          <a href="https://calendar.app.google/LUhpKq7nBNLpLiBWA" target="_blank" rel="noopener noreferrer" style={{textDecoration:'none'}}><Btn primary>Book a Call <Arrow/></Btn></a>
+        </div>
+      </section>
+
+      <Footer setPage={setPage}/>
+    </div>
+  );
+};
+
 const Contact = ({setPage}) => (
   <div style={{background:c.bg,minHeight:'100vh',color:c.text}}>
     <section style={{paddingTop:'120px',paddingBottom:'100px'}}>
@@ -5610,6 +6022,111 @@ const websiteRealEstateData = {
   ]
 };
 
+
+// Back-Office Automation Data Objects - Direct, helpful, accurate
+const billingAutomationData = {
+  title: 'Billing & Collections Automation',
+  subtitle: 'Invoices go out on time. Follow-up runs automatically. You get paid faster.',
+  intro: 'You know the drill. Job closes, but the invoice sits for days because billing is slammed. When it finally goes out, follow-up is inconsistent. Some customers pay on time. Others don\'t hear from you until they\'re 60 days past due. By then, collecting is harder and write-offs are more likely. We automate the entire sequence—invoice generation, delivery, and follow-up—so your team handles disputes and exceptions instead of routine paperwork.',
+  whatWeAutomate: 'Invoice creation triggered by job completion, PO approval, or whatever event makes sense for your workflow. Delivery via email, customer portal, or EDI—formatted the way each customer requires. Payment reminders at intervals you set. Escalation when invoices age. Handoff to your team when a real conversation is needed.',
+  integrations: 'QuickBooks, NetSuite, SAP, Sage, Dynamics, Salesforce, HubSpot. Customer portals. EDI. If your system has an API, we can probably connect to it.',
+  howItWorks: 'You tell us what triggers an invoice and what your follow-up cadence should be. We build the automation. Invoices generate and send without anyone touching them. Reminders go out on schedule. Exceptions—disputes, large invoices, new customers—route to your team with full context. Everything else just runs.',
+  implementation: 'We need access to your billing system, your invoice templates, and your rules. We map your workflow, build the automation, test with real data, and go live. Most setups take 2-4 weeks.',
+  cta: 'Let\'s look at your AR. Book a call and we\'ll show you where automation fits.',
+  faq: [
+    { q: 'We have complicated billing—progress billing, retainers, milestone-based. Can you handle that?', a: 'Yes. We build for your model, not a template. If you can explain the logic, we can automate it.' },
+    { q: 'What if something needs a human review?', a: 'You define the rules. Invoices that need review get flagged and routed. Everything else runs automatically.' },
+    { q: 'Can we adjust the rules after go-live?', a: 'Anytime. Timing, triggers, escalation paths—all changeable.' },
+    { q: 'What does it cost?', a: 'Depends on complexity. We\'ll scope it on a call—no mystery pricing.' }
+  ]
+};
+
+const quotingAutomationData = {
+  title: 'Quoting & Estimating Automation',
+  subtitle: 'Quotes go out fast. Follow-up happens automatically. You close more deals.',
+  intro: 'Speed matters in quoting. The first credible response often wins. But your sales team is busy, quotes take time to build, and follow-up falls through the cracks. Meanwhile, the customer gets three other quotes and goes with whoever responded first. We automate quote generation from intake data and run follow-up sequences until they say yes, no, or not yet. Your team focuses on selling, not paperwork.',
+  whatWeAutomate: 'Quote generation from web forms, RFQs, or CRM opportunities. Pricing pulled from your rules—discounts, minimums, volume tiers. Delivery via email or portal. Follow-up sequences that persist until you get a decision.',
+  integrations: 'Salesforce, HubSpot, Dynamics, Pipedrive, Zoho. Your ERP for pricing. CPQ tools if you have them. We connect to your source of truth.',
+  howItWorks: 'Request comes in. System pulls customer data, applies your pricing, generates the quote, sends it. Follow-up starts automatically—Day 2, Day 5, Day 10, whatever you set. When they respond, the sequence stops. Quotes that need approval route to the right person first.',
+  implementation: 'We need your pricing logic, quote templates, and approval rules. Build takes 2-3 weeks. We test with real scenarios before going live.',
+  cta: 'Let\'s look at your quote-to-close process. Book a call.',
+  faq: [
+    { q: 'What about complex or custom quotes?', a: 'We automate the repeatable parts. Complex quotes route to your team with all the intake data pre-filled.' },
+    { q: 'Can this handle approvals?', a: 'Yes. Quotes over threshold, discount requests, non-standard terms—all routable for approval before sending.' },
+    { q: 'How does it connect to our CRM?', a: 'Direct integration. Quotes sync to opportunities, status updates in real-time.' },
+    { q: 'What does it cost?', a: 'Depends on complexity. We\'ll scope it on a call.' }
+  ]
+};
+
+const schedulingAutomationData = {
+  title: 'Scheduling & Dispatch Automation',
+  subtitle: 'Customers book themselves. Reminders cut no-shows. Routes make sense.',
+  intro: 'Your scheduler is overwhelmed. Phone calls, calendar juggling, last-minute changes, no-shows that kill productivity. It\'s a full-time job just keeping the board straight. We automate the parts that don\'t need human judgment—online booking, confirmations, reminders, rescheduling, route optimization. Your scheduler handles exceptions and complex situations instead of routine coordination.',
+  whatWeAutomate: 'Online self-booking from your availability. Confirmation emails and texts. Reminder sequences—24 hours out, morning of, on-the-way. No-show follow-up. Route optimization based on location and time windows.',
+  integrations: 'ServiceTitan, Housecall Pro, Jobber, Google Calendar, Outlook. FSM systems. GPS and routing tools. We work with what you have.',
+  howItWorks: 'Customer books online from your real-time availability. They get instant confirmation with details. Reminders go out automatically. If they need to reschedule, they do it themselves within your rules. Routes reoptimize as the day changes. No-shows get follow-up to rebook.',
+  implementation: 'We need your scheduling system access and your rules—time windows, tech skills, service areas, reminder timing. Setup takes 2-4 weeks.',
+  cta: 'Let\'s look at your scheduling workflow. Book a call.',
+  faq: [
+    { q: 'Does this replace our scheduling software?', a: 'No. We integrate with it. Your team keeps their tools—we automate the coordination layer.' },
+    { q: 'Can customers reschedule themselves?', a: 'Yes, within your rules. Minimum notice, available windows, whatever constraints you set.' },
+    { q: 'How does route optimization work?', a: 'Jobs sequence by location and time windows. Routes update as the day changes.' },
+    { q: 'What does it cost?', a: 'Depends on complexity. We\'ll scope it on a call.' }
+  ]
+};
+
+const customerCommsData = {
+  title: 'Customer Communications Automation',
+  subtitle: 'Customers know what\'s happening before they have to ask. Reviews come in automatically.',
+  intro: 'Every "where\'s my technician?" call is a failure. The customer shouldn\'t have to call. They should already know. Proactive communication—booking confirmations, on-the-way alerts, service summaries, review requests—eliminates most inbound status calls and makes your company look buttoned-up. We automate these touchpoints so they happen consistently, on brand, without anyone having to remember.',
+  whatWeAutomate: 'Booking confirmations with appointment details. On-the-way notifications with real ETA. Job completion summaries. Review requests timed for when satisfaction is highest. Follow-up for repeat business.',
+  integrations: 'Your CRM, FSM, or scheduling system. Twilio, SendGrid, or whatever you use for SMS/email. Google, Yelp, or industry review platforms. We trigger from events in your systems.',
+  howItWorks: 'Customer books—confirmation goes out. Tech dispatched—on-the-way notification with ETA. Job complete—summary with invoice and next steps. 24 hours later—review request. All automatic, all in your voice.',
+  implementation: 'We need your message templates, brand guidelines, and access to trigger events in your systems. Setup takes 1-3 weeks.',
+  cta: 'Let\'s map your customer touchpoints. Book a call.',
+  faq: [
+    { q: 'Can we customize the messages?', a: 'Completely. Your brand, your tone. We automate timing and delivery—you control every word.' },
+    { q: 'What channels?', a: 'SMS, email, app notifications if you have them. We use what your customers actually check.' },
+    { q: 'What about negative feedback?', a: 'Negative responses route to your team immediately for service recovery—before they become public reviews.' },
+    { q: 'What does it cost?', a: 'Depends on volume and channels. We\'ll scope it on a call.' }
+  ]
+};
+
+const leadFollowupData = {
+  title: 'Lead Follow-up Automation',
+  subtitle: 'Every lead gets followed up. Automatically. Until they decide.',
+  intro: 'You\'re paying to generate leads. Then most of them die in your CRM. Someone was supposed to follow up. They got busy. The lead went cold. It happens constantly, and it\'s expensive. We automate the follow-up sequence—fast initial response, persistent outreach until they engage, long-term nurture for the ones who aren\'t ready yet. No lead falls through the cracks because someone forgot.',
+  whatWeAutomate: 'Speed-to-lead response within minutes. Follow-up sequences on open quotes. Missed call recovery. Long-term nurture for not-ready-yet leads. Re-engagement for dormant contacts.',
+  integrations: 'Salesforce, HubSpot, Pipedrive, Zoho, Dynamics. Web forms, landing pages, call tracking. Your email and SMS tools. We connect to wherever your leads come from.',
+  howItWorks: 'Lead comes in—response goes out within minutes via email, SMS, or AI call. No reply? Follow-up at Day 1, Day 3, Day 7. Still nothing? Into the nurture sequence with periodic touches. When they engage, your team takes over.',
+  implementation: 'We need access to your lead sources, CRM, and your follow-up sequences (or we\'ll help you build them). Setup takes 2-3 weeks.',
+  cta: 'Let\'s look at your lead flow. Book a call.',
+  faq: [
+    { q: 'Won\'t this annoy people?', a: 'No. Sequences are spaced appropriately and stop when they engage or opt out. Persistent isn\'t aggressive.' },
+    { q: 'How is this different from my CRM automation?', a: 'Most CRM automation needs manual setup per lead. We build always-on sequences that trigger automatically from any source.' },
+    { q: 'What channels?', a: 'Email, SMS, phone via AI or callback queues. Multi-channel works better than single-channel.' },
+    { q: 'What does it cost?', a: 'Depends on volume. We\'ll scope it on a call.' }
+  ]
+};
+
+const dataEntryAutomationData = {
+  title: 'Data Entry & Admin Automation',
+  subtitle: 'Enter it once. It shows up everywhere. Documents generate themselves.',
+  intro: 'Your team types the same information into three systems. Customer fills out a form, someone re-enters it into the CRM, then again into dispatch, then again into accounting. It\'s slow, error-prone, and it doesn\'t scale. We connect your systems so data flows automatically. Enter once, sync everywhere. Documents generate from system data. Your team handles exceptions, not copy-paste.',
+  whatWeAutomate: 'Smart intake forms that validate at entry. System-to-system sync—CRM to dispatch to accounting. Document generation from system data—contracts, work orders, reports. Exception routing for anything that needs a human look.',
+  integrations: 'CRMs, ERPs, accounting systems. Google Sheets, Airtable, custom databases. If it has an API or accepts imports, we can probably connect it.',
+  howItWorks: 'Data enters via form or import. Validation catches errors at entry. Information syncs to every system that needs it. Documents generate automatically. Exceptions flag for review. No duplicate entry. No copy-paste.',
+  implementation: 'We map your data flows—what goes where, what triggers what. Simple integrations take days. Complex multi-system setups take 2-4 weeks.',
+  cta: 'Let\'s map your data workflows. Book a call.',
+  faq: [
+    { q: 'What systems can you integrate?', a: 'Most CRMs, ERPs, and accounting systems. Custom databases with API access. We work with what you have.' },
+    { q: 'What about paper forms?', a: 'We can digitize intake with mobile-friendly forms. For paper that has to stay paper, OCR/scanning is an option.' },
+    { q: 'How do you handle bad data?', a: 'Validation rules catch errors at entry. Anomalies flag for review. Bad data doesn\'t spread.' },
+    { q: 'What does it cost?', a: 'Depends on complexity and number of systems. We\'ll scope it on a call.' }
+  ]
+};
+
+
 export default function App() {
   const [page,setPage] = useState('home');
   
@@ -5665,7 +6182,14 @@ export default function App() {
       'content-engine-realestate': 'Content Engine for Real Estate Agents | Forgelight Labs',
       'content-engine-advisor': 'Content Engine for Financial Advisors | Forgelight Labs',
       'website-design-local': 'Website Design for Local Service Businesses | Forgelight Labs',
-      'website-design-realestate': 'Website Design for Real Estate Agents | Forgelight Labs'
+      'website-design-realestate': 'Website Design for Real Estate Agents | Forgelight Labs',
+      'back-office': 'Back-Office Automations | Forgelight Labs',
+      'billing-automation': 'AI Billing Automation | Forgelight Labs',
+      'quoting-automation': 'AI Quoting & Estimating Automation | Forgelight Labs',
+      'scheduling-automation': 'AI Scheduling & Dispatch Automation | Forgelight Labs',
+      'customer-communications': 'AI Customer Communications Automation | Forgelight Labs',
+      'lead-followup': 'AI Lead Follow-up & Nurture Automation | Forgelight Labs',
+      'data-entry-automation': 'AI Data Entry & Admin Automation | Forgelight Labs'
     };
     document.title = titles[page] || 'Forgelight Labs';
     
@@ -5691,6 +6215,7 @@ export default function App() {
     if (page === 'faq') return <FAQ setPage={setPage}/>;
     if (page === 'blog') return <Blog setPage={setPage}/>;
     if (page === 'call-network') return <CallNetwork setPage={setPage}/>;
+    if (page === 'back-office') return <BackOffice setPage={setPage}/>;
     if (page.startsWith('blog-')) return <BlogPost setPage={setPage} slug={page.replace('blog-', '')}/>;
     if (page === 'about') return <About setPage={setPage}/>;
     if (page === 'ai-front-desk-roofing') return <MoneyPage setPage={setPage} data={roofingData}/>;
@@ -5730,6 +6255,13 @@ export default function App() {
     // Website Design Money Pages
     if (page === 'website-design-local') return <MoneyPage setPage={setPage} data={websiteLocalData}/>;
     if (page === 'website-design-realestate') return <MoneyPage setPage={setPage} data={websiteRealEstateData}/>;
+    // Back-Office Automation Pages
+    if (page === 'billing-automation') return <BackOfficePage setPage={setPage} data={billingAutomationData}/>;
+    if (page === 'quoting-automation') return <BackOfficePage setPage={setPage} data={quotingAutomationData}/>;
+    if (page === 'scheduling-automation') return <BackOfficePage setPage={setPage} data={schedulingAutomationData}/>;
+    if (page === 'customer-communications') return <BackOfficePage setPage={setPage} data={customerCommsData}/>;
+    if (page === 'lead-followup') return <BackOfficePage setPage={setPage} data={leadFollowupData}/>;
+    if (page === 'data-entry-automation') return <BackOfficePage setPage={setPage} data={dataEntryAutomationData}/>;
     return <Landing id={page} setPage={setPage}/>;
   };
   
