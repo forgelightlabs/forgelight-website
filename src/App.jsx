@@ -1491,7 +1491,7 @@ const Home = ({setPage}) => (
     <section style={{padding:'80px 0',borderBottom:'1px solid '+c.border}}>
       <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px'}}>
         <div style={{marginBottom:'32px',textAlign:'center'}}>
-          <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Optimize Operations</p>
+          <p style={{fontSize:'0.85rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.text,margin:'0 0 16px 0'}}>Optimize Operations?</p>
           <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>Optimize back office operations and cut spend.</h2>
         </div>
         <div className="backoffice-grid" style={{display:'grid',gridTemplateColumns:'repeat(6,1fr)',gap:'12px',marginBottom:'32px'}}>
@@ -1512,8 +1512,8 @@ const Home = ({setPage}) => (
             )}</Card>
           ))}
         </div>
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'20px'}}>
-          <p style={{fontSize:'1.1rem',fontWeight:500,color:c.textSecondary,margin:0}}>Eliminate waste. Recover revenue. Then scale.</p>
+        <div style={{textAlign:'center'}}>
+          <p style={{fontSize:'1.1rem',fontWeight:500,color:c.textSecondary,margin:'0 0 20px 0'}}>Eliminate waste. Recover revenue. Then scale.</p>
           <button onClick={()=>setPage('back-office')} style={{background:'none',border:'none',padding:0,cursor:'pointer'}}><Btn>See All Back-Office Solutions <Arrow/></Btn></button>
         </div>
       </div>
@@ -1522,7 +1522,7 @@ const Home = ({setPage}) => (
     <section id="systems" style={{padding:'80px 0 100px'}}>
       <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px'}}>
         <div style={{marginBottom:'32px',textAlign:'center'}}>
-          <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Ready to Scale</p>
+          <p style={{fontSize:'0.85rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.text,margin:'0 0 16px 0'}}>Ready to Scale?</p>
           <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>Eight systems. Revenue on autopilot.</h2>
         </div>
         <div className="systems-grid">
@@ -1550,7 +1550,7 @@ const Home = ({setPage}) => (
             <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,marginBottom:'16px'}}>About</p>
             <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,marginBottom:'24px'}}>Built by Operators,<br/>Not Just Technologists</h2>
             <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.7}}>Forgelight Labs was founded on a simple premise: AI systems should be built by people who've actually done the work they're automating.</p>
-            <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.7}}>Our team brings 10+ years of frontline experience in heavy truck dealerships, parts operations, and industrial supply chains. We've managed the billing cycles, chased the invoices, scheduled the technicians, and worked the phones. We know how operational inefficiency bleeds margin—and how a missed call at 4:47 PM turns into a $3,000 order for your competitor.</p>
+            <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.7}}>Our team brings 10+ years of frontline experience in heavy truck dealerships, parts operations, and industrial supply chains. We've managed the billing cycles, chased the invoices, scheduled the technicians, and worked the phones. We know how operational inefficiency bleeds margin—how a missed call at 4:47 PM turns into a $3,000 order for your competitor, and how manual processes and reporting waste valuable time and misallocate labor.</p>
             <p style={{fontSize:'0.95rem',color:c.textSecondary,lineHeight:1.7}}>That operational background is why Forgelight exists. We don't build generic AI tools. We build systems that understand your actual workflow—back office and front office—because we've lived it.</p>
           </div>
           <div>
@@ -2394,10 +2394,20 @@ const BackOffice = ({setPage}) => {
 
 // Back-Office Landing Page Component - Direct, helpful, with accurate calculators
 const BackOfficePage = ({setPage, data}) => {
-  // Calculator states - defaults work across different page types
-  const [calcValue1, setCalcValue1] = useState(250000); // monthly revenue/billings
-  const [calcValue2, setCalcValue2] = useState(45);      // current DSO or other metric
-  const [calcValue3, setCalcValue3] = useState(15);      // improvement target
+  // Calculator states - set sensible defaults per calculator type
+  const getDefaults = () => {
+    if (data.title.includes('Billing')) return [250000, 45, 15]; // monthly revenue, DSO, reduction target
+    if (data.title.includes('Quoting')) return [50, 5000, 20]; // quotes/mo, deal size, close rate
+    if (data.title.includes('Scheduling')) return [50, 250, 10]; // appts/wk, job value, no-show rate
+    if (data.title.includes('Customer Comm')) return [15, 4, 35]; // calls/day, minutes, hourly cost
+    if (data.title.includes('Lead Follow')) return [100, 2000, 10]; // leads/mo, customer value, conversion
+    if (data.title.includes('Data Entry')) return [20, 40, 2]; // hrs/wk, hourly cost, staff count
+    return [100, 50, 10];
+  };
+  const defaults = getDefaults();
+  const [calcValue1, setCalcValue1] = useState(defaults[0]);
+  const [calcValue2, setCalcValue2] = useState(defaults[1]);
+  const [calcValue3, setCalcValue3] = useState(defaults[2]);
 
   // Determine calculator type based on page
   const getCalculator = () => {
