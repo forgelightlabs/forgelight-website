@@ -1293,7 +1293,7 @@ const systems = [
   {id:'ai-outbound',num:'04',title:'AI Outbound SDR',desc:'Automated prospecting that identifies, contacts, and qualifies leads.',nodes:[{icon:<UsersIcon/>,label:'Identify'},{icon:<MailIcon/>,label:'Engage'},{icon:<CalIcon/>,label:'Meet'},{icon:<DollarIcon/>,label:'Close'}]},
   {id:'referral',num:'05',title:'AI Referral Network',desc:'Systematized partner outreach that turns your network into revenue.',nodes:[{icon:<UsersIcon/>,label:'Find'},{icon:<MsgIcon/>,label:'Nurture'},{icon:<UserPlusIcon/>,label:'Partner'},{icon:<DollarIcon/>,label:'Earn'}]},
   {id:'community-systems',num:'06',title:'Community Systems',desc:'Infrastructure for masterminds and memberships.',nodes:[{icon:<UsersIcon/>,label:'Onboard'},{icon:<MsgIcon/>,label:'Engage'},{icon:<ActivityIcon/>,label:'Track'},{icon:<DollarIcon/>,label:'Monetize'}]},
-  {id:'broker-os',num:'07',title:'Broker OS',desc:'Deal flow management for M&A advisors and acquisition entrepreneurs.',nodes:[{icon:<UsersIcon/>,label:'Organize'},{icon:<ActivityIcon/>,label:'Execute'},{icon:<LayoutIcon/>,label:'Track'},{icon:<DollarIcon/>,label:'Scale'}]},
+  {id:'broker-os',num:'07',title:'Broker OS',desc:'Deal flow management for brokers and intermediaries.',nodes:[{icon:<UsersIcon/>,label:'Organize'},{icon:<ActivityIcon/>,label:'Execute'},{icon:<LayoutIcon/>,label:'Track'},{icon:<DollarIcon/>,label:'Scale'}]},
   {id:'ai-parts-counter',num:'08',title:'AI Parts Counter',desc:'Built for heavy-duty dealers. 24/7 parts lookup and order booking.',nodes:[{icon:<PhoneIcon/>,label:'Answer'},{icon:<BrainIcon/>,label:'Lookup'},{icon:<CheckIcon/>,label:'Confirm'},{icon:<DollarIcon/>,label:'Order'}]}
 ];
 
@@ -1411,6 +1411,7 @@ const Footer = ({setPage}) => (
         <div>
           <h4 style={{fontSize:'0.7rem',fontWeight:600,color:c.textSecondary,textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:'16px'}}>Systems</h4>
           <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
+            <button onClick={()=>setPage('back-office')} style={{background:'none',border:'none',cursor:'pointer',fontSize:'0.8rem',color:c.warm,textAlign:'left',padding:0,fontWeight:500}}>Back-Office Automation</button>
             {systems.slice(0,4).map(s=><button key={s.id} onClick={()=>setPage(s.id)} style={{background:'none',border:'none',cursor:'pointer',fontSize:'0.8rem',color:c.textTertiary,textAlign:'left',padding:0}}>{s.title}</button>)}
           </div>
         </div>
@@ -1494,7 +1495,7 @@ const Home = ({setPage}) => (
     <section style={{padding:'80px 0',borderBottom:'1px solid '+c.border}}>
       <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 20px'}}>
         <div style={{marginBottom:'32px',textAlign:'center'}}>
-          <p style={{fontSize:'0.85rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.text,margin:'0 0 16px 0'}}>Optimize Operations?</p>
+          <p style={{fontSize:'0.85rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.text,margin:'0 0 16px 0'}}>Cut Costs First?</p>
           <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>Optimize back office operations and cut spend.</h2>
         </div>
         <div className="backoffice-grid" style={{display:'grid',gridTemplateColumns:'repeat(6,1fr)',gap:'12px',marginBottom:'32px'}}>

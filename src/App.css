@@ -30,6 +30,15 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+  align-items: stretch;
+}
+
+.systems-grid > * {
+  height: 100%;
+}
+
+.system-card {
+  height: 100%;
 }
 
 .results-grid {
