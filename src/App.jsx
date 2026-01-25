@@ -1340,6 +1340,8 @@ const Header = ({setPage}) => {
             <div style={{position:'relative',padding:'20px 0'}} onMouseEnter={()=>setDrop(true)} onMouseLeave={()=>setDrop(false)}>
               <button style={{display:'flex',alignItems:'center',gap:'6px',background:'none',border:'none',cursor:'pointer',fontSize:'0.8rem',color:c.textSecondary}}>Systems <Chev/></button>
               {drop&&<div style={{position:'absolute',top:'100%',left:'50%',transform:'translateX(-50%)',minWidth:'200px',background:'#1C1C1F',border:'1px solid '+c.border,borderRadius:'12px',padding:'6px',boxShadow:'0 10px 40px rgba(0,0,0,0.5)'}}>
+                <button onClick={()=>{setPage('back-office');setDrop(false);}} style={{display:'block',width:'100%',textAlign:'left',padding:'10px 12px',background:'none',border:'none',cursor:'pointer',borderRadius:'8px',fontSize:'0.8rem',color:c.warm,fontWeight:500}}>Back-Office Automation</button>
+                <div style={{height:'1px',background:c.border,margin:'6px 0'}}/>
                 {systems.map(s=><button key={s.id} onClick={()=>{setPage(s.id);setDrop(false);}} style={{display:'block',width:'100%',textAlign:'left',padding:'10px 12px',background:'none',border:'none',cursor:'pointer',borderRadius:'8px',fontSize:'0.8rem',color:c.text}}>{s.title}</button>)}
               </div>}
             </div>
@@ -1369,6 +1371,7 @@ const Header = ({setPage}) => {
             <div style={{padding:'16px 0',borderBottom:'1px solid '+c.border}}>
               <span style={{fontSize:'0.75rem',color:c.textTertiary,textTransform:'uppercase',letterSpacing:'0.1em'}}>Systems</span>
               <div style={{display:'flex',flexDirection:'column',marginTop:'12px',gap:'8px'}}>
+                <button onClick={()=>{setPage('back-office');setMobileOpen(false);}} style={{background:'none',border:'none',cursor:'pointer',fontSize:'1rem',color:c.warm,padding:'8px 0',textAlign:'left',fontWeight:500}}>Back-Office Automation</button>
                 {systems.map(s=><button key={s.id} onClick={()=>{setPage(s.id);setMobileOpen(false);}} style={{background:'none',border:'none',cursor:'pointer',fontSize:'1rem',color:c.textSecondary,padding:'8px 0',textAlign:'left'}}>{s.title}</button>)}
               </div>
             </div>
@@ -1550,7 +1553,7 @@ const Home = ({setPage}) => (
             <p style={{fontSize:'0.7rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,marginBottom:'16px'}}>About</p>
             <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,marginBottom:'24px'}}>Built by Operators,<br/>Not Just Technologists</h2>
             <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.7}}>Forgelight Labs was founded on a simple premise: AI systems should be built by people who've actually done the work they're automating.</p>
-            <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.7}}>Our team brings 10+ years of frontline experience in heavy truck dealerships, parts operations, and industrial supply chains. We've managed the billing cycles, chased the invoices, scheduled the technicians, and worked the phones. We know how operational inefficiency bleeds margin—how a missed call at 4:47 PM turns into a $3,000 order for your competitor, and how manual processes and reporting waste valuable time and misallocate labor.</p>
+            <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.7}}>Our team brings 10+ years of frontline experience in heavy truck dealerships, parts operations, and industrial supply chains. We've managed the billing cycles, chased the invoices, scheduled the technicians, and worked the phones. We know how operational inefficiency bleeds margin—how a missed call at 4:47 PM turns into a $3,000 order for your competitor, while manual processes and reporting waste valuable time and misallocate labor.</p>
             <p style={{fontSize:'0.95rem',color:c.textSecondary,lineHeight:1.7}}>That operational background is why Forgelight exists. We don't build generic AI tools. We build systems that understand your actual workflow—back office and front office—because we've lived it.</p>
           </div>
           <div>
@@ -2186,15 +2189,16 @@ const Landing = ({id,setPage}) => {
 
 const About = ({setPage}) => (
   <div style={{background:c.bg,minHeight:'100vh',color:c.text}}>
-    <section style={{paddingTop:'120px',paddingBottom:'80px'}}>
-      <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px'}}>
+    <section style={{position:'relative',paddingTop:'120px',paddingBottom:'80px',overflow:'hidden'}}>
+      <ArchitecturalLines/>
+      <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px',position:'relative',zIndex:1}}>
         <div style={{marginBottom:'20px',fontSize:'0.75rem',color:c.textTertiary}}>
           <button onClick={()=>setPage('home')} style={{background:'none',border:'none',cursor:'pointer',color:c.textTertiary}}>Home</button>
           <span style={{margin:'0 8px',opacity:0.5}}>/</span><span style={{color:c.textSecondary}}>About</span>
         </div>
-        <h1 style={{fontSize:'clamp(2rem,5vw,3rem)',fontWeight:600,lineHeight:1.1,letterSpacing:'-0.03em',marginBottom:'24px'}}>Building the infrastructure<br/>that builds your revenue.</h1>
+        <h1 style={{fontSize:'clamp(2rem,5vw,3rem)',fontWeight:600,lineHeight:1.1,letterSpacing:'-0.03em',marginBottom:'24px'}}>Operational AI Infrastructure<br/>for Mid-Market Companies</h1>
         <p style={{fontSize:'1.1rem',lineHeight:1.7,color:c.textSecondary,marginBottom:'40px'}}>
-          Forgelight Labs builds AI-powered revenue systems for businesses who are tired of duct-taping tools together and ready for infrastructure that actually compounds.
+          Forgelight Labs designs and deploys AI-powered systems that automate revenue operations—from back-office workflows to customer acquisition. Purpose-built for service businesses, dealerships, and B2B operators ready to scale without adding headcount. Done-for-you systems built by operators who've done the work.
         </p>
       </div>
     </section>

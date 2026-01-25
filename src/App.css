@@ -326,6 +326,25 @@ body {
   .desktop-only {
     display: none;
   }
+  
+  .backoffice-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .stats-ticker-content {
+    font-size: 1rem !important;
+    padding: 0 16px !important;
+  }
+  
+  .stats-ticker-content strong {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .backoffice-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 /* Scrolling Stats Ticker */
