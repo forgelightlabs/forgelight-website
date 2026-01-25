@@ -1510,7 +1510,7 @@ const Home = ({setPage}) => (
             const isWing = i === 0 || i === 5;
             return (
             <Card key={i} onClick={()=>setPage(item.id)}>{h=>(
-              <div style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'12px',padding:'20px',textAlign:'center',cursor:'pointer',transition:'all 0.2s',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center',transform:isWing?'scale(0.95)':'none'}}>
+              <div style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'12px',padding:isWing?'20px 16px':'20px',textAlign:'center',cursor:'pointer',transition:'all 0.2s',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center',marginTop:isWing?'8px':'0',marginBottom:isWing?'8px':'0'}}>
                 <div style={{color:c.accent,marginBottom:'12px'}}>{item.icon}</div>
                 <h4 style={{fontSize:'0.85rem',fontWeight:600,marginBottom:'6px'}}>{item.title}</h4>
                 <p style={{fontSize:'0.7rem',color:c.textTertiary,lineHeight:1.4}}>{item.desc}</p>
@@ -2348,7 +2348,7 @@ const BackOffice = ({setPage}) => {
           </div>
           <h1 style={{fontSize:'clamp(2rem,5vw,3rem)',fontWeight:600,lineHeight:1.1,letterSpacing:'-0.03em',marginBottom:'24px'}}>Back-Office Automations</h1>
           <p style={{fontSize:'1.1rem',lineHeight:1.7,color:c.textSecondary,marginBottom:'16px',maxWidth:'600px',margin:'0 auto 16px'}}>
-            Fix the operational leaks before you scale. Billing, quoting, scheduling, communications, follow-up, admin—automated.
+            Billing cycles, quote follow-ups, scheduling, customer updates—the operational work that runs in the background, faster, better, and without adding headcount.
           </p>
           <p style={{fontSize:'1.1rem',fontWeight:500,color:c.accent}}>
             Eliminate waste. Recover revenue. Then scale.
