@@ -1106,6 +1106,103 @@ const ContentAnimation = () => {
   return (<><canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}/><div style={{position:'absolute',top:0,left:0,right:0,bottom:0,background:`radial-gradient(ellipse at 55% 50%, transparent 0%, ${c.bg} 70%)`,pointerEvents:'none'}}/></>);
 };
 
+// Back-Office Animation - Interlocking gears processing data
+const BackOfficeAnimation = () => {
+  const canvasRef = useRef(null);
+  const animationRef = useRef();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const cx = canvas.width * 0.6, cy = canvas.height * 0.5;
+
+    const gears = [
+      { x: cx - 60, y: cy - 20, r: 40, teeth: 10, speed: 0.008, angle: 0 },
+      { x: cx + 30, y: cy + 25, r: 30, teeth: 8, speed: -0.0107, angle: 0 },
+      { x: cx + 95, y: cy - 10, r: 25, teeth: 7, speed: 0.0128, angle: 0 },
+    ];
+
+    // Data particles flowing through
+    let particles = [];
+    let lastSpawn = 0;
+
+    const drawGear = (x, y, r, teeth, angle, alpha) => {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+      ctx.beginPath();
+      for (let i = 0; i < teeth; i++) {
+        const a1 = (i / teeth) * Math.PI * 2;
+        const a2 = ((i + 0.3) / teeth) * Math.PI * 2;
+        const a3 = ((i + 0.5) / teeth) * Math.PI * 2;
+        const a4 = ((i + 0.8) / teeth) * Math.PI * 2;
+        const inner = r * 0.75;
+        const outer = r;
+        if (i === 0) ctx.moveTo(Math.cos(a1) * inner, Math.sin(a1) * inner);
+        else ctx.lineTo(Math.cos(a1) * inner, Math.sin(a1) * inner);
+        ctx.lineTo(Math.cos(a2) * outer, Math.sin(a2) * outer);
+        ctx.lineTo(Math.cos(a3) * outer, Math.sin(a3) * outer);
+        ctx.lineTo(Math.cos(a4) * inner, Math.sin(a4) * inner);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = `rgba(100,116,139,${0.3 * alpha})`;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      // Center circle
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.25, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(100,116,139,${0.4 * alpha})`;
+      ctx.stroke();
+      ctx.restore();
+    };
+
+    const animate = () => {
+      ctx.fillStyle = 'rgba(9,9,11,0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Rotate gears
+      gears.forEach(g => {
+        g.angle += g.speed;
+        drawGear(g.x, g.y, g.r, g.teeth, g.angle, 1);
+      });
+
+      // Spawn particles from left
+      const now = Date.now();
+      if (now - lastSpawn > 600) {
+        particles.push({ x: cx - 180, y: cy + (Math.random() - 0.5) * 60, life: 1, speed: 1 + Math.random() });
+        lastSpawn = now;
+      }
+
+      // Update particles
+      particles = particles.filter(p => {
+        p.x += p.speed;
+        // Speed up through gears
+        if (p.x > cx - 80 && p.x < cx + 120) p.speed = 2 + Math.random();
+        if (p.x > cx + 120) p.life -= 0.02;
+
+        if (p.life > 0 && p.x < cx + 250) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 2 * p.life, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(232,228,221,${p.life * 0.6})`;
+          ctx.fill();
+          return true;
+        }
+        return false;
+      });
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    ctx.fillStyle = c.bg; ctx.fillRect(0,0,canvas.width,canvas.height);
+    animate();
+    return () => cancelAnimationFrame(animationRef.current);
+  }, []);
+
+  return (<><canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}/><div style={{position:'absolute',top:0,left:0,right:0,bottom:0,background:`radial-gradient(ellipse at 60% 50%, transparent 0%, ${c.bg} 70%)`,pointerEvents:'none'}}/></>);
+};
+
 // Website Design Animation - Blueprint building into a live site
 const WebsiteAnimation = () => {
   const canvasRef = useRef(null);
@@ -1205,6 +1302,186 @@ const WebsiteAnimation = () => {
   return (<><canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}/><div style={{position:'absolute',top:0,left:0,right:0,bottom:0,background:`radial-gradient(ellipse at 60% 50%, transparent 0%, ${c.bg} 70%)`,pointerEvents:'none'}}/></>);
 };
 
+// Web Development Animation - Code lines + SEO network graph
+const WebDevAnimation = () => {
+  const canvasRef = useRef(null);
+  const animationRef = useRef();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const cx = canvas.width * 0.55, cy = canvas.height * 0.5;
+
+    // Code lines that type in
+    const lines = [];
+    const lineCount = 12;
+    for (let i = 0; i < lineCount; i++) {
+      const indent = i === 0 || i === lineCount - 1 ? 0 : (i <= 2 || i >= lineCount - 2) ? 1 : 2;
+      lines.push({
+        x: cx - 110 + indent * 14,
+        y: cy - 70 + i * 12,
+        w: 40 + Math.random() * 80,
+        progress: 0,
+        delay: i * 200,
+      });
+    }
+
+    // SEO network nodes (right side)
+    const nodes = [
+      { x: cx + 80, y: cy - 40, r: 6, label: '' },
+      { x: cx + 130, y: cy - 60, r: 4, label: '' },
+      { x: cx + 150, y: cy - 20, r: 5, label: '' },
+      { x: cx + 110, y: cy + 10, r: 4, label: '' },
+      { x: cx + 160, y: cy + 30, r: 5, label: '' },
+      { x: cx + 100, y: cy + 50, r: 4, label: '' },
+      { x: cx + 180, y: cy - 40, r: 3, label: '' },
+      { x: cx + 190, y: cy + 10, r: 3, label: '' },
+    ];
+
+    const edges = [
+      [0,1],[0,2],[0,3],[1,6],[2,4],[2,7],[3,5],[4,7],[3,4]
+    ];
+
+    let pulses = [];
+    let startTime = Date.now();
+    let nextPulse = 3000;
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      ctx.fillStyle = 'rgba(9,9,11,0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw code editor frame
+      const frameAlpha = Math.min(1, elapsed / 800);
+      ctx.strokeStyle = `rgba(100,116,139,${0.25 * frameAlpha})`;
+      ctx.lineWidth = 1;
+      const rx = cx - 120, ry = cy - 80, rw = 160, rh = lineCount * 12 + 20;
+      // Rounded rect
+      const rad = 6;
+      ctx.beginPath();
+      ctx.moveTo(rx + rad, ry);
+      ctx.lineTo(rx + rw - rad, ry);
+      ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + rad);
+      ctx.lineTo(rx + rw, ry + rh - rad);
+      ctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - rad, ry + rh);
+      ctx.lineTo(rx + rad, ry + rh);
+      ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - rad);
+      ctx.lineTo(rx, ry + rad);
+      ctx.quadraticCurveTo(rx, ry, rx + rad, ry);
+      ctx.closePath();
+      ctx.stroke();
+
+      // Title bar dots
+      if (frameAlpha > 0.5) {
+        [0,1,2].forEach((d,i) => {
+          ctx.beginPath();
+          ctx.arc(rx + 10 + i * 10, ry + 8, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(100,116,139,${0.3 * frameAlpha})`;
+          ctx.fill();
+        });
+        ctx.beginPath();
+        ctx.moveTo(rx, ry + 16);
+        ctx.lineTo(rx + rw, ry + 16);
+        ctx.strokeStyle = `rgba(100,116,139,${0.15 * frameAlpha})`;
+        ctx.stroke();
+      }
+
+      // Draw code lines typing in
+      lines.forEach(line => {
+        if (elapsed > line.delay && line.progress < 1) {
+          line.progress = Math.min(1, line.progress + 0.03);
+        }
+        if (line.progress > 0) {
+          ctx.fillStyle = `rgba(100,116,139,${0.25 * line.progress})`;
+          // Rounded code line
+          const lh = 4, lr = 2;
+          const lw = line.w * line.progress;
+          ctx.beginPath();
+          ctx.moveTo(line.x + lr, line.y);
+          ctx.lineTo(line.x + lw - lr, line.y);
+          ctx.quadraticCurveTo(line.x + lw, line.y, line.x + lw, line.y + lr);
+          ctx.lineTo(line.x + lw, line.y + lh - lr);
+          ctx.quadraticCurveTo(line.x + lw, line.y + lh, line.x + lw - lr, line.y + lh);
+          ctx.lineTo(line.x + lr, line.y + lh);
+          ctx.quadraticCurveTo(line.x, line.y + lh, line.x, line.y + lh - lr);
+          ctx.lineTo(line.x, line.y + lr);
+          ctx.quadraticCurveTo(line.x, line.y, line.x + lr, line.y);
+          ctx.closePath();
+          ctx.fill();
+        }
+      });
+
+      // Draw network edges
+      const netAlpha = Math.min(1, Math.max(0, (elapsed - 2000) / 1000));
+      if (netAlpha > 0) {
+        edges.forEach(([a,b]) => {
+          ctx.beginPath();
+          ctx.moveTo(nodes[a].x, nodes[a].y);
+          ctx.lineTo(nodes[b].x, nodes[b].y);
+          ctx.strokeStyle = `rgba(100,116,139,${0.15 * netAlpha})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        });
+
+        // Draw nodes
+        nodes.forEach((n, i) => {
+          const nodeDelay = 2200 + i * 150;
+          const nodeAlpha = Math.min(1, Math.max(0, (elapsed - nodeDelay) / 400));
+          if (nodeAlpha > 0) {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.r * nodeAlpha, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(232,228,221,${0.15 * nodeAlpha})`;
+            ctx.fill();
+            ctx.strokeStyle = `rgba(232,228,221,${0.3 * nodeAlpha})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        });
+      }
+
+      // Pulses traveling along edges
+      if (elapsed > nextPulse && netAlpha >= 1) {
+        const edge = edges[Math.floor(Math.random() * edges.length)];
+        pulses.push({ from: edge[0], to: edge[1], t: 0 });
+        nextPulse = elapsed + 500 + Math.random() * 400;
+      }
+
+      pulses = pulses.filter(p => {
+        p.t += 0.025;
+        if (p.t <= 1) {
+          const a = nodes[p.from], b = nodes[p.to];
+          const px = a.x + (b.x - a.x) * p.t;
+          const py = a.y + (b.y - a.y) * p.t;
+          ctx.beginPath();
+          ctx.arc(px, py, 2.5 * (1 - p.t * 0.5), 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(232,228,221,${(1 - p.t) * 0.7})`;
+          ctx.fill();
+          return true;
+        }
+        return false;
+      });
+
+      // Reset cycle
+      if (elapsed > 9000) {
+        startTime = Date.now();
+        lines.forEach(l => l.progress = 0);
+        pulses = [];
+        nextPulse = 3000;
+      }
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    ctx.fillStyle = c.bg; ctx.fillRect(0,0,canvas.width,canvas.height);
+    animate();
+    return () => cancelAnimationFrame(animationRef.current);
+  }, []);
+
+  return (<><canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}/><div style={{position:'absolute',top:0,left:0,right:0,bottom:0,background:`radial-gradient(ellipse at 55% 50%, transparent 0%, ${c.bg} 70%)`,pointerEvents:'none'}}/></>);
+};
+
 // Animation selector
 const LandingAnimation = ({ type }) => {
   switch(type) {
@@ -1214,6 +1491,8 @@ const LandingAnimation = ({ type }) => {
     case 'broker-os': return <BrokerAnimation />;
     case 'content-engine': return <OutboundAnimation />;
     case 'website-design': return <WebsiteAnimation />;
+    case 'web-development': return <WebDevAnimation />;
+    case 'back-office': return <BackOfficeAnimation />;
     default: return <SalesDeskAnimation />;
   }
 };
@@ -1346,6 +1625,7 @@ const Header = ({setPage}) => {
               </div>}
             </div>
             <button onClick={()=>setPage('call-network')} style={{background:'none',border:'none',cursor:'pointer',fontSize:'0.8rem',color:c.textSecondary}}>Call Network</button>
+            <button onClick={()=>setPage('web-development')} style={{background:'none',border:'none',cursor:'pointer',fontSize:'0.8rem',color:c.textSecondary}}>Web Development</button>
             <button onClick={()=>setPage('contact')} style={{background:'none',border:'none',cursor:'pointer',fontSize:'0.8rem',color:c.textSecondary}}>Contact</button>
             <a href="https://calendar.app.google/LUhpKq7nBNLpLiBWA" target="_blank" rel="noopener noreferrer" style={{textDecoration:'none'}}><Btn primary>Book a Call <Arrow/></Btn></a>
           </nav>
@@ -1367,6 +1647,7 @@ const Header = ({setPage}) => {
             <button onClick={()=>{setPage('home');setMobileOpen(false);}} style={{background:'none',border:'none',cursor:'pointer',fontSize:'1.25rem',color:c.text,padding:'16px 0',textAlign:'left',borderBottom:'1px solid '+c.border}}>Home</button>
             <button onClick={()=>{setPage('about');setMobileOpen(false);}} style={{background:'none',border:'none',cursor:'pointer',fontSize:'1.25rem',color:c.text,padding:'16px 0',textAlign:'left',borderBottom:'1px solid '+c.border}}>About</button>
             <button onClick={()=>{setPage('call-network');setMobileOpen(false);}} style={{background:'none',border:'none',cursor:'pointer',fontSize:'1.25rem',color:c.text,padding:'16px 0',textAlign:'left',borderBottom:'1px solid '+c.border}}>Call Network</button>
+            <button onClick={()=>{setPage('web-development');setMobileOpen(false);}} style={{background:'none',border:'none',cursor:'pointer',fontSize:'1.25rem',color:c.text,padding:'16px 0',textAlign:'left',borderBottom:'1px solid '+c.border}}>Web Development</button>
             <button onClick={()=>{setPage('contact');setMobileOpen(false);}} style={{background:'none',border:'none',cursor:'pointer',fontSize:'1.25rem',color:c.text,padding:'16px 0',textAlign:'left',borderBottom:'1px solid '+c.border}}>Contact</button>
             <div style={{padding:'16px 0',borderBottom:'1px solid '+c.border}}>
               <span style={{fontSize:'0.75rem',color:c.textTertiary,textTransform:'uppercase',letterSpacing:'0.1em'}}>Systems</span>
@@ -2340,8 +2621,9 @@ const BackOffice = ({setPage}) => {
   return (
     <div style={{background:c.bg,minHeight:'100vh',color:c.text}}>
       {/* Hero */}
-      <section style={{paddingTop:'120px',paddingBottom:'80px'}}>
-        <div style={{maxWidth:'900px',margin:'0 auto',padding:'0 24px',textAlign:'center'}}>
+      <section style={{position:'relative',paddingTop:'120px',paddingBottom:'80px',overflow:'hidden'}}>
+        <LandingAnimation type="back-office"/>
+        <div style={{maxWidth:'900px',margin:'0 auto',padding:'0 24px',textAlign:'center',position:'relative',zIndex:1}}>
           <div style={{marginBottom:'20px',fontSize:'0.75rem',color:c.textTertiary}}>
             <button onClick={()=>setPage('home')} style={{background:'none',border:'none',cursor:'pointer',color:c.textTertiary}}>Home</button>
             <span style={{margin:'0 8px',opacity:0.5}}>/</span><span style={{color:c.textSecondary}}>Back-Office Automations</span>
@@ -2362,12 +2644,12 @@ const BackOffice = ({setPage}) => {
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit, minmax(340px, 1fr))',gap:'24px'}}>
             {solutions.map((sol,i) => (
               <Card key={i} onClick={()=>setPage(sol.id)}>{h=>(
-                <div style={{background:c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'16px',padding:'32px',cursor:'pointer',transition:'all 0.2s',height:'100%',display:'flex',flexDirection:'column'}}>
+                <div style={{background:h?'rgba(28,28,31,0.9)':c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'16px',padding:'32px',cursor:'pointer',transition:'all 0.3s',height:'100%',display:'flex',flexDirection:'column',boxShadow:h?'0 0 30px rgba(232,228,221,0.03)':'none'}}>
                   <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'16px'}}>
-                    <div style={{color:c.accent}}>{sol.icon}</div>
-                    <div style={{color:c.textTertiary,transform:h?'translateX(2px)':'translateX(0)',transition:'transform 0.2s'}}><Arrow/></div>
+                    <div style={{color:h?c.warm:c.accent,transition:'color 0.3s'}}>{sol.icon}</div>
+                    <div style={{color:c.textTertiary,transform:h?'translateX(4px)':'translateX(0)',transition:'transform 0.3s'}}><Arrow/></div>
                   </div>
-                  <h3 style={{fontSize:'1.25rem',fontWeight:600,marginBottom:'12px'}}>{sol.title}</h3>
+                  <h3 style={{fontSize:'1.25rem',fontWeight:600,marginBottom:'12px',color:h?c.warm:c.text,transition:'color 0.3s'}}>{sol.title}</h3>
                   <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.6,flex:1}}>{sol.desc}</p>
                   <p style={{fontSize:'0.85rem',color:c.accent,margin:0,fontWeight:500}}>{sol.outcome}</p>
                 </div>
@@ -2399,7 +2681,126 @@ const BackOffice = ({setPage}) => {
   );
 };
 
-// Back-Office Landing Page Component - Direct, helpful, with accurate calculators
+// Website Development Landing Page
+const WebDev = ({setPage}) => {
+  const services = [
+    {icon:<LayoutIcon/>,title:'Custom Website Design',desc:'High-performance websites built for conversion. Responsive, fast, and designed to turn visitors into customers.',features:['Mobile-first responsive design','Conversion-optimized layouts','Brand-aligned visual identity','Performance-optimized builds']},
+    {icon:<BrainIcon/>,title:'SEO Audits & Strategy',desc:'Technical and on-page SEO analysis that identifies what\'s holding your site back and what to fix first.',features:['Technical SEO audit','Keyword research & mapping','On-page optimization','Competitive analysis']},
+    {icon:<ActivityIcon/>,title:'Website Redesigns',desc:'Modernize outdated sites without losing what works. Better UX, faster load times, stronger conversions.',features:['UX/UI modernization','Content migration','Page speed optimization','Analytics setup']},
+    {icon:<DollarIcon/>,title:'Landing Pages & Funnels',desc:'Purpose-built pages for campaigns, launches, and lead capture. Every element designed to convert.',features:['A/B test-ready layouts','Lead capture optimization','Campaign-specific pages','CRM integration']},
+    {icon:<MsgIcon/>,title:'Content & Copywriting',desc:'SEO-driven content that ranks and converts. Blog posts, service pages, and product descriptions that work.',features:['SEO content strategy','Service page copywriting','Blog content creation','Meta & schema optimization']},
+    {icon:<CheckIcon/>,title:'Ongoing Support & Optimization',desc:'Continuous improvement based on real data. Monthly reporting, updates, and conversion rate optimization.',features:['Monthly performance reports','Conversion rate optimization','Security updates & maintenance','Content updates & additions']}
+  ];
+
+  return (
+    <div style={{background:c.bg,minHeight:'100vh',color:c.text}}>
+      {/* Hero */}
+      <section style={{position:'relative',paddingTop:'120px',paddingBottom:'80px',overflow:'hidden'}}>
+        <LandingAnimation type="web-development"/>
+        <div style={{maxWidth:'900px',margin:'0 auto',padding:'0 24px',textAlign:'center',position:'relative',zIndex:1}}>
+          <div style={{marginBottom:'20px',fontSize:'0.75rem',color:c.textTertiary}}>
+            <button onClick={()=>setPage('home')} style={{background:'none',border:'none',cursor:'pointer',color:c.textTertiary}}>Home</button>
+            <span style={{margin:'0 8px',opacity:0.5}}>/</span><span style={{color:c.textSecondary}}>Website Development</span>
+          </div>
+          <h1 style={{fontSize:'clamp(2rem,5vw,3rem)',fontWeight:600,lineHeight:1.1,letterSpacing:'-0.03em',marginBottom:'24px'}}>Website Development<br/>& SEO Services</h1>
+          <p style={{fontSize:'1.1rem',lineHeight:1.7,color:c.textSecondary,maxWidth:'650px',margin:'0 auto 24px'}}>
+            High-performance websites built for mid-market businesses. Custom design, technical SEO, and ongoing optimization—so your site generates leads, not just traffic.
+          </p>
+          <a href="https://calendar.app.google/LUhpKq7nBNLpLiBWA" target="_blank" rel="noopener noreferrer" style={{textDecoration:'none'}}><Btn primary>Book a Call <Arrow/></Btn></a>
+        </div>
+      </section>
+
+      {/* Why It Matters */}
+      <section style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
+        <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px'}}>
+          <p style={{fontSize:'1.1rem',lineHeight:1.9,color:c.text,opacity:0.9}}>
+            Your website is your most visible sales tool—but most business websites underperform. Slow load times cost you rankings. Poor mobile experience loses visitors. Weak SEO means your competitors show up first. We build websites that solve all three: fast, responsive, and optimized to rank for the searches your customers are actually making.
+          </p>
+        </div>
+      </section>
+
+      {/* Services Grid */}
+      <section style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
+        <div style={{maxWidth:'1200px',margin:'0 auto',padding:'0 24px'}}>
+          <div style={{textAlign:'center',marginBottom:'48px'}}>
+            <p style={{fontSize:'0.85rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Services</p>
+            <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>Everything your website needs to perform.</h2>
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit, minmax(340px, 1fr))',gap:'24px'}}>
+            {services.map((svc,i) => (
+              <Card key={i}>{h=>(
+                <div style={{background:h?'rgba(28,28,31,0.9)':c.bgCard,border:'1px solid '+(h?c.borderHover:c.border),borderRadius:'16px',padding:'32px',transition:'all 0.3s',height:'100%',display:'flex',flexDirection:'column',boxShadow:h?'0 0 30px rgba(232,228,221,0.03)':'none'}}>
+                  <div style={{color:h?c.warm:c.accent,marginBottom:'16px',transition:'color 0.3s'}}>{svc.icon}</div>
+                  <h3 style={{fontSize:'1.25rem',fontWeight:600,marginBottom:'12px',color:h?c.warm:c.text,transition:'color 0.3s'}}>{svc.title}</h3>
+                  <p style={{fontSize:'0.95rem',color:c.textSecondary,marginBottom:'20px',lineHeight:1.6}}>{svc.desc}</p>
+                  <ul style={{listStyle:'none',padding:0,margin:0,marginTop:'auto'}}>
+                    {svc.features.map((f,j)=>(
+                      <li key={j} style={{fontSize:'0.85rem',color:c.textTertiary,padding:'6px 0',borderTop:j===0?'1px solid '+c.border:'none',display:'flex',alignItems:'center',gap:'8px'}}>
+                        <span style={{color:c.accent,fontSize:'0.7rem'}}>✓</span> {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}</Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process */}
+      <section style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
+        <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px'}}>
+          <div style={{textAlign:'center',marginBottom:'48px'}}>
+            <p style={{fontSize:'0.85rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.1em',color:c.accent,margin:'0 0 16px 0'}}>Process</p>
+            <h2 style={{fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:600,letterSpacing:'-0.02em',lineHeight:1.2,margin:0}}>How it works.</h2>
+          </div>
+          {[
+            {step:'01',title:'Audit & Discovery',desc:'We analyze your current site, competitors, and target keywords. You get a clear picture of what\'s working, what\'s not, and what to prioritize.'},
+            {step:'02',title:'Strategy & Design',desc:'Custom design mockups built around your brand, your audience, and your conversion goals. Nothing templated.'},
+            {step:'03',title:'Build & Optimize',desc:'Development with performance baked in. Clean code, fast load times, mobile-first, and SEO-ready from day one.'},
+            {step:'04',title:'Launch & Iterate',desc:'Go live with analytics in place. Monthly reporting and continuous optimization based on real traffic data.'}
+          ].map((p,i)=>(
+            <div key={i} style={{display:'flex',gap:'24px',marginBottom:'40px',alignItems:'flex-start'}}>
+              <span style={{fontSize:'1.5rem',fontWeight:700,color:c.warm,minWidth:'48px'}}>{p.step}</span>
+              <div>
+                <h3 style={{fontSize:'1.1rem',fontWeight:600,marginBottom:'8px'}}>{p.title}</h3>
+                <p style={{fontSize:'0.95rem',color:c.textSecondary,lineHeight:1.6,margin:0}}>{p.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SEO Keywords Section */}
+      <section style={{padding:'80px 0',borderTop:'1px solid '+c.border}}>
+        <div style={{maxWidth:'800px',margin:'0 auto',padding:'0 24px'}}>
+          <div style={{textAlign:'center',marginBottom:'48px'}}>
+            <h2 style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:600,letterSpacing:'-0.02em',marginBottom:'16px'}}>Web development services for businesses that need results.</h2>
+            <p style={{fontSize:'1rem',color:c.textSecondary,lineHeight:1.7}}>
+              Whether you need a full website redesign, a technical SEO audit, landing pages for paid campaigns, or ongoing website maintenance and optimization—we build websites that rank, convert, and scale with your business. From custom web design to search engine optimization, our Houston-based team delivers enterprise-quality web development for mid-market companies.
+            </p>
+          </div>
+          <div style={{display:'flex',flexWrap:'wrap',gap:'8px',justifyContent:'center'}}>
+            {['Custom Web Design','SEO Audit','Technical SEO','Website Redesign','Landing Page Design','Web Development','Search Engine Optimization','Website Optimization','Mobile-First Design','Page Speed Optimization','Conversion Rate Optimization','Local SEO','WordPress Development','React Development','Website Maintenance','Content Strategy','Responsive Web Design','E-commerce Development','Lead Generation Websites','Houston Web Design'].map((tag,i)=>(
+              <span key={i} style={{padding:'8px 16px',background:c.bgCard,border:'1px solid '+c.border,borderRadius:'20px',fontSize:'0.8rem',color:c.textSecondary}}>{tag}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section style={{padding:'80px 0',borderTop:'1px solid '+c.border,textAlign:'center'}}>
+        <div style={{maxWidth:'600px',margin:'0 auto',padding:'0 24px'}}>
+          <h2 style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:600,marginBottom:'16px'}}>Ready for a website that works as hard as you do?</h2>
+          <p style={{fontSize:'1rem',color:c.textSecondary,marginBottom:'32px'}}>Book a free audit. We'll review your current site, identify quick wins, and show you what a high-performance website looks like for your business.</p>
+          <a href="https://calendar.app.google/LUhpKq7nBNLpLiBWA" target="_blank" rel="noopener noreferrer" style={{textDecoration:'none'}}><Btn primary>Book a Call <Arrow/></Btn></a>
+        </div>
+      </section>
+
+      <Footer setPage={setPage}/>
+    </div>
+  );
+};
 const BackOfficePage = ({setPage, data}) => {
   // Calculator states - set sensible defaults per calculator type
   const getDefaults = () => {
@@ -6164,6 +6565,7 @@ export default function App() {
       'faq': 'FAQ | Forgelight Labs',
       'blog': 'Blog | Forgelight Labs',
       'call-network': 'Call Network | Forgelight Labs',
+      'web-development': 'Website Development & SEO Services | Forgelight Labs',
       'privacy': 'Privacy Policy | Forgelight Labs',
       'ai-front-desk': 'AI Sales Desk | Forgelight Labs',
       'ai-outbound': 'Outbound Engine | Forgelight Labs',
@@ -6236,6 +6638,7 @@ export default function App() {
     if (page === 'blog') return <Blog setPage={setPage}/>;
     if (page === 'call-network') return <CallNetwork setPage={setPage}/>;
     if (page === 'back-office') return <BackOffice setPage={setPage}/>;
+    if (page === 'web-development') return <WebDev setPage={setPage}/>;
     if (page.startsWith('blog-')) return <BlogPost setPage={setPage} slug={page.replace('blog-', '')}/>;
     if (page === 'about') return <About setPage={setPage}/>;
     if (page === 'ai-front-desk-roofing') return <MoneyPage setPage={setPage} data={roofingData}/>;
