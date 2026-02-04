@@ -1106,7 +1106,7 @@ const ContentAnimation = () => {
   return (<><canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}/><div style={{position:'absolute',top:0,left:0,right:0,bottom:0,background:`radial-gradient(ellipse at 55% 50%, transparent 0%, ${c.bg} 70%)`,pointerEvents:'none'}}/></>);
 };
 
-// Back-Office Animation - Interlocking gears processing data
+// Back-Office Animation - Parallel workflow lanes processing data
 const BackOfficeAnimation = () => {
   const canvasRef = useRef(null);
   const animationRef = useRef();
@@ -1118,80 +1118,82 @@ const BackOfficeAnimation = () => {
     canvas.height = window.innerHeight;
     const cx = canvas.width * 0.6, cy = canvas.height * 0.5;
 
-    const gears = [
-      { x: cx - 60, y: cy - 20, r: 40, teeth: 10, speed: 0.008, angle: 0 },
-      { x: cx + 30, y: cy + 25, r: 30, teeth: 8, speed: -0.0107, angle: 0 },
-      { x: cx + 95, y: cy - 10, r: 25, teeth: 7, speed: 0.0128, angle: 0 },
+    // Three parallel processing lanes
+    const lanes = [
+      { y: cy - 60, nodes: [{x:cx-180,r:4},{x:cx-80,r:5},{x:cx+20,r:5},{x:cx+120,r:4}] },
+      { y: cy,      nodes: [{x:cx-160,r:4},{x:cx-60,r:6},{x:cx+40,r:6},{x:cx+140,r:4}] },
+      { y: cy + 60, nodes: [{x:cx-180,r:4},{x:cx-80,r:5},{x:cx+20,r:5},{x:cx+120,r:4}] },
     ];
 
-    // Data particles flowing through
-    let particles = [];
-    let lastSpawn = 0;
+    // Cross-connections between lanes
+    const crossLinks = [
+      {lane:0,node:1,toLane:1,toNode:1},{lane:1,node:2,toLane:0,toNode:2},
+      {lane:1,node:1,toLane:2,toNode:1},{lane:2,node:2,toLane:1,toNode:2},
+    ];
 
-    const drawGear = (x, y, r, teeth, angle, alpha) => {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(angle);
-      ctx.beginPath();
-      for (let i = 0; i < teeth; i++) {
-        const a1 = (i / teeth) * Math.PI * 2;
-        const a2 = ((i + 0.3) / teeth) * Math.PI * 2;
-        const a3 = ((i + 0.5) / teeth) * Math.PI * 2;
-        const a4 = ((i + 0.8) / teeth) * Math.PI * 2;
-        const inner = r * 0.75;
-        const outer = r;
-        if (i === 0) ctx.moveTo(Math.cos(a1) * inner, Math.sin(a1) * inner);
-        else ctx.lineTo(Math.cos(a1) * inner, Math.sin(a1) * inner);
-        ctx.lineTo(Math.cos(a2) * outer, Math.sin(a2) * outer);
-        ctx.lineTo(Math.cos(a3) * outer, Math.sin(a3) * outer);
-        ctx.lineTo(Math.cos(a4) * inner, Math.sin(a4) * inner);
+    // Structure lines within lanes
+    const structureLines = [];
+    lanes.forEach((lane, li) => {
+      for (let i = 0; i < lane.nodes.length - 1; i++) {
+        structureLines.push({ from: {x:lane.nodes[i].x, y:lane.y}, to: {x:lane.nodes[i+1].x, y:lane.y}, progress: 0, speed: 0.008, delay: li * 300 + i * 250 });
       }
-      ctx.closePath();
-      ctx.strokeStyle = `rgba(100,116,139,${0.3 * alpha})`;
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-      // Center circle
-      ctx.beginPath();
-      ctx.arc(0, 0, r * 0.25, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(100,116,139,${0.4 * alpha})`;
-      ctx.stroke();
-      ctx.restore();
-    };
+    });
+    crossLinks.forEach((cl, i) => {
+      structureLines.push({ from: {x:lanes[cl.lane].nodes[cl.node].x, y:lanes[cl.lane].y}, to: {x:lanes[cl.toLane].nodes[cl.toNode].x, y:lanes[cl.toLane].y}, progress: 0, speed: 0.006, delay: 2000 + i * 300 });
+    });
+
+    let packets = [];
+    let startTime = Date.now();
+    let nextPacket = 3500;
 
     const animate = () => {
-      ctx.fillStyle = 'rgba(9,9,11,0.08)';
+      const elapsed = Date.now() - startTime;
+      ctx.fillStyle = 'rgba(9,9,11,0.1)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Rotate gears
-      gears.forEach(g => {
-        g.angle += g.speed;
-        drawGear(g.x, g.y, g.r, g.teeth, g.angle, 1);
+      // Draw structure
+      structureLines.forEach(line => {
+        if (elapsed > line.delay) {
+          line.progress = Math.min(1, line.progress + line.speed);
+          const pos = drawLine(ctx, line.from.x, line.from.y, line.to.x, line.to.y, line.progress);
+          if (line.progress < 1) drawTravelingDot(ctx, pos.x, pos.y);
+        }
       });
 
-      // Spawn particles from left
-      const now = Date.now();
-      if (now - lastSpawn > 600) {
-        particles.push({ x: cx - 180, y: cy + (Math.random() - 0.5) * 60, life: 1, speed: 1 + Math.random() });
-        lastSpawn = now;
+      // Draw nodes
+      lanes.forEach((lane, li) => {
+        lane.nodes.forEach((node, ni) => {
+          const lineIdx = li * 3 + Math.max(0, ni - 1);
+          const reached = ni === 0 ? elapsed > li * 300 : (structureLines[lineIdx] && structureLines[lineIdx].progress > 0.9);
+          if (reached) drawNode(ctx, node.x, lane.y, node.r);
+        });
+      });
+
+      // Data packets flowing through lanes
+      const ready = structureLines.every(l => l.progress >= 1);
+      if (ready && elapsed > nextPacket) {
+        const laneIdx = Math.floor(Math.random() * 3);
+        const lane = lanes[laneIdx];
+        packets.push({ laneIdx, nodeIdx: 0, progress: 0, x: lane.nodes[0].x, y: lane.y });
+        nextPacket = elapsed + 800 + Math.random() * 600;
       }
 
-      // Update particles
-      particles = particles.filter(p => {
-        p.x += p.speed;
-        // Speed up through gears
-        if (p.x > cx - 80 && p.x < cx + 120) p.speed = 2 + Math.random();
-        if (p.x > cx + 120) p.life -= 0.02;
-
-        if (p.life > 0 && p.x < cx + 250) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 2 * p.life, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(232,228,221,${p.life * 0.6})`;
-          ctx.fill();
+      packets = packets.filter(p => {
+        const lane = lanes[p.laneIdx];
+        if (p.nodeIdx < lane.nodes.length - 1) {
+          p.progress += 0.025;
+          const from = lane.nodes[p.nodeIdx];
+          const to = lane.nodes[p.nodeIdx + 1];
+          p.x = from.x + (to.x - from.x) * p.progress;
+          p.y = lane.y;
+          drawTravelingDot(ctx, p.x, p.y, 3);
+          if (p.progress >= 1) { p.nodeIdx++; p.progress = 0; }
           return true;
         }
         return false;
       });
 
+      if (elapsed > 9000) { startTime = Date.now(); structureLines.forEach(l => l.progress = 0); packets = []; nextPacket = 3500; }
       animationRef.current = requestAnimationFrame(animate);
     };
 
@@ -1302,7 +1304,7 @@ const WebsiteAnimation = () => {
   return (<><canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}/><div style={{position:'absolute',top:0,left:0,right:0,bottom:0,background:`radial-gradient(ellipse at 60% 50%, transparent 0%, ${c.bg} 70%)`,pointerEvents:'none'}}/></>);
 };
 
-// Web Development Animation - Code lines + SEO network graph
+// Web Development Animation - Sitemap tree with crawl dots
 const WebDevAnimation = () => {
   const canvasRef = useRef(null);
   const animationRef = useRef();
@@ -1312,165 +1314,97 @@ const WebDevAnimation = () => {
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    const cx = canvas.width * 0.55, cy = canvas.height * 0.5;
+    const cx = canvas.width * 0.6, cy = canvas.height * 0.45;
 
-    // Code lines that type in
-    const lines = [];
-    const lineCount = 12;
-    for (let i = 0; i < lineCount; i++) {
-      const indent = i === 0 || i === lineCount - 1 ? 0 : (i <= 2 || i >= lineCount - 2) ? 1 : 2;
-      lines.push({
-        x: cx - 110 + indent * 14,
-        y: cy - 70 + i * 12,
-        w: 40 + Math.random() * 80,
-        progress: 0,
-        delay: i * 200,
-      });
-    }
-
-    // SEO network nodes (right side)
+    // Sitemap tree: root -> tier1 -> tier2 -> tier3
     const nodes = [
-      { x: cx + 80, y: cy - 40, r: 6, label: '' },
-      { x: cx + 130, y: cy - 60, r: 4, label: '' },
-      { x: cx + 150, y: cy - 20, r: 5, label: '' },
-      { x: cx + 110, y: cy + 10, r: 4, label: '' },
-      { x: cx + 160, y: cy + 30, r: 5, label: '' },
-      { x: cx + 100, y: cy + 50, r: 4, label: '' },
-      { x: cx + 180, y: cy - 40, r: 3, label: '' },
-      { x: cx + 190, y: cy + 10, r: 3, label: '' },
+      {x:cx, y:cy-80, r:6},  // 0: root
+      {x:cx-100, y:cy-20, r:5}, // 1: tier1 left
+      {x:cx, y:cy-20, r:5},     // 2: tier1 center
+      {x:cx+100, y:cy-20, r:5}, // 3: tier1 right
+      {x:cx-140, y:cy+40, r:4}, // 4: tier2
+      {x:cx-70, y:cy+40, r:4},  // 5: tier2
+      {x:cx-20, y:cy+40, r:4},  // 6: tier2
+      {x:cx+40, y:cy+40, r:4},  // 7: tier2
+      {x:cx+100, y:cy+40, r:4}, // 8: tier2
+      {x:cx+150, y:cy+40, r:4}, // 9: tier2
+      {x:cx-160, y:cy+100, r:3}, // 10: tier3
+      {x:cx-110, y:cy+100, r:3}, // 11: tier3
+      {x:cx-40, y:cy+100, r:3},  // 12: tier3
+      {x:cx+20, y:cy+100, r:3},  // 13: tier3
+      {x:cx+80, y:cy+100, r:3},  // 14: tier3
+      {x:cx+140, y:cy+100, r:3}, // 15: tier3
+      {x:cx+180, y:cy+100, r:3}, // 16: tier3
     ];
 
     const edges = [
-      [0,1],[0,2],[0,3],[1,6],[2,4],[2,7],[3,5],[4,7],[3,4]
+      [0,1],[0,2],[0,3],
+      [1,4],[1,5],[2,6],[2,7],[3,8],[3,9],
+      [4,10],[5,11],[6,12],[7,13],[8,14],[9,15],[9,16],
     ];
 
-    let pulses = [];
+    const structureLines = edges.map((e, i) => ({
+      from: nodes[e[0]], to: nodes[e[1]], progress: 0,
+      speed: 0.007 + Math.random() * 0.003,
+      delay: (e[0] === 0 ? 0 : e[1] >= 10 ? 2200 : 1000) + i * 120,
+    }));
+
+    let crawlers = [];
     let startTime = Date.now();
-    let nextPulse = 3000;
+    let nextCrawl = 4000;
 
     const animate = () => {
       const elapsed = Date.now() - startTime;
-      ctx.fillStyle = 'rgba(9,9,11,0.08)';
+      ctx.fillStyle = 'rgba(9,9,11,0.1)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Draw code editor frame
-      const frameAlpha = Math.min(1, elapsed / 800);
-      ctx.strokeStyle = `rgba(100,116,139,${0.25 * frameAlpha})`;
-      ctx.lineWidth = 1;
-      const rx = cx - 120, ry = cy - 80, rw = 160, rh = lineCount * 12 + 20;
-      // Rounded rect
-      const rad = 6;
-      ctx.beginPath();
-      ctx.moveTo(rx + rad, ry);
-      ctx.lineTo(rx + rw - rad, ry);
-      ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + rad);
-      ctx.lineTo(rx + rw, ry + rh - rad);
-      ctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - rad, ry + rh);
-      ctx.lineTo(rx + rad, ry + rh);
-      ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - rad);
-      ctx.lineTo(rx, ry + rad);
-      ctx.quadraticCurveTo(rx, ry, rx + rad, ry);
-      ctx.closePath();
-      ctx.stroke();
-
-      // Title bar dots
-      if (frameAlpha > 0.5) {
-        [0,1,2].forEach((d,i) => {
-          ctx.beginPath();
-          ctx.arc(rx + 10 + i * 10, ry + 8, 2.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(100,116,139,${0.3 * frameAlpha})`;
-          ctx.fill();
-        });
-        ctx.beginPath();
-        ctx.moveTo(rx, ry + 16);
-        ctx.lineTo(rx + rw, ry + 16);
-        ctx.strokeStyle = `rgba(100,116,139,${0.15 * frameAlpha})`;
-        ctx.stroke();
-      }
-
-      // Draw code lines typing in
-      lines.forEach(line => {
-        if (elapsed > line.delay && line.progress < 1) {
-          line.progress = Math.min(1, line.progress + 0.03);
-        }
-        if (line.progress > 0) {
-          ctx.fillStyle = `rgba(100,116,139,${0.25 * line.progress})`;
-          // Rounded code line
-          const lh = 4, lr = 2;
-          const lw = line.w * line.progress;
-          ctx.beginPath();
-          ctx.moveTo(line.x + lr, line.y);
-          ctx.lineTo(line.x + lw - lr, line.y);
-          ctx.quadraticCurveTo(line.x + lw, line.y, line.x + lw, line.y + lr);
-          ctx.lineTo(line.x + lw, line.y + lh - lr);
-          ctx.quadraticCurveTo(line.x + lw, line.y + lh, line.x + lw - lr, line.y + lh);
-          ctx.lineTo(line.x + lr, line.y + lh);
-          ctx.quadraticCurveTo(line.x, line.y + lh, line.x, line.y + lh - lr);
-          ctx.lineTo(line.x, line.y + lr);
-          ctx.quadraticCurveTo(line.x, line.y, line.x + lr, line.y);
-          ctx.closePath();
-          ctx.fill();
+      // Draw structure
+      structureLines.forEach(line => {
+        if (elapsed > line.delay) {
+          line.progress = Math.min(1, line.progress + line.speed);
+          const pos = drawLine(ctx, line.from.x, line.from.y, line.to.x, line.to.y, line.progress);
+          if (line.progress < 1) drawTravelingDot(ctx, pos.x, pos.y);
         }
       });
 
-      // Draw network edges
-      const netAlpha = Math.min(1, Math.max(0, (elapsed - 2000) / 1000));
-      if (netAlpha > 0) {
-        edges.forEach(([a,b]) => {
-          ctx.beginPath();
-          ctx.moveTo(nodes[a].x, nodes[a].y);
-          ctx.lineTo(nodes[b].x, nodes[b].y);
-          ctx.strokeStyle = `rgba(100,116,139,${0.15 * netAlpha})`;
-          ctx.lineWidth = 1;
-          ctx.stroke();
-        });
+      // Draw nodes as they're reached
+      nodes.forEach((node, i) => {
+        const reached = i === 0 ? true : structureLines.some(l => edges[structureLines.indexOf(l)] && nodes[edges[structureLines.indexOf(l)][1]] === node && l.progress > 0.9);
+        const isReached = i === 0 || structureLines.some((l, li) => edges[li][1] === i && l.progress > 0.9);
+        if (isReached) drawNode(ctx, node.x, node.y, node.r);
+      });
 
-        // Draw nodes
-        nodes.forEach((n, i) => {
-          const nodeDelay = 2200 + i * 150;
-          const nodeAlpha = Math.min(1, Math.max(0, (elapsed - nodeDelay) / 400));
-          if (nodeAlpha > 0) {
-            ctx.beginPath();
-            ctx.arc(n.x, n.y, n.r * nodeAlpha, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(232,228,221,${0.15 * nodeAlpha})`;
-            ctx.fill();
-            ctx.strokeStyle = `rgba(232,228,221,${0.3 * nodeAlpha})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
+      // Crawl dots that travel random paths down the tree
+      const ready = structureLines.every(l => l.progress >= 1);
+      if (ready && elapsed > nextCrawl) {
+        crawlers.push({ edgeIdx: Math.floor(Math.random() * 3), progress: 0, path: [0] });
+        nextCrawl = elapsed + 600 + Math.random() * 500;
+      }
+
+      crawlers = crawlers.filter(cr => {
+        cr.progress += 0.03;
+        const edge = edges[cr.edgeIdx];
+        if (!edge) return false;
+        const from = nodes[edge[0]], to = nodes[edge[1]];
+        const x = from.x + (to.x - from.x) * cr.progress;
+        const y = from.y + (to.y - from.y) * cr.progress;
+        drawTravelingDot(ctx, x, y, 3);
+
+        if (cr.progress >= 1) {
+          cr.progress = 0;
+          cr.path.push(edge[1]);
+          // Find next edge from current node
+          const nextEdges = edges.reduce((acc, e, i) => { if (e[0] === edge[1]) acc.push(i); return acc; }, []);
+          if (nextEdges.length > 0) {
+            cr.edgeIdx = nextEdges[Math.floor(Math.random() * nextEdges.length)];
+            return true;
           }
-        });
-      }
-
-      // Pulses traveling along edges
-      if (elapsed > nextPulse && netAlpha >= 1) {
-        const edge = edges[Math.floor(Math.random() * edges.length)];
-        pulses.push({ from: edge[0], to: edge[1], t: 0 });
-        nextPulse = elapsed + 500 + Math.random() * 400;
-      }
-
-      pulses = pulses.filter(p => {
-        p.t += 0.025;
-        if (p.t <= 1) {
-          const a = nodes[p.from], b = nodes[p.to];
-          const px = a.x + (b.x - a.x) * p.t;
-          const py = a.y + (b.y - a.y) * p.t;
-          ctx.beginPath();
-          ctx.arc(px, py, 2.5 * (1 - p.t * 0.5), 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(232,228,221,${(1 - p.t) * 0.7})`;
-          ctx.fill();
-          return true;
+          return false; // reached leaf
         }
-        return false;
+        return true;
       });
 
-      // Reset cycle
-      if (elapsed > 9000) {
-        startTime = Date.now();
-        lines.forEach(l => l.progress = 0);
-        pulses = [];
-        nextPulse = 3000;
-      }
-
+      if (elapsed > 9000) { startTime = Date.now(); structureLines.forEach(l => l.progress = 0); crawlers = []; nextCrawl = 4000; }
       animationRef.current = requestAnimationFrame(animate);
     };
 
@@ -1479,7 +1413,7 @@ const WebDevAnimation = () => {
     return () => cancelAnimationFrame(animationRef.current);
   }, []);
 
-  return (<><canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}/><div style={{position:'absolute',top:0,left:0,right:0,bottom:0,background:`radial-gradient(ellipse at 55% 50%, transparent 0%, ${c.bg} 70%)`,pointerEvents:'none'}}/></>);
+  return (<><canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}/><div style={{position:'absolute',top:0,left:0,right:0,bottom:0,background:`radial-gradient(ellipse at 60% 45%, transparent 0%, ${c.bg} 70%)`,pointerEvents:'none'}}/></>);
 };
 
 // Animation selector
