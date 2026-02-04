@@ -1308,58 +1308,77 @@ const WebsiteAnimation = () => {
 const WebDevAnimation = () => {
   const canvasRef = useRef(null);
   const animationRef = useRef();
+  const nodesRef = useRef([]);
+  const edgesRef = useRef([]);
+  const linesRef = useRef([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const cx = canvas.width * 0.6, cy = canvas.height * 0.45;
 
-    // Sitemap tree: root -> tier1 -> tier2 -> tier3
-    const nodes = [
-      {x:cx, y:cy-80, r:6},  // 0: root
-      {x:cx-100, y:cy-20, r:5}, // 1: tier1 left
-      {x:cx, y:cy-20, r:5},     // 2: tier1 center
-      {x:cx+100, y:cy-20, r:5}, // 3: tier1 right
-      {x:cx-140, y:cy+40, r:4}, // 4: tier2
-      {x:cx-70, y:cy+40, r:4},  // 5: tier2
-      {x:cx-20, y:cy+40, r:4},  // 6: tier2
-      {x:cx+40, y:cy+40, r:4},  // 7: tier2
-      {x:cx+100, y:cy+40, r:4}, // 8: tier2
-      {x:cx+150, y:cy+40, r:4}, // 9: tier2
-      {x:cx-160, y:cy+100, r:3}, // 10: tier3
-      {x:cx-110, y:cy+100, r:3}, // 11: tier3
-      {x:cx-40, y:cy+100, r:3},  // 12: tier3
-      {x:cx+20, y:cy+100, r:3},  // 13: tier3
-      {x:cx+80, y:cy+100, r:3},  // 14: tier3
-      {x:cx+140, y:cy+100, r:3}, // 15: tier3
-      {x:cx+180, y:cy+100, r:3}, // 16: tier3
-    ];
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const cx = canvas.width * 0.55, cy = canvas.height * 0.45;
 
-    const edges = [
-      [0,1],[0,2],[0,3],
-      [1,4],[1,5],[2,6],[2,7],[3,8],[3,9],
-      [4,10],[5,11],[6,12],[7,13],[8,14],[9,15],[9,16],
-    ];
+      // Wide sitemap tree filling the viewport
+      nodesRef.current = [
+        {x:cx, y:cy-160, r:6},           // 0: root
+        {x:cx-180, y:cy-60, r:5},        // 1: tier1 left
+        {x:cx, y:cy-60, r:5},            // 2: tier1 center
+        {x:cx+180, y:cy-60, r:5},        // 3: tier1 right
+        {x:cx-280, y:cy+50, r:4},        // 4: tier2
+        {x:cx-140, y:cy+50, r:4},        // 5: tier2
+        {x:cx-50, y:cy+50, r:4},         // 6: tier2
+        {x:cx+70, y:cy+50, r:4},         // 7: tier2
+        {x:cx+180, y:cy+50, r:4},        // 8: tier2
+        {x:cx+300, y:cy+50, r:4},        // 9: tier2
+        {x:cx-340, y:cy+160, r:3},       // 10: tier3
+        {x:cx-240, y:cy+160, r:3},       // 11: tier3
+        {x:cx-140, y:cy+170, r:3},       // 12: tier3
+        {x:cx-40, y:cy+160, r:3},        // 13: tier3
+        {x:cx+80, y:cy+170, r:3},        // 14: tier3
+        {x:cx+190, y:cy+160, r:3},       // 15: tier3
+        {x:cx+310, y:cy+160, r:3},       // 16: tier3
+        {x:cx+380, y:cy+170, r:2},       // 17: tier3 outer
+        {x:cx-390, y:cy+250, r:2},       // 18: tier4 outer
+        {x:cx-200, y:cy+260, r:2},       // 19: tier4
+        {x:cx+40, y:cy+260, r:2},        // 20: tier4
+        {x:cx+260, y:cy+250, r:2},       // 21: tier4
+      ];
 
-    const structureLines = edges.map((e, i) => ({
-      from: nodes[e[0]], to: nodes[e[1]], progress: 0,
-      speed: 0.007 + Math.random() * 0.003,
-      delay: (e[0] === 0 ? 0 : e[1] >= 10 ? 2200 : 1000) + i * 120,
-    }));
+      edgesRef.current = [
+        [0,1],[0,2],[0,3],
+        [1,4],[1,5],[2,6],[2,7],[3,8],[3,9],
+        [4,10],[4,11],[5,12],[6,13],[7,14],[8,15],[9,16],[9,17],
+        [10,18],[12,19],[14,20],[16,21],
+      ];
 
+      linesRef.current = edgesRef.current.map((e, i) => {
+        const tier = e[1] <= 3 ? 0 : e[1] <= 9 ? 1 : e[1] <= 17 ? 2 : 3;
+        return {
+          from: nodesRef.current[e[0]], to: nodesRef.current[e[1]], progress: 0,
+          speed: 0.007 + Math.random() * 0.003,
+          delay: tier * 800 + i * 100,
+        };
+      });
+    };
+
+    resize();
+    window.addEventListener('resize', resize);
     let crawlers = [];
     let startTime = Date.now();
-    let nextCrawl = 4000;
+    let nextCrawl = 4500;
 
     const animate = () => {
       const elapsed = Date.now() - startTime;
       ctx.fillStyle = 'rgba(9,9,11,0.1)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+      const nodes = nodesRef.current, edges = edgesRef.current, lines = linesRef.current;
+
       // Draw structure
-      structureLines.forEach(line => {
+      lines.forEach(line => {
         if (elapsed > line.delay) {
           line.progress = Math.min(1, line.progress + line.speed);
           const pos = drawLine(ctx, line.from.x, line.from.y, line.to.x, line.to.y, line.progress);
@@ -1369,20 +1388,19 @@ const WebDevAnimation = () => {
 
       // Draw nodes as they're reached
       nodes.forEach((node, i) => {
-        const reached = i === 0 ? true : structureLines.some(l => edges[structureLines.indexOf(l)] && nodes[edges[structureLines.indexOf(l)][1]] === node && l.progress > 0.9);
-        const isReached = i === 0 || structureLines.some((l, li) => edges[li][1] === i && l.progress > 0.9);
+        const isReached = i === 0 || lines.some((l, li) => edges[li][1] === i && l.progress > 0.9);
         if (isReached) drawNode(ctx, node.x, node.y, node.r);
       });
 
       // Crawl dots that travel random paths down the tree
-      const ready = structureLines.every(l => l.progress >= 1);
+      const ready = lines.every(l => l.progress >= 1);
       if (ready && elapsed > nextCrawl) {
-        crawlers.push({ edgeIdx: Math.floor(Math.random() * 3), progress: 0, path: [0] });
-        nextCrawl = elapsed + 600 + Math.random() * 500;
+        crawlers.push({ edgeIdx: Math.floor(Math.random() * 3), progress: 0 });
+        nextCrawl = elapsed + 500 + Math.random() * 400;
       }
 
       crawlers = crawlers.filter(cr => {
-        cr.progress += 0.03;
+        cr.progress += 0.02;
         const edge = edges[cr.edgeIdx];
         if (!edge) return false;
         const from = nodes[edge[0]], to = nodes[edge[1]];
@@ -1392,28 +1410,26 @@ const WebDevAnimation = () => {
 
         if (cr.progress >= 1) {
           cr.progress = 0;
-          cr.path.push(edge[1]);
-          // Find next edge from current node
           const nextEdges = edges.reduce((acc, e, i) => { if (e[0] === edge[1]) acc.push(i); return acc; }, []);
           if (nextEdges.length > 0) {
             cr.edgeIdx = nextEdges[Math.floor(Math.random() * nextEdges.length)];
             return true;
           }
-          return false; // reached leaf
+          return false;
         }
         return true;
       });
 
-      if (elapsed > 9000) { startTime = Date.now(); structureLines.forEach(l => l.progress = 0); crawlers = []; nextCrawl = 4000; }
+      if (elapsed > 10000) { startTime = Date.now(); lines.forEach(l => l.progress = 0); crawlers = []; nextCrawl = 4500; }
       animationRef.current = requestAnimationFrame(animate);
     };
 
     ctx.fillStyle = c.bg; ctx.fillRect(0,0,canvas.width,canvas.height);
     animate();
-    return () => cancelAnimationFrame(animationRef.current);
+    return () => { window.removeEventListener('resize', resize); cancelAnimationFrame(animationRef.current); };
   }, []);
 
-  return (<><canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}/><div style={{position:'absolute',top:0,left:0,right:0,bottom:0,background:`radial-gradient(ellipse at 60% 45%, transparent 0%, ${c.bg} 70%)`,pointerEvents:'none'}}/></>);
+  return (<><canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}/><div style={{position:'absolute',top:0,left:0,right:0,bottom:0,background:`radial-gradient(ellipse at 55% 45%, transparent 0%, ${c.bg} 70%)`,pointerEvents:'none'}}/></>);
 };
 
 // Animation selector
