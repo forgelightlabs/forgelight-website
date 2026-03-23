@@ -6,19 +6,18 @@
   <title>Forgelight Labs | Pre-Call Questionnaire</title>
   <meta name="description" content="Help us understand your firm before our conversation." />
   <link rel="icon" href="/favicon.svg" />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
   <style>
-    :root{--bg:#09090B;--bg-card:#111113;--text:#FAFAFA;--text-sec:#A1A1AA;--text-tert:#52525B;--accent:#64748B;--warm:#E8E4DD;--warm-dim:rgba(232,228,221,0.15);--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12)}
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-    .fade-up{animation:fadeUp .45s ease-out}
-    textarea::-webkit-scrollbar{width:5px}textarea::-webkit-scrollbar-thumb{background:var(--text-tert);border-radius:3px}
-    select option{background:var(--bg-card);color:var(--text)}
-    ::selection{background:var(--warm-dim);color:var(--warm)}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FAFAFA;color:#1C1C1F;min-height:100vh;-webkit-font-smoothing:antialiased}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .fade-up{animation:fadeUp .4s ease-out}
+    textarea::-webkit-scrollbar{width:5px}textarea::-webkit-scrollbar-thumb{background:#D4D4D8;border-radius:3px}
+    select option{background:#fff;color:#1C1C1F}
+    ::selection{background:rgba(232,228,221,0.5)}
   </style>
 </head>
 <body>
@@ -41,9 +40,10 @@
       {id:"firm_size",label:"Firm Size",type:"select",opts:["1\u20135 people","6\u201315 people","16\u201350 people","51\u2013100 people","100+"]},
     ];
     function Btn({onClick,disabled,sec,children}){
-      const b={border:"none",fontSize:14,fontWeight:600,borderRadius:6,cursor:disabled?"not-allowed":"pointer",fontFamily:"inherit",transition:"all .2s",letterSpacing:".01em"};
-      const st=sec?{...b,background:"transparent",border:"1px solid var(--border-hover)",color:"var(--text-sec)",padding:"11px 22px"}
-        :{...b,background:disabled?"var(--text-tert)":"var(--warm)",color:disabled?"var(--bg-card)":"var(--bg)",padding:"13px 32px",boxShadow:disabled?"none":"0 2px 12px rgba(232,228,221,.12)"};
+      const b={border:"none",fontSize:14,fontWeight:600,borderRadius:6,cursor:disabled?"not-allowed":"pointer",fontFamily:"inherit",transition:"all .2s"};
+      const st=sec
+        ?{...b,background:"transparent",border:"1px solid #D4D4D8",color:"#52525B",padding:"11px 22px"}
+        :{...b,background:disabled?"#D4D4D8":"#1C1C1F",color:disabled?"#A1A1AA":"#FAFAFA",padding:"13px 32px"};
       return <button onClick={onClick} disabled={disabled} style={st}>{children}</button>;
     }
     function App(){
@@ -65,28 +65,28 @@
         try{const e=JSON.parse(localStorage.getItem("fl_q")||"[]");e.push(p);localStorage.setItem("fl_q",JSON.stringify(e))}catch(e){}
         setDone(true);setStep(tot);
       };
-      const is={width:"100%",background:"var(--bg-card)",border:"1px solid var(--border-hover)",borderRadius:6,padding:"11px 14px",fontSize:14,color:"var(--text)",fontFamily:"inherit",outline:"none",boxSizing:"border-box",transition:"border-color .2s"};
+      const is={width:"100%",background:"#fff",border:"1px solid #E4E4E7",borderRadius:8,padding:"12px 14px",fontSize:14,color:"#1C1C1F",fontFamily:"inherit",outline:"none",boxSizing:"border-box",transition:"border-color .2s"};
       return(
         <div style={{display:"flex",flexDirection:"column",alignItems:"center",padding:"0 20px"}}>
-          {step>0&&step<tot&&<div style={{position:"fixed",top:0,left:0,right:0,height:2,background:"var(--bg-card)",zIndex:50}}><div style={{height:"100%",width:`${prog}%`,background:"var(--warm)",transition:"width .5s cubic-bezier(.4,0,.2,1)"}}/></div>}
-          <div style={{maxWidth:580,width:"100%",paddingTop:step===0?80:56,paddingBottom:60}}>
+          {step>0&&step<tot&&<div style={{position:"fixed",top:0,left:0,right:0,height:3,background:"#E4E4E7",zIndex:50}}><div style={{height:"100%",width:`${prog}%`,background:"#1C1C1F",transition:"width .5s cubic-bezier(.4,0,.2,1)"}}/></div>}
+          <div style={{maxWidth:560,width:"100%",paddingTop:step===0?72:56,paddingBottom:60}}>
             {step===0&&(
               <div className="fade-up">
-                <div style={{fontSize:10,fontWeight:600,letterSpacing:4,color:"var(--warm)",marginBottom:28,textTransform:"uppercase"}}>FORGELIGHT LABS</div>
-                <h1 style={{fontFamily:"'Cinzel',Georgia,serif",fontSize:32,lineHeight:1.25,fontWeight:500,margin:"0 0 16px 0"}}>Before we talk, help us understand your firm.</h1>
-                <p style={{fontSize:15,lineHeight:1.7,color:"var(--text-sec)",margin:"0 0 28px 0"}}>This takes about 3 minutes. Your answers help us determine whether our system is a genuine fit &mdash; and if it is, we'll come to the call with a specific plan built around your situation.</p>
-                <p style={{fontSize:13,lineHeight:1.6,color:"var(--text-tert)",margin:"0 0 40px 0"}}>No generic sales pitch. No wasted time. Just an honest conversation informed by what you tell us here.</p>
+                <img src="/forgelight-logo-dark.svg" alt="Forgelight Labs" style={{height:34,marginBottom:36}} />
+                <h1 style={{fontSize:28,lineHeight:1.3,fontWeight:700,margin:"0 0 14px 0",color:"#1C1C1F"}}>Before we talk, help us understand your firm.</h1>
+                <p style={{fontSize:15,lineHeight:1.7,color:"#52525B",margin:"0 0 24px 0"}}>This takes about 3 minutes. Your answers help us determine whether our system is a genuine fit &mdash; and if it is, we'll come to the call with a specific plan built around your situation.</p>
+                <p style={{fontSize:13,lineHeight:1.6,color:"#A1A1AA",margin:"0 0 36px 0"}}>No generic sales pitch. No wasted time. Just an honest conversation informed by what you tell us here.</p>
                 <Btn onClick={()=>setStep(1)}>Get started &rarr;</Btn>
               </div>
             )}
             {step>=1&&step<=QS.length&&(
               <div key={step} className="fade-up">
-                <div style={{fontSize:11,fontWeight:600,color:"var(--text-tert)",marginBottom:12,letterSpacing:1}}>{step} / {QS.length}</div>
-                <h2 style={{fontFamily:"'Cinzel',Georgia,serif",fontSize:21,lineHeight:1.4,fontWeight:500,margin:"0 0 8px 0"}}>{QS[step-1].label}</h2>
-                <p style={{fontSize:13,color:"var(--text-tert)",margin:"0 0 20px 0"}}>{QS[step-1].hint}</p>
+                <div style={{fontSize:12,fontWeight:600,color:"#A1A1AA",marginBottom:12,letterSpacing:1}}>{step} / {QS.length}</div>
+                <h2 style={{fontSize:20,lineHeight:1.4,fontWeight:600,margin:"0 0 8px 0",color:"#1C1C1F"}}>{QS[step-1].label}</h2>
+                <p style={{fontSize:13,color:"#A1A1AA",margin:"0 0 20px 0"}}>{QS[step-1].hint}</p>
                 <textarea value={ans[QS[step-1].id]||""} onChange={e=>setAns(p=>({...p,[QS[step-1].id]:e.target.value}))} placeholder="Type your answer here..." autoFocus
                   style={{...is,minHeight:130,resize:"vertical",fontSize:15,lineHeight:1.6,padding:16,borderRadius:8}}
-                  onFocus={e=>e.target.style.borderColor="var(--warm)"} onBlur={e=>e.target.style.borderColor="var(--border-hover)"}/>
+                  onFocus={e=>e.target.style.borderColor="#1C1C1F"} onBlur={e=>e.target.style.borderColor="#E4E4E7"}/>
                 <div style={{display:"flex",justifyContent:"space-between",marginTop:24}}>
                   <Btn sec onClick={()=>setStep(step-1)}>&larr; Back</Btn>
                   <Btn onClick={()=>setStep(step+1)} disabled={!ok()}>Continue &rarr;</Btn>
@@ -95,13 +95,13 @@
             )}
             {step===QS.length+1&&(
               <div className="fade-up">
-                <div style={{fontSize:11,fontWeight:600,color:"var(--text-tert)",marginBottom:12,letterSpacing:1}}>LAST STEP</div>
-                <h2 style={{fontFamily:"'Cinzel',Georgia,serif",fontSize:21,lineHeight:1.4,fontWeight:500,margin:"0 0 8px 0"}}>Tell us about your firm.</h2>
-                <p style={{fontSize:13,color:"var(--text-tert)",margin:"0 0 20px 0"}}>So we can come prepared.</p>
+                <div style={{fontSize:12,fontWeight:600,color:"#A1A1AA",marginBottom:12,letterSpacing:1}}>LAST STEP</div>
+                <h2 style={{fontSize:20,lineHeight:1.4,fontWeight:600,margin:"0 0 8px 0",color:"#1C1C1F"}}>Tell us about your firm.</h2>
+                <p style={{fontSize:13,color:"#A1A1AA",margin:"0 0 20px 0"}}>So we can come prepared.</p>
                 <div style={{display:"flex",flexDirection:"column",gap:14}}>
                   {FF.map(f=>(
                     <div key={f.id}>
-                      <label style={{fontSize:12,fontWeight:500,color:"var(--text-sec)",display:"block",marginBottom:5}}>{f.label}</label>
+                      <label style={{fontSize:12,fontWeight:500,color:"#52525B",display:"block",marginBottom:5}}>{f.label}</label>
                       {f.type==="select"?(
                         <select value={fi[f.id]||""} onChange={e=>setFi(p=>({...p,[f.id]:e.target.value}))} style={{...is,appearance:"none"}}>
                           <option value="">Select...</option>
@@ -109,7 +109,7 @@
                         </select>
                       ):(
                         <input type={f.type} value={fi[f.id]||""} onChange={e=>setFi(p=>({...p,[f.id]:e.target.value}))} placeholder={f.ph} style={is}
-                          onFocus={e=>e.target.style.borderColor="var(--warm)"} onBlur={e=>e.target.style.borderColor="var(--border-hover)"}/>
+                          onFocus={e=>e.target.style.borderColor="#1C1C1F"} onBlur={e=>e.target.style.borderColor="#E4E4E7"}/>
                       )}
                     </div>
                   ))}
@@ -122,15 +122,15 @@
             )}
             {done&&step===tot&&(
               <div className="fade-up" style={{textAlign:"center",paddingTop:40}}>
-                <div style={{width:56,height:56,borderRadius:"50%",background:"var(--warm)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 24px",fontSize:24,color:"var(--bg)"}}>&check;</div>
-                <h2 style={{fontFamily:"'Cinzel',Georgia,serif",fontSize:26,fontWeight:500,margin:"0 0 12px 0"}}>Thank you{fi.your_name?`, ${fi.your_name.split(" ")[0]}`:""}</h2>
-                <p style={{fontSize:15,lineHeight:1.7,color:"var(--text-sec)",margin:"0 0 28px 0"}}>We&rsquo;ve received your answers. When we speak, we'll have a specific assessment for{fi.firm_name?` ${fi.firm_name}`:` your firm`} &mdash; no generic pitch.</p>
-                <div style={{background:"var(--bg-card)",border:"1px solid var(--border-hover)",borderRadius:8,padding:24,marginBottom:24,textAlign:"left"}}>
-                  <p style={{fontSize:10,fontWeight:600,color:"var(--warm)",margin:"0 0 6px 0",letterSpacing:2}}>NEXT STEP</p>
-                  <p style={{fontSize:14,lineHeight:1.6,color:"var(--text-sec)",margin:0}}>Book a 15-minute call with David. He&rsquo;ll walk through your answers and give you an honest assessment.</p>
+                <div style={{width:52,height:52,borderRadius:"50%",background:"#1C1C1F",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 24px",fontSize:22,color:"#FAFAFA"}}>&check;</div>
+                <h2 style={{fontSize:24,fontWeight:700,margin:"0 0 12px 0",color:"#1C1C1F"}}>Thank you{fi.your_name?`, ${fi.your_name.split(" ")[0]}`:""}</h2>
+                <p style={{fontSize:15,lineHeight:1.7,color:"#52525B",margin:"0 0 28px 0"}}>We&rsquo;ve received your answers. When we speak, we'll have a specific assessment for{fi.firm_name?` ${fi.firm_name}`:` your firm`} &mdash; no generic pitch.</p>
+                <div style={{background:"#fff",border:"1px solid #E4E4E7",borderRadius:8,padding:24,marginBottom:24,textAlign:"left"}}>
+                  <p style={{fontSize:11,fontWeight:600,color:"#64748B",margin:"0 0 6px 0",letterSpacing:1.5}}>NEXT STEP</p>
+                  <p style={{fontSize:14,lineHeight:1.6,color:"#52525B",margin:0}}>Book a 15-minute call with David. He&rsquo;ll walk through your answers and give you an honest assessment.</p>
                 </div>
-                <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"var(--warm)",color:"var(--bg)",padding:"14px 40px",fontSize:14,fontWeight:600,borderRadius:6,boxShadow:"0 2px 12px rgba(232,228,221,.12)",fontFamily:"inherit",textDecoration:"none"}}>Book Your 15-Minute Call &rarr;</a>
-                <p style={{fontSize:11,color:"var(--text-tert)",marginTop:14}}>Pick any time that works.</p>
+                <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"#1C1C1F",color:"#FAFAFA",padding:"14px 40px",fontSize:14,fontWeight:600,borderRadius:6,fontFamily:"inherit",textDecoration:"none"}}>Book Your 15-Minute Call &rarr;</a>
+                <p style={{fontSize:11,color:"#A1A1AA",marginTop:14}}>Pick any time that works.</p>
               </div>
             )}
           </div>
