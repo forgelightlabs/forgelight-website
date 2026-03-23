@@ -3,298 +3,141 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Forgelight | Pre-Call Questionnaire</title>
-  <meta name="description" content="Help us understand your firm before our conversation. Takes about 3 minutes." />
+  <title>Forgelight Labs | Pre-Call Questionnaire</title>
+  <meta name="description" content="Help us understand your firm before our conversation." />
   <link rel="icon" href="/favicon.svg" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'DM Sans', system-ui, sans-serif;
-      background: linear-gradient(168deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-      color: #f8fafc;
-      min-height: 100vh;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-up { animation: fadeUp 0.5s ease-out; }
-    textarea::-webkit-scrollbar { width: 6px; }
-    textarea::-webkit-scrollbar-track { background: transparent; }
-    textarea::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-    select option { background: #1e293b; }
-    a { text-decoration: none; }
+    :root{--bg:#09090B;--bg-card:#111113;--text:#FAFAFA;--text-sec:#A1A1AA;--text-tert:#52525B;--accent:#64748B;--warm:#E8E4DD;--warm-dim:rgba(232,228,221,0.15);--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12)}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .fade-up{animation:fadeUp .45s ease-out}
+    textarea::-webkit-scrollbar{width:5px}textarea::-webkit-scrollbar-thumb{background:var(--text-tert);border-radius:3px}
+    select option{background:var(--bg-card);color:var(--text)}
+    ::selection{background:var(--warm-dim);color:var(--warm)}
   </style>
 </head>
 <body>
   <div id="root"></div>
   <script type="text/babel">
-    const { useState } = React;
-
-    const CALENDLY_URL = "https://calendly.com/forgelightlabs/discovery";
-
-    const QUESTIONS = [
-      {
-        id: 1,
-        label: "What's the biggest challenge your firm is facing right now when it comes to generating new clients?",
-        hint: "Be specific — there are no wrong answers.",
-      },
-      {
-        id: 2,
-        label: "What have you already tried to fix this?",
-        hint: "Networking events, marketing agencies, LinkedIn, referral programs, etc.",
-      },
-      {
-        id: 3,
-        label: "If we don't end up working together, what's your Plan B for growing your practice this year?",
-        hint: "We ask this to understand your situation honestly, not to pressure you.",
-      },
-      {
-        id: 4,
-        label: "Describe your firm 6 months from now if you had a reliable system generating 5–10 new qualified conversations every month.",
-        hint: "Revenue, team, clients, peace of mind — whatever matters most to you.",
-      },
-      {
-        id: 5,
-        label: "What does your firm specialize in?",
-        hint: "Tax advisory, fractional CFO, audit, M&A consulting, wealth management, litigation, etc.",
-      },
+    const{useState}=React;
+    const CALENDLY_URL="https://calendly.com/forgelightlabs/discovery";
+    const QS=[
+      {id:1,label:"What\u2019s the biggest challenge your firm is facing right now when it comes to generating new clients?",hint:"Be specific \u2014 there are no wrong answers."},
+      {id:2,label:"What have you already tried to fix this?",hint:"Networking events, marketing agencies, LinkedIn, referral programs, etc."},
+      {id:3,label:"If we don\u2019t end up working together, what\u2019s your Plan B for growing your practice this year?",hint:"We ask this to understand your situation honestly, not to pressure you."},
+      {id:4,label:"Describe your firm 6 months from now if you had a reliable system generating 5\u201310 qualified conversations every month.",hint:"Revenue, team, clients, peace of mind \u2014 whatever matters most."},
+      {id:5,label:"What does your firm specialize in?",hint:"Tax advisory, fractional CFO, audit, M&A consulting, wealth management, litigation, etc."},
     ];
-
-    const FIRM_FIELDS = [
-      { id: "firm_name", label: "Firm Name", type: "text", placeholder: "e.g., Smith & Associates", required: true },
-      { id: "your_name", label: "Your Name", type: "text", placeholder: "e.g., John Smith", required: true },
-      { id: "your_title", label: "Your Title", type: "text", placeholder: "e.g., Managing Partner" },
-      { id: "email", label: "Email", type: "email", placeholder: "john@smithadvisory.com", required: true },
-      { id: "firm_size", label: "Approximate Firm Size", type: "select", options: ["1–5 people", "6–15 people", "16–50 people", "51–100 people", "100+"] },
+    const FF=[
+      {id:"firm_name",label:"Firm Name",type:"text",ph:"e.g., Smith & Associates",req:true},
+      {id:"your_name",label:"Your Name",type:"text",ph:"e.g., John Smith",req:true},
+      {id:"your_title",label:"Your Title",type:"text",ph:"e.g., Managing Partner"},
+      {id:"email",label:"Email",type:"email",ph:"john@smithadvisory.com",req:true},
+      {id:"firm_size",label:"Firm Size",type:"select",opts:["1\u20135 people","6\u201315 people","16\u201350 people","51\u2013100 people","100+"]},
     ];
-
-    function ProgressBar({ progress }) {
-      return (
-        <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: 3, background: "#1e293b", zIndex: 50 }}>
-          <div style={{
-            height: "100%", width: `${progress}%`,
-            background: "linear-gradient(90deg, #e94560, #f472b6)",
-            transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-          }} />
-        </div>
-      );
+    function Btn({onClick,disabled,sec,children}){
+      const b={border:"none",fontSize:14,fontWeight:600,borderRadius:6,cursor:disabled?"not-allowed":"pointer",fontFamily:"inherit",transition:"all .2s",letterSpacing:".01em"};
+      const st=sec?{...b,background:"transparent",border:"1px solid var(--border-hover)",color:"var(--text-sec)",padding:"11px 22px"}
+        :{...b,background:disabled?"var(--text-tert)":"var(--warm)",color:disabled?"var(--bg-card)":"var(--bg)",padding:"13px 32px",boxShadow:disabled?"none":"0 2px 12px rgba(232,228,221,.12)"};
+      return <button onClick={onClick} disabled={disabled} style={st}>{children}</button>;
     }
-
-    function Button({ onClick, disabled, variant, children, style: extraStyle }) {
-      const base = {
-        border: "none", padding: "14px 36px", fontSize: 15, fontWeight: 600,
-        borderRadius: 8, cursor: disabled ? "not-allowed" : "pointer",
-        fontFamily: "inherit", transition: "all 0.2s",
-      };
-      const styles = variant === "secondary"
-        ? { ...base, background: "transparent", border: "1px solid #334155", color: "#94a3b8", padding: "12px 24px", fontSize: 14 }
-        : { ...base, background: disabled ? "#334155" : "linear-gradient(135deg, #e94560, #dc2626)", color: disabled ? "#64748b" : "#fff",
-            boxShadow: disabled ? "none" : "0 4px 20px rgba(233, 69, 96, 0.3)" };
-      return <button onClick={onClick} disabled={disabled} style={{ ...styles, ...extraStyle }}>{children}</button>;
-    }
-
-    function App() {
-      const [step, setStep] = useState(0);
-      const [answers, setAnswers] = useState({});
-      const [firmInfo, setFirmInfo] = useState({});
-      const [submitted, setSubmitted] = useState(false);
-
-      const totalSteps = QUESTIONS.length + 2;
-      const progress = step === 0 ? 0 : Math.min((step / (totalSteps - 1)) * 100, 100);
-
-      const canProceed = () => {
-        if (step === 0) return true;
-        if (step >= 1 && step <= QUESTIONS.length) {
-          return (answers[QUESTIONS[step - 1].id] || "").trim().length > 10;
-        }
-        if (step === QUESTIONS.length + 1) {
-          return firmInfo.firm_name && firmInfo.your_name && firmInfo.email;
-        }
+    function App(){
+      const[step,setStep]=useState(0);
+      const[ans,setAns]=useState({});
+      const[fi,setFi]=useState({});
+      const[done,setDone]=useState(false);
+      const tot=QS.length+2;
+      const prog=step===0?0:Math.min((step/(tot-1))*100,100);
+      const ok=()=>{
+        if(step===0)return true;
+        if(step>=1&&step<=QS.length)return(ans[QS[step-1].id]||"").trim().length>10;
+        if(step===QS.length+1)return fi.firm_name&&fi.your_name&&fi.email;
         return false;
       };
-
-      const handleSubmit = () => {
-        // Send to backend / webhook
-        const payload = {
-          firm: firmInfo,
-          answers: QUESTIONS.map(q => ({ question: q.label, answer: answers[q.id] || "" })),
-          submitted_at: new Date().toISOString(),
-          source: window.location.href,
-        };
-        // POST to webhook (update URL when n8n/Supabase is wired)
-        try {
-          navigator.sendBeacon && navigator.sendBeacon(
-            "https://hooks.zapier.com/hooks/catch/placeholder",
-            JSON.stringify(payload)
-          );
-        } catch(e) {}
-        // Also store in localStorage as backup
-        try {
-          const existing = JSON.parse(localStorage.getItem("fl_questionnaires") || "[]");
-          existing.push(payload);
-          localStorage.setItem("fl_questionnaires", JSON.stringify(existing));
-        } catch(e) {}
-        setSubmitted(true);
-        setStep(totalSteps);
+      const submit=()=>{
+        const p={firm:fi,answers:QS.map(q=>({question:q.label,answer:ans[q.id]||""})),submitted_at:new Date().toISOString(),source:location.href};
+        try{navigator.sendBeacon&&navigator.sendBeacon("https://hooks.zapier.com/hooks/catch/placeholder",JSON.stringify(p))}catch(e){}
+        try{const e=JSON.parse(localStorage.getItem("fl_q")||"[]");e.push(p);localStorage.setItem("fl_q",JSON.stringify(e))}catch(e){}
+        setDone(true);setStep(tot);
       };
-
-      const inputStyle = {
-        width: "100%", background: "#1e293b", border: "1px solid #334155",
-        borderRadius: 8, padding: "12px 14px", fontSize: 14, color: "#f1f5f9",
-        fontFamily: "inherit", outline: "none", boxSizing: "border-box",
-      };
-
-      return (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "0 16px" }}>
-          {step > 0 && step < totalSteps && <ProgressBar progress={progress} />}
-
-          <div style={{ maxWidth: 640, width: "100%", paddingTop: step === 0 ? 80 : 60, paddingBottom: 60 }}>
-
-            {/* INTRO */}
-            {step === 0 && (
+      const is={width:"100%",background:"var(--bg-card)",border:"1px solid var(--border-hover)",borderRadius:6,padding:"11px 14px",fontSize:14,color:"var(--text)",fontFamily:"inherit",outline:"none",boxSizing:"border-box",transition:"border-color .2s"};
+      return(
+        <div style={{display:"flex",flexDirection:"column",alignItems:"center",padding:"0 20px"}}>
+          {step>0&&step<tot&&<div style={{position:"fixed",top:0,left:0,right:0,height:2,background:"var(--bg-card)",zIndex:50}}><div style={{height:"100%",width:`${prog}%`,background:"var(--warm)",transition:"width .5s cubic-bezier(.4,0,.2,1)"}}/></div>}
+          <div style={{maxWidth:580,width:"100%",paddingTop:step===0?80:56,paddingBottom:60}}>
+            {step===0&&(
               <div className="fade-up">
-                <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, color: "#e94560", marginBottom: 24, textTransform: "uppercase" }}>
-                  FORGELIGHT
-                </div>
-                <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 36, lineHeight: 1.2, fontWeight: 400, margin: "0 0 16px 0" }}>
-                  Before we talk, help us<br />understand your firm.
-                </h1>
-                <p style={{ fontSize: 16, lineHeight: 1.7, color: "#94a3b8", margin: "0 0 32px 0" }}>
-                  This takes about 3 minutes. Your answers help us determine whether our system
-                  is a genuine fit for your firm — and if it is, we'll come to the call with a
-                  specific plan built around your situation.
-                </p>
-                <p style={{ fontSize: 14, lineHeight: 1.6, color: "#64748b", margin: "0 0 40px 0" }}>
-                  No generic sales pitch. No wasted time. Just an honest conversation
-                  informed by what you tell us here.
-                </p>
-                <Button onClick={() => setStep(1)}>Let's get started →</Button>
+                <div style={{fontSize:10,fontWeight:600,letterSpacing:4,color:"var(--warm)",marginBottom:28,textTransform:"uppercase"}}>FORGELIGHT LABS</div>
+                <h1 style={{fontFamily:"'Cinzel',Georgia,serif",fontSize:32,lineHeight:1.25,fontWeight:500,margin:"0 0 16px 0"}}>Before we talk, help us understand your firm.</h1>
+                <p style={{fontSize:15,lineHeight:1.7,color:"var(--text-sec)",margin:"0 0 28px 0"}}>This takes about 3 minutes. Your answers help us determine whether our system is a genuine fit &mdash; and if it is, we'll come to the call with a specific plan built around your situation.</p>
+                <p style={{fontSize:13,lineHeight:1.6,color:"var(--text-tert)",margin:"0 0 40px 0"}}>No generic sales pitch. No wasted time. Just an honest conversation informed by what you tell us here.</p>
+                <Btn onClick={()=>setStep(1)}>Get started &rarr;</Btn>
               </div>
             )}
-
-            {/* QUESTIONS */}
-            {step >= 1 && step <= QUESTIONS.length && (
+            {step>=1&&step<=QS.length&&(
               <div key={step} className="fade-up">
-                <div style={{ fontSize: 12, fontWeight: 600, color: "#64748b", marginBottom: 12 }}>
-                  QUESTION {step} OF {QUESTIONS.length}
-                </div>
-                <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 24, lineHeight: 1.35, fontWeight: 400, margin: "0 0 8px 0", color: "#f1f5f9" }}>
-                  {QUESTIONS[step - 1].label}
-                </h2>
-                <p style={{ fontSize: 13, color: "#64748b", margin: "0 0 24px 0" }}>
-                  {QUESTIONS[step - 1].hint}
-                </p>
-                <textarea
-                  value={answers[QUESTIONS[step - 1].id] || ""}
-                  onChange={(e) => setAnswers(prev => ({ ...prev, [QUESTIONS[step - 1].id]: e.target.value }))}
-                  placeholder="Type your answer here..."
-                  autoFocus
-                  style={{
-                    ...inputStyle, minHeight: 140, resize: "vertical",
-                    fontSize: 15, lineHeight: 1.6, padding: 18, borderRadius: 10,
-                  }}
-                  onFocus={(e) => e.target.style.borderColor = "#e94560"}
-                  onBlur={(e) => e.target.style.borderColor = "#334155"}
-                />
-                <div style={{ display: "flex", justifyContent: "space-between", marginTop: 24 }}>
-                  <Button variant="secondary" onClick={() => setStep(step - 1)}>← Back</Button>
-                  <Button onClick={() => setStep(step + 1)} disabled={!canProceed()}>Continue →</Button>
+                <div style={{fontSize:11,fontWeight:600,color:"var(--text-tert)",marginBottom:12,letterSpacing:1}}>{step} / {QS.length}</div>
+                <h2 style={{fontFamily:"'Cinzel',Georgia,serif",fontSize:21,lineHeight:1.4,fontWeight:500,margin:"0 0 8px 0"}}>{QS[step-1].label}</h2>
+                <p style={{fontSize:13,color:"var(--text-tert)",margin:"0 0 20px 0"}}>{QS[step-1].hint}</p>
+                <textarea value={ans[QS[step-1].id]||""} onChange={e=>setAns(p=>({...p,[QS[step-1].id]:e.target.value}))} placeholder="Type your answer here..." autoFocus
+                  style={{...is,minHeight:130,resize:"vertical",fontSize:15,lineHeight:1.6,padding:16,borderRadius:8}}
+                  onFocus={e=>e.target.style.borderColor="var(--warm)"} onBlur={e=>e.target.style.borderColor="var(--border-hover)"}/>
+                <div style={{display:"flex",justifyContent:"space-between",marginTop:24}}>
+                  <Btn sec onClick={()=>setStep(step-1)}>&larr; Back</Btn>
+                  <Btn onClick={()=>setStep(step+1)} disabled={!ok()}>Continue &rarr;</Btn>
                 </div>
               </div>
             )}
-
-            {/* FIRM INFO */}
-            {step === QUESTIONS.length + 1 && (
+            {step===QS.length+1&&(
               <div className="fade-up">
-                <div style={{ fontSize: 12, fontWeight: 600, color: "#64748b", marginBottom: 12 }}>LAST STEP</div>
-                <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 24, lineHeight: 1.35, fontWeight: 400, margin: "0 0 8px 0", color: "#f1f5f9" }}>
-                  Tell us about your firm.
-                </h2>
-                <p style={{ fontSize: 13, color: "#64748b", margin: "0 0 24px 0" }}>So we can come prepared to the conversation.</p>
-                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                  {FIRM_FIELDS.map((f) => (
+                <div style={{fontSize:11,fontWeight:600,color:"var(--text-tert)",marginBottom:12,letterSpacing:1}}>LAST STEP</div>
+                <h2 style={{fontFamily:"'Cinzel',Georgia,serif",fontSize:21,lineHeight:1.4,fontWeight:500,margin:"0 0 8px 0"}}>Tell us about your firm.</h2>
+                <p style={{fontSize:13,color:"var(--text-tert)",margin:"0 0 20px 0"}}>So we can come prepared.</p>
+                <div style={{display:"flex",flexDirection:"column",gap:14}}>
+                  {FF.map(f=>(
                     <div key={f.id}>
-                      <label style={{ fontSize: 13, fontWeight: 500, color: "#94a3b8", display: "block", marginBottom: 6 }}>{f.label}</label>
-                      {f.type === "select" ? (
-                        <select
-                          value={firmInfo[f.id] || ""}
-                          onChange={(e) => setFirmInfo(prev => ({ ...prev, [f.id]: e.target.value }))}
-                          style={{ ...inputStyle, appearance: "none" }}
-                        >
+                      <label style={{fontSize:12,fontWeight:500,color:"var(--text-sec)",display:"block",marginBottom:5}}>{f.label}</label>
+                      {f.type==="select"?(
+                        <select value={fi[f.id]||""} onChange={e=>setFi(p=>({...p,[f.id]:e.target.value}))} style={{...is,appearance:"none"}}>
                           <option value="">Select...</option>
-                          {f.options.map(o => <option key={o} value={o}>{o}</option>)}
+                          {f.opts.map(o=><option key={o} value={o}>{o}</option>)}
                         </select>
-                      ) : (
-                        <input
-                          type={f.type} value={firmInfo[f.id] || ""}
-                          onChange={(e) => setFirmInfo(prev => ({ ...prev, [f.id]: e.target.value }))}
-                          placeholder={f.placeholder} style={inputStyle}
-                          onFocus={(e) => e.target.style.borderColor = "#e94560"}
-                          onBlur={(e) => e.target.style.borderColor = "#334155"}
-                        />
+                      ):(
+                        <input type={f.type} value={fi[f.id]||""} onChange={e=>setFi(p=>({...p,[f.id]:e.target.value}))} placeholder={f.ph} style={is}
+                          onFocus={e=>e.target.style.borderColor="var(--warm)"} onBlur={e=>e.target.style.borderColor="var(--border-hover)"}/>
                       )}
                     </div>
                   ))}
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginTop: 28 }}>
-                  <Button variant="secondary" onClick={() => setStep(step - 1)}>← Back</Button>
-                  <Button onClick={handleSubmit} disabled={!canProceed()}>Submit & Book a Call →</Button>
+                <div style={{display:"flex",justifyContent:"space-between",marginTop:24}}>
+                  <Btn sec onClick={()=>setStep(step-1)}>&larr; Back</Btn>
+                  <Btn onClick={submit} disabled={!ok()}>Submit & Book a Call &rarr;</Btn>
                 </div>
               </div>
             )}
-
-            {/* COMPLETE */}
-            {submitted && step === totalSteps && (
-              <div className="fade-up" style={{ textAlign: "center", paddingTop: 40 }}>
-                <div style={{
-                  width: 64, height: 64, borderRadius: "50%",
-                  background: "linear-gradient(135deg, #10b981, #059669)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  margin: "0 auto 24px", fontSize: 28, color: "#fff",
-                }}>✓</div>
-                <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 28, fontWeight: 400, margin: "0 0 12px 0" }}>
-                  Thank you{firmInfo.your_name ? `, ${firmInfo.your_name.split(" ")[0]}` : ""}.
-                </h2>
-                <p style={{ fontSize: 16, lineHeight: 1.7, color: "#94a3b8", margin: "0 0 32px 0" }}>
-                  We've received your answers and we'll review them before our conversation.
-                  When we speak, we'll have a specific assessment of whether our system fits
-                  {firmInfo.firm_name ? ` ${firmInfo.firm_name}'s` : " your firm's"} situation — no generic pitch.
-                </p>
-                <div style={{
-                  background: "#1e293b", border: "1px solid #334155",
-                  borderRadius: 12, padding: 28, marginBottom: 24, textAlign: "left",
-                }}>
-                  <p style={{ fontSize: 14, fontWeight: 600, color: "#e94560", margin: "0 0 8px 0" }}>NEXT STEP</p>
-                  <p style={{ fontSize: 15, lineHeight: 1.6, color: "#cbd5e1", margin: 0 }}>
-                    Book a 15-minute call with David. He'll walk through your answers
-                    and tell you honestly whether this system makes sense for your firm.
-                  </p>
+            {done&&step===tot&&(
+              <div className="fade-up" style={{textAlign:"center",paddingTop:40}}>
+                <div style={{width:56,height:56,borderRadius:"50%",background:"var(--warm)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 24px",fontSize:24,color:"var(--bg)"}}>&check;</div>
+                <h2 style={{fontFamily:"'Cinzel',Georgia,serif",fontSize:26,fontWeight:500,margin:"0 0 12px 0"}}>Thank you{fi.your_name?`, ${fi.your_name.split(" ")[0]}`:""}</h2>
+                <p style={{fontSize:15,lineHeight:1.7,color:"var(--text-sec)",margin:"0 0 28px 0"}}>We&rsquo;ve received your answers. When we speak, we'll have a specific assessment for{fi.firm_name?` ${fi.firm_name}`:` your firm`} &mdash; no generic pitch.</p>
+                <div style={{background:"var(--bg-card)",border:"1px solid var(--border-hover)",borderRadius:8,padding:24,marginBottom:24,textAlign:"left"}}>
+                  <p style={{fontSize:10,fontWeight:600,color:"var(--warm)",margin:"0 0 6px 0",letterSpacing:2}}>NEXT STEP</p>
+                  <p style={{fontSize:14,lineHeight:1.6,color:"var(--text-sec)",margin:0}}>Book a 15-minute call with David. He&rsquo;ll walk through your answers and give you an honest assessment.</p>
                 </div>
-                <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" style={{
-                  display: "inline-block",
-                  background: "linear-gradient(135deg, #e94560, #dc2626)",
-                  color: "#fff", padding: "16px 44px", fontSize: 15, fontWeight: 600,
-                  borderRadius: 8, boxShadow: "0 4px 20px rgba(233, 69, 96, 0.3)",
-                }}>
-                  Book Your 15-Minute Call →
-                </a>
-                <p style={{ fontSize: 12, color: "#475569", marginTop: 16 }}>
-                  Pick any time that works for you.
-                </p>
+                <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"var(--warm)",color:"var(--bg)",padding:"14px 40px",fontSize:14,fontWeight:600,borderRadius:6,boxShadow:"0 2px 12px rgba(232,228,221,.12)",fontFamily:"inherit",textDecoration:"none"}}>Book Your 15-Minute Call &rarr;</a>
+                <p style={{fontSize:11,color:"var(--text-tert)",marginTop:14}}>Pick any time that works.</p>
               </div>
             )}
-
           </div>
         </div>
       );
     }
-
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
   </script>
 </body>
 </html>
