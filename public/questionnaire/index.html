@@ -6,7 +6,7 @@
   <title>Forgelight Labs | Pre-Call Questionnaire</title>
   <meta name="description" content="Help us understand your firm before our conversation." />
   <link rel="icon" href="/favicon.svg" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
@@ -25,6 +25,31 @@
   <script type="text/babel">
     const{useState}=React;
     const CALENDLY_URL="https://calendly.com/forgelightlabs/discovery";
+
+    // Inline SVG logo so it works everywhere — no external file dependency
+    function Logo({height=34}) {
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" width={height * 5} height={height} viewBox="0 0 500 100" style={{display:'block',marginBottom:36}}>
+          <defs>
+            <style>{`@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap');.wm{font-family:'Cinzel',Georgia,serif;font-size:28px;font-weight:600;fill:#1C1C1F}`}</style>
+          </defs>
+          <g transform="translate(24, 16)">
+            <circle cx="32" cy="32" r="27" fill="none" stroke="#1C1C1F" strokeWidth="3"/>
+            <path d="M32 24L34.2 17.2L29.9 11.1L32 7" stroke="#1C1C1F" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M37.7 26.3L44.1 23.1L45.3 15.7L49.7 14.3" stroke="#1C1C1F" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M40 32L46.8 34.2L52.9 29.9L57 32" stroke="#1C1C1F" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M37.7 37.7L40.9 44.1L48.3 45.3L49.7 49.7" stroke="#1C1C1F" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M32 40L29.8 46.8L34.1 52.9L32 57" stroke="#1C1C1F" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M26.3 37.7L19.9 40.9L18.7 48.3L14.3 49.7" stroke="#1C1C1F" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M24 32L17.2 29.8L11.1 34.1L7 32" stroke="#1C1C1F" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M26.3 26.3L23.1 19.9L15.7 18.7L14.3 14.3" stroke="#1C1C1F" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="32" cy="32" r="5.5" fill="#1C1C1F"/>
+          </g>
+          <text x="106" y="58" className="wm" style={{fontFamily:"'Cinzel',Georgia,serif",fontSize:28,fontWeight:600,fill:'#1C1C1F'}}>Forgelight Labs</text>
+        </svg>
+      );
+    }
+
     const QS=[
       {id:1,label:"What\u2019s the biggest challenge your firm is facing right now when it comes to generating new clients?",hint:"Be specific \u2014 there are no wrong answers."},
       {id:2,label:"What have you already tried to fix this?",hint:"Networking events, marketing agencies, LinkedIn, referral programs, etc."},
@@ -72,7 +97,7 @@
           <div style={{maxWidth:560,width:"100%",paddingTop:step===0?72:56,paddingBottom:60}}>
             {step===0&&(
               <div className="fade-up">
-                <img src="/forgelight-logo-dark.svg" alt="Forgelight Labs" style={{height:34,marginBottom:36}} />
+                <Logo height={34} />
                 <h1 style={{fontSize:28,lineHeight:1.3,fontWeight:700,margin:"0 0 14px 0",color:"#1C1C1F"}}>Before we talk, help us understand your firm.</h1>
                 <p style={{fontSize:15,lineHeight:1.7,color:"#52525B",margin:"0 0 24px 0"}}>This takes about 3 minutes. Your answers help us determine whether our system is a genuine fit &mdash; and if it is, we'll come to the call with a specific plan built around your situation.</p>
                 <p style={{fontSize:13,lineHeight:1.6,color:"#A1A1AA",margin:"0 0 36px 0"}}>No generic sales pitch. No wasted time. Just an honest conversation informed by what you tell us here.</p>
