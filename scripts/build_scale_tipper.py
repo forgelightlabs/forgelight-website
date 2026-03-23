@@ -8,7 +8,6 @@ from reportlab.platypus import (
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
 from reportlab.pdfgen import canvas
-import math
 
 TEXT = HexColor('#1C1C1F')
 TEXT_SEC = HexColor('#52525B')
@@ -45,62 +44,23 @@ s['cta_body'] = ParagraphStyle('CB', fontName='Helvetica', fontSize=10.5, leadin
 s['cta_link'] = ParagraphStyle('CL', fontName='Helvetica-Bold', fontSize=11, leading=16, textColor=ACCENT, alignment=TA_CENTER, spaceAfter=4)
 s['cta_small'] = ParagraphStyle('CS', fontName='Helvetica', fontSize=8.5, leading=12, textColor=TEXT_TERT, alignment=TA_CENTER)
 
-def draw_forge_icon(c, x, y, size=18):
-    """Draw the forge sun icon at given position"""
-    cx, cy = x + size/2, y + size/2
-    r_outer = size * 0.42
-    r_inner = size * 0.086
-    c.setStrokeColor(TEXT)
-    c.setLineWidth(1.2)
-    c.setLineCap(1)  # round
-    c.setLineJoin(1)  # round
-    # Outer circle
-    c.circle(cx, cy, r_outer, stroke=1, fill=0)
-    # Center dot
-    c.setFillColor(TEXT)
-    c.circle(cx, cy, r_inner, stroke=0, fill=1)
-    # 8 rays
-    angles = [90, 45, 0, 315, 270, 225, 180, 135]
-    ray_points = [
-        # Each ray: 3 segments from center outward with slight zigzag
-        [(0.375, 0), (0.53, 0.034), (0.47, 0.033), (0.5, 0)],  # simplified ray pattern
-    ]
-    for angle in angles:
-        rad = math.radians(angle)
-        r1 = r_outer * 0.75
-        r2 = r_outer * 1.3
-        r3 = r_outer * 1.55
-        # Simple 2-segment ray
-        x1 = cx + r1 * math.cos(rad)
-        y1 = cy + r1 * math.sin(rad)
-        x2 = cx + r2 * math.cos(rad + 0.15)
-        y2 = cy + r2 * math.sin(rad + 0.15)
-        x3 = cx + r3 * math.cos(rad - 0.08)
-        y3 = cy + r3 * math.sin(rad - 0.08)
-        p = c.beginPath()
-        p.moveTo(x1, y1)
-        p.lineTo(x2, y2)
-        p.lineTo(x3, y3)
-        c.drawPath(p, stroke=1, fill=0)
+LOGO = "/home/claude/forgelight-logo-dark.png"
 
 def header_footer(c, doc):
     c.saveState()
     w, h = letter
-    # Draw forge icon
-    draw_forge_icon(c, doc.leftMargin, h - 50, size=20)
-    # Wordmark next to icon
-    c.setFont('Helvetica-Bold', 9)
-    c.setFillColor(TEXT)
-    c.drawString(doc.leftMargin + 26, h - 44, "Forgelight Labs")
-    # Page number
+    try:
+        c.drawImage(LOGO, doc.leftMargin, h - 50, width=115, height=23, preserveAspectRatio=True, mask='auto')
+    except:
+        c.setFont('Helvetica-Bold', 8)
+        c.setFillColor(TEXT)
+        c.drawString(doc.leftMargin, h - 44, "FORGELIGHT LABS")
     c.setFillColor(TEXT_TERT)
-    c.setFont('Helvetica', 8)
+    c.setFont('Helvetica', 7.5)
     c.drawRightString(w - doc.rightMargin, h - 44, f"{doc.page}")
-    # Warm line
     c.setStrokeColor(WARM)
     c.setLineWidth(1.5)
     c.line(doc.leftMargin, h - 56, w - doc.rightMargin, h - 56)
-    # Footer
     c.setStrokeColor(BORDER)
     c.setLineWidth(0.5)
     c.line(doc.leftMargin, 38, w - doc.rightMargin, 38)
