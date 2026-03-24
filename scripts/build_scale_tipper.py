@@ -68,7 +68,7 @@ def header_footer(c, doc):
     c.setFont('Helvetica', 7)
     c.drawString(doc.leftMargin, 26, "forgelightlabs.com")
     c.drawCentredString(w/2, 26, "Confidential")
-    c.drawRightString(w - doc.rightMargin, 26, "david@forgelightlabs.com")
+    c.drawRightString(w - doc.rightMargin, 26, "felix@forgelightlabs.com")
     c.restoreState()
 
 def mkstep(num, title, body):
