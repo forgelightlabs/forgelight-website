@@ -170,9 +170,9 @@ story.append(Spacer(1,12))
 story.append(KeepTogether([
     HRFlowable(width="100%", thickness=1.5, color=WARM, spaceAfter=12),
     Paragraph("Ready to see if this fits your firm?", s['cta_head']),
-    Paragraph("Book a 15-minute call with Felix. We\u2019ll review your situation and give you an honest assessment.", s['cta_body']),
-    Paragraph('<link href="https://calendly.com/forgelightlabs/discovery" color="#64748B">\u2794  Book Your 15-Minute Call</link>', s['cta_link']),
-    Paragraph("calendly.com/forgelightlabs/discovery", s['cta_small']),
+    Paragraph("Book a 20-minute call with Felix. We\u2019ll review your situation and give you an honest assessment.", s['cta_body']),
+    Paragraph('<link href="https://cal.com/felixmann/20min" color="#64748B">\u2794  Book Your 20-Minute Call</link>', s['cta_link']),
+    Paragraph("cal.com/felixmann/20min", s['cta_small']),
     Spacer(1,8),
     Paragraph("Or reply to this email and we\u2019ll send a short questionnaire first \u2014 takes 3 minutes.",
         ParagraphStyle('Alt', fontName='Helvetica', fontSize=9, leading=13, textColor=TEXT_TERT, alignment=TA_CENTER)),
