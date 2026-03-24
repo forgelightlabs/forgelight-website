@@ -86,7 +86,7 @@
       };
       const submit=()=>{
         const p={firm:fi,answers:QS.map(q=>({question:q.label,answer:ans[q.id]||""})),submitted_at:new Date().toISOString(),source:location.href};
-        try{navigator.sendBeacon&&navigator.sendBeacon("https://hooks.zapier.com/hooks/catch/placeholder",JSON.stringify(p))}catch(e){}
+        fetch("/api/questionnaire",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)}).catch(e=>console.error(e));
         try{const e=JSON.parse(localStorage.getItem("fl_q")||"[]");e.push(p);localStorage.setItem("fl_q",JSON.stringify(e))}catch(e){}
         setDone(true);setStep(tot);
       };
