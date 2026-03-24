@@ -143,7 +143,7 @@ story.append(Spacer(1,5))
 story.append(mkstep("02","We Find and Reach Your Ideal Clients","We identify decision-makers in your target industries using verified B2B data, then craft personalized outreach written as your firm and send at scale."))
 story.append(Spacer(1,5))
 story.append(KeepTogether([
-    mkstep("03","You Take the Calls","When a prospect responds, we qualify them and route them to your calendar. You show up to a warm conversation. No cold calling. No pitching strangers."),
+    mkstep("03","You Take the Calls","When a prospect responds, we qualify them and route them to your calendar. You show up to a warm conversation with someone who already wants what you offer."),
 ]))
 story.append(Spacer(1,10))
 
@@ -170,7 +170,7 @@ story.append(Spacer(1,12))
 story.append(KeepTogether([
     HRFlowable(width="100%", thickness=1.5, color=WARM, spaceAfter=12),
     Paragraph("Ready to see if this fits your firm?", s['cta_head']),
-    Paragraph("Book a 15-minute call. No generic pitch \u2014 we\u2019ll review your situation and give you an honest assessment.", s['cta_body']),
+    Paragraph("Book a 15-minute call with Felix. We\u2019ll review your situation and give you an honest assessment.", s['cta_body']),
     Paragraph('<link href="https://calendly.com/forgelightlabs/discovery" color="#64748B">\u2794  Book Your 15-Minute Call</link>', s['cta_link']),
     Paragraph("calendly.com/forgelightlabs/discovery", s['cta_small']),
     Spacer(1,8),

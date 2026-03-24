@@ -100,7 +100,7 @@
                 <Logo height={48} />
                 <h1 style={{fontSize:28,lineHeight:1.3,fontWeight:700,margin:"0 0 14px 0",color:"#1C1C1F"}}>Before we talk, help us understand your firm.</h1>
                 <p style={{fontSize:15,lineHeight:1.7,color:"#52525B",margin:"0 0 24px 0"}}>This takes about 3 minutes. Your answers help us determine whether our system is a genuine fit &mdash; and if it is, we'll come to the call with a specific plan built around your situation.</p>
-                <p style={{fontSize:13,lineHeight:1.6,color:"#A1A1AA",margin:"0 0 36px 0"}}>No generic sales pitch. No wasted time. Just an honest conversation informed by what you tell us here.</p>
+                <p style={{fontSize:13,lineHeight:1.6,color:"#A1A1AA",margin:"0 0 36px 0"}}>No wasted time. Just an honest conversation informed by what you tell us here.</p>
                 <Btn onClick={()=>setStep(1)}>Get started &rarr;</Btn>
               </div>
             )}
@@ -147,12 +147,12 @@
             )}
             {done&&step===tot&&(
               <div className="fade-up" style={{textAlign:"center",paddingTop:40}}>
-                <div style={{width:52,height:52,borderRadius:"50%",background:"#1C1C1F",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 24px",fontSize:22,color:"#FAFAFA"}}>&check;</div>
+                <div style={{width:52,height:52,borderRadius:"50%",background:"#1C1C1F",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 24px",fontSize:0}}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FAFAFA" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
                 <h2 style={{fontSize:24,fontWeight:700,margin:"0 0 12px 0",color:"#1C1C1F"}}>Thank you{fi.your_name?`, ${fi.your_name.split(" ")[0]}`:""}</h2>
-                <p style={{fontSize:15,lineHeight:1.7,color:"#52525B",margin:"0 0 28px 0"}}>We&rsquo;ve received your answers. When we speak, we'll have a specific assessment for{fi.firm_name?` ${fi.firm_name}`:` your firm`} &mdash; no generic pitch.</p>
+                <p style={{fontSize:15,lineHeight:1.7,color:"#52525B",margin:"0 0 28px 0"}}>We&rsquo;ve received your answers. When we speak, we'll have a specific assessment for{fi.firm_name?` ${fi.firm_name}`:` your firm`}.</p>
                 <div style={{background:"#fff",border:"1px solid #E4E4E7",borderRadius:8,padding:24,marginBottom:24,textAlign:"left"}}>
                   <p style={{fontSize:11,fontWeight:600,color:"#64748B",margin:"0 0 6px 0",letterSpacing:1.5}}>NEXT STEP</p>
-                  <p style={{fontSize:14,lineHeight:1.6,color:"#52525B",margin:0}}>Book a 15-minute call with David. He&rsquo;ll walk through your answers and give you an honest assessment.</p>
+                  <p style={{fontSize:14,lineHeight:1.6,color:"#52525B",margin:0}}>Book a 15-minute call with Felix. He'll walk through your answers and give you an honest assessment.</p>
                 </div>
                 <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"#1C1C1F",color:"#FAFAFA",padding:"14px 40px",fontSize:14,fontWeight:600,borderRadius:6,fontFamily:"inherit",textDecoration:"none"}}>Book Your 15-Minute Call &rarr;</a>
                 <p style={{fontSize:11,color:"#A1A1AA",marginTop:14}}>Pick any time that works.</p>
