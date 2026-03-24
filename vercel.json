@@ -3,6 +3,7 @@
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/questionnaire", "destination": "/questionnaire/index.html" },
     { "source": "/questionnaire/", "destination": "/questionnaire/index.html" },
-    { "source": "/assets/(.*)", "destination": "/assets/$1" }
+    { "source": "/assets/(.*)", "destination": "/assets/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

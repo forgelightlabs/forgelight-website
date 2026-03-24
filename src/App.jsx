@@ -6499,7 +6499,44 @@ const dataEntryAutomationData = {
 
 
 export default function App() {
-  const [page,setPage] = useState('home');
+  // URL-based routing: read path on load, update URL on navigation
+  const parents = ['ai-front-desk','ai-outbound','referral','broker-os','content-engine','website-design'];
+  
+  const urlToPageId = (pathname) => {
+    const p = pathname.replace(/^\//, '').replace(/\/$/, '');
+    if (!p) return 'home';
+    return p.replace(/\//g, '-');
+  };
+  
+  const pageIdToUrl = (id) => {
+    if (id === 'home') return '/';
+    for (const pr of parents) {
+      if (id.startsWith(pr + '-')) return '/' + pr + '/' + id.slice(pr.length + 1);
+    }
+    return '/' + id;
+  };
+
+  const [page, setPageRaw] = useState(() => urlToPageId(window.location.pathname));
+  
+  const setPage = (newPage) => {
+    setPageRaw(newPage);
+    const url = pageIdToUrl(newPage);
+    if (window.location.pathname !== url) {
+      window.history.pushState({ page: newPage }, '', url);
+    }
+  };
+
+  // Back button support
+  useEffect(() => {
+    const onPop = (e) => {
+      const pg = e.state?.page || urlToPageId(window.location.pathname);
+      setPageRaw(pg);
+    };
+    window.addEventListener('popstate', onPop);
+    // Set initial state
+    window.history.replaceState({ page }, '', pageIdToUrl(page));
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
   
   // Check analytics consent on mount
   useEffect(() => {
